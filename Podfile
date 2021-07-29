@@ -6,7 +6,9 @@ target 'TakeOff' do
   use_frameworks!
 pod 'Firebase/Analytics'
   # Pods for TakeOff
-
+pod 'SnapKit', '~> 5.0.0'
+pod 'RxSwift', '~> 5.0.0'
+pod 'RxCocoa' 
   target 'TakeOffTests' do
     inherit! :search_paths
     # Pods for testing
