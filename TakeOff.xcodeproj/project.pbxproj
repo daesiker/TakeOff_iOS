@@ -16,6 +16,8 @@
 		BF4591A426B7B25B0031E119 /* UIKitExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4591A326B7B25B0031E119 /* UIKitExtension.swift */; };
 		BF4591A626B7B2D60031E119 /* FoundationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4591A526B7B2D60031E119 /* FoundationExtension.swift */; };
 		BF4591A926B7B3420031E119 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4591A826B7B3420031E119 /* SignUpView.swift */; };
+		BF4591B126B7E8D50031E119 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4591B026B7E8D50031E119 /* User.swift */; };
+		BF4591B326B7E92B0031E119 /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4591B226B7E92B0031E119 /* SignUpViewModel.swift */; };
 		BF606EE726A2876E004091A5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF606EE626A2876E004091A5 /* AppDelegate.swift */; };
 		BF606EE926A2876E004091A5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF606EE826A2876E004091A5 /* SceneDelegate.swift */; };
 		BF606EEB26A2876E004091A5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF606EEA26A2876E004091A5 /* ViewController.swift */; };
@@ -60,6 +62,8 @@
 		BF4591A326B7B25B0031E119 /* UIKitExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitExtension.swift; sourceTree = "<group>"; };
 		BF4591A526B7B2D60031E119 /* FoundationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoundationExtension.swift; sourceTree = "<group>"; };
 		BF4591A826B7B3420031E119 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
+		BF4591B026B7E8D50031E119 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		BF4591B226B7E92B0031E119 /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
 		BF606EE326A2876E004091A5 /* TakeOff.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TakeOff.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF606EE626A2876E004091A5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BF606EE826A2876E004091A5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -154,8 +158,17 @@
 			isa = PBXGroup;
 			children = (
 				BF4591A826B7B3420031E119 /* SignUpView.swift */,
+				BF4591B226B7E92B0031E119 /* SignUpViewModel.swift */,
 			);
 			path = SignUp;
+			sourceTree = "<group>";
+		};
+		BF4591AF26B7E8CB0031E119 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				BF4591B026B7E8D50031E119 /* User.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		BF606EDA26A2876E004091A5 = {
@@ -183,6 +196,7 @@
 		BF606EE526A2876E004091A5 /* TakeOff */ = {
 			isa = PBXGroup;
 			children = (
+				BF4591AF26B7E8CB0031E119 /* Model */,
 				BF4591A726B7B3370031E119 /* SignUp */,
 				BF4591A226B7B24D0031E119 /* Extension */,
 				BF45919F26B7B1E30031E119 /* Login */,
@@ -460,11 +474,13 @@
 			files = (
 				BF606EEB26A2876E004091A5 /* ViewController.swift in Sources */,
 				BF606EE726A2876E004091A5 /* AppDelegate.swift in Sources */,
+				BF4591B326B7E92B0031E119 /* SignUpViewModel.swift in Sources */,
 				BF606EE926A2876E004091A5 /* SceneDelegate.swift in Sources */,
 				BF4591A426B7B25B0031E119 /* UIKitExtension.swift in Sources */,
 				0497F61E26C3A35A002F1ACB /* FirebaseDB.swift in Sources */,
 				BF4591A926B7B3420031E119 /* SignUpView.swift in Sources */,
 				0497F61426C3A23A002F1ACB /* Protocol.swift in Sources */,
+				//BF4591B126B7E8D50031E119 /* User.swift in Sources */,
 				BF4591A126B7B1F00031E119 /* LoginViewModel.swift in Sources */,
 				BF606F2F26A28F0F004091A5 /* LoginView.swift in Sources */,
 				0497F61926C3A253002F1ACB /* UserModel.swift in Sources */,
