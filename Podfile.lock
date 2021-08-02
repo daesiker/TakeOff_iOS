@@ -69,12 +69,16 @@ PODS:
     - RxSwift (~> 5)
   - RxSwift (5.0.1)
   - SnapKit (5.0.1)
+  - TextFieldEffects (1.6.0)
+  - Then (2.7.0)
 
 DEPENDENCIES:
   - Firebase/Analytics
   - RxCocoa
   - RxSwift (~> 5.0.0)
   - SnapKit (~> 5.0.0)
+  - TextFieldEffects
+  - Then
 
 SPEC REPOS:
   trunk:
@@ -92,6 +96,8 @@ SPEC REPOS:
     - RxRelay
     - RxSwift
     - SnapKit
+    - TextFieldEffects
+    - Then
 
 SPEC CHECKSUMS:
   Firebase: 8db6f2d1b2c5e2984efba4949a145875a8f65fe5
@@ -108,7 +114,9 @@ SPEC CHECKSUMS:
   RxRelay: d77f7d771495f43c556cbc43eebd1bb54d01e8e9
   RxSwift: e2dc62b366a3adf6a0be44ba9f405efd4c94e0c4
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
+  TextFieldEffects: 529b8aff706fb40f82c41c780c0777941a893796
+  Then: acfe0be7e98221c6204e12f8161459606d5d822d
 
-PODFILE CHECKSUM: 09c99e16b7f94c463536c867b9cbd0c66bcd8ccd
+PODFILE CHECKSUM: adb4a90ea4ee0ad2f673035e4fab0b56796600e4
 
 COCOAPODS: 1.10.0

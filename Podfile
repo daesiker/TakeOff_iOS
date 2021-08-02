@@ -8,7 +8,10 @@ pod 'Firebase/Analytics'
   # Pods for TakeOff
 pod 'SnapKit', '~> 5.0.0'
 pod 'RxSwift', '~> 5.0.0'
-pod 'RxCocoa' 
+pod 'RxCocoa'
+pod 'Then'
+pod 'TextFieldEffects'
+
   target 'TakeOffTests' do
     inherit! :search_paths
     # Pods for testing
