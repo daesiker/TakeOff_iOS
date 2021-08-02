@@ -18,3 +18,26 @@ extension UIColor {
     
     static var enableMainColor = UIColor.rgb(red: 250, green: 224, blue: 212)
 }
+
+extension UIViewController {
+    var safeView:UIView {
+        get{
+            guard let safeView = self.view.viewWithTag(Int(INT_MAX)) else {
+                let guide = self.view.safeAreaLayoutGuide
+                let view = UIView()
+                view.tag = Int(INT_MAX)
+                
+                self.view.addSubview(view)
+                view.translatesAutoresizingMaskIntoConstraints = false
+                NSLayoutConstraint.activate([
+                    view.topAnchor.constraint(equalTo: guide.topAnchor),
+                    view.bottomAnchor.constraint(equalTo: guide.bottomAnchor),
+                    view.leftAnchor.constraint(equalTo: guide.leftAnchor),
+                    view.rightAnchor.constraint(equalTo: guide.rightAnchor)
+                ])
+                return view
+            }
+            return safeView
+        }
+    }
+}
