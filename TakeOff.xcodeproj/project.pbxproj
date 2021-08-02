@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		12976C7C5238AE8E49C94015 /* Pods_TakeOff.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B96FC7B284EF767A99B29A5 /* Pods_TakeOff.framework */; };
 		B98DA3D9814E88F33671E6B8 /* Pods_TakeOff_TakeOffUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 350243CD383F88E0778AB157 /* Pods_TakeOff_TakeOffUITests.framework */; };
+		BF4591A126B7B1F00031E119 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4591A026B7B1F00031E119 /* LoginViewModel.swift */; };
+		BF4591A426B7B25B0031E119 /* UIKitExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4591A326B7B25B0031E119 /* UIKitExtension.swift */; };
+		BF4591A626B7B2D60031E119 /* FoundationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4591A526B7B2D60031E119 /* FoundationExtension.swift */; };
+		BF4591A926B7B3420031E119 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4591A826B7B3420031E119 /* SignUpView.swift */; };
 		BF606EE726A2876E004091A5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF606EE626A2876E004091A5 /* AppDelegate.swift */; };
 		BF606EE926A2876E004091A5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF606EE826A2876E004091A5 /* SceneDelegate.swift */; };
 		BF606EEB26A2876E004091A5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF606EEA26A2876E004091A5 /* ViewController.swift */; };
@@ -18,7 +22,7 @@
 		BF606EFE26A28772004091A5 /* TakeOffTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF606EFD26A28772004091A5 /* TakeOffTests.swift */; };
 		BF606F0926A28772004091A5 /* TakeOffUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF606F0826A28772004091A5 /* TakeOffUITests.swift */; };
 		BF606F1A26A287D5004091A5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BF606F1926A287D5004091A5 /* GoogleService-Info.plist */; };
-		BF606F2F26A28F0F004091A5 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF606F2E26A28F0F004091A5 /* LoginViewController.swift */; };
+		BF606F2F26A28F0F004091A5 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF606F2E26A28F0F004091A5 /* LoginView.swift */; };
 		FEE2F63F1E8D7C2FCF508D6A /* Pods_TakeOffTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3262C1A1886FC01C8B0B0EE0 /* Pods_TakeOffTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -46,6 +50,10 @@
 		4B96FC7B284EF767A99B29A5 /* Pods_TakeOff.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TakeOff.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		904F2C6911FEEF43C782E968 /* Pods-TakeOff.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TakeOff.debug.xcconfig"; path = "Target Support Files/Pods-TakeOff/Pods-TakeOff.debug.xcconfig"; sourceTree = "<group>"; };
 		9D3799695D1A6873AD9AD76F /* Pods-TakeOff-TakeOffUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TakeOff-TakeOffUITests.release.xcconfig"; path = "Target Support Files/Pods-TakeOff-TakeOffUITests/Pods-TakeOff-TakeOffUITests.release.xcconfig"; sourceTree = "<group>"; };
+		BF4591A026B7B1F00031E119 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		BF4591A326B7B25B0031E119 /* UIKitExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitExtension.swift; sourceTree = "<group>"; };
+		BF4591A526B7B2D60031E119 /* FoundationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoundationExtension.swift; sourceTree = "<group>"; };
+		BF4591A826B7B3420031E119 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		BF606EE326A2876E004091A5 /* TakeOff.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TakeOff.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF606EE626A2876E004091A5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BF606EE826A2876E004091A5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -61,7 +69,7 @@
 		BF606F0826A28772004091A5 /* TakeOffUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TakeOffUITests.swift; sourceTree = "<group>"; };
 		BF606F0A26A28772004091A5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BF606F1926A287D5004091A5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		BF606F2E26A28F0F004091A5 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		BF606F2E26A28F0F004091A5 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		C41870B3E414FF79D7F3BDEE /* Pods-TakeOffTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TakeOffTests.release.xcconfig"; path = "Target Support Files/Pods-TakeOffTests/Pods-TakeOffTests.release.xcconfig"; sourceTree = "<group>"; };
 		C4FE371827A1C9A242C5DA3D /* Pods-TakeOff.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TakeOff.release.xcconfig"; path = "Target Support Files/Pods-TakeOff/Pods-TakeOff.release.xcconfig"; sourceTree = "<group>"; };
 		C945A15D23A9AC95B04DA62C /* Pods-TakeOff-TakeOffUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TakeOff-TakeOffUITests.debug.xcconfig"; path = "Target Support Files/Pods-TakeOff-TakeOffUITests/Pods-TakeOff-TakeOffUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -118,6 +126,32 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		BF45919F26B7B1E30031E119 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				BF606F2E26A28F0F004091A5 /* LoginView.swift */,
+				BF4591A026B7B1F00031E119 /* LoginViewModel.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		BF4591A226B7B24D0031E119 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				BF4591A326B7B25B0031E119 /* UIKitExtension.swift */,
+				BF4591A526B7B2D60031E119 /* FoundationExtension.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		BF4591A726B7B3370031E119 /* SignUp */ = {
+			isa = PBXGroup;
+			children = (
+				BF4591A826B7B3420031E119 /* SignUpView.swift */,
+			);
+			path = SignUp;
+			sourceTree = "<group>";
+		};
 		BF606EDA26A2876E004091A5 = {
 			isa = PBXGroup;
 			children = (
@@ -143,6 +177,9 @@
 		BF606EE526A2876E004091A5 /* TakeOff */ = {
 			isa = PBXGroup;
 			children = (
+				BF4591A726B7B3370031E119 /* SignUp */,
+				BF4591A226B7B24D0031E119 /* Extension */,
+				BF45919F26B7B1E30031E119 /* Login */,
 				BF606EE626A2876E004091A5 /* AppDelegate.swift */,
 				BF606EE826A2876E004091A5 /* SceneDelegate.swift */,
 				BF606EEA26A2876E004091A5 /* ViewController.swift */,
@@ -151,7 +188,6 @@
 				BF606EF126A28771004091A5 /* LaunchScreen.storyboard */,
 				BF606F1926A287D5004091A5 /* GoogleService-Info.plist */,
 				BF606EF426A28771004091A5 /* Info.plist */,
-				BF606F2E26A28F0F004091A5 /* LoginViewController.swift */,
 			);
 			path = TakeOff;
 			sourceTree = "<group>";
@@ -416,7 +452,11 @@
 				BF606EEB26A2876E004091A5 /* ViewController.swift in Sources */,
 				BF606EE726A2876E004091A5 /* AppDelegate.swift in Sources */,
 				BF606EE926A2876E004091A5 /* SceneDelegate.swift in Sources */,
-				BF606F2F26A28F0F004091A5 /* LoginViewController.swift in Sources */,
+				BF4591A426B7B25B0031E119 /* UIKitExtension.swift in Sources */,
+				BF4591A926B7B3420031E119 /* SignUpView.swift in Sources */,
+				BF4591A126B7B1F00031E119 /* LoginViewModel.swift in Sources */,
+				BF606F2F26A28F0F004091A5 /* LoginView.swift in Sources */,
+				BF4591A626B7B2D60031E119 /* FoundationExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
