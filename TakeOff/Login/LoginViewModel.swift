@@ -24,7 +24,7 @@ class LoginViewModel {
         
         return Observable.create({ (observer) -> Disposable in
             print("Firebase Login Function")
-            observer.onNext(User(name: info))
+            observer.onNext(User())
             return Disposables.create()
         })
         
@@ -39,6 +39,3 @@ class LoginViewModel {
     
 }
 
-struct User {
-    let name: String
-}
