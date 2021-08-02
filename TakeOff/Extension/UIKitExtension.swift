@@ -26,6 +26,7 @@ extension UIViewController {
                 let guide = self.view.safeAreaLayoutGuide
                 let view = UIView()
                 view.tag = Int(INT_MAX)
+                view.layer.zPosition = CGFloat(Float.greatestFiniteMagnitude)
                 
                 self.view.addSubview(view)
                 view.translatesAutoresizingMaskIntoConstraints = false
