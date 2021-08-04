@@ -10,27 +10,30 @@ import RxSwift
 import RxRelay
 
 
-protocol SignUpViewModelType {
-    var tap: PublishRelay<Void> { get }
-}
-
-
-
-class SignUpViewModel: SignUpViewModelType {
+class SignUpViewModel {
     
-    private let user = BehaviorRelay<User>(value: .init())
+    private var user = User()
     let disposeBag = DisposeBag()
+    let stapOne = StapOne()
+    let stapTwo = StapTwo()
     
-    let tap = PublishRelay<Void>()
+    struct StapOne {
+        let tap = PublishRelay<Int>()
+    }
+    
+    struct StapTwo {
+        
+    }
+    
+    
     
     init() {
-        self.tap
-            .withLatestFrom(user)
-            .map { user -> User in
-                var nextUser = user
-                nextUser.type = true
-                return nextUser
-            }.bind(to: self.user)
-            .disposed(by: disposeBag)
+        stapOne.tap.subscribe(onNext: { a in
+            self.user.type = a == 1 ? true : false
+        })
+        .disposed(by: disposeBag)
+        
+        
+        
     }
 }

@@ -9,7 +9,10 @@ protocol SignUpViewAttributes {
 
 class SignUp1View: UIViewController {
     
-    var user: User
+    var vm: SignUpViewModel
+    var disposebag = DisposeBag()
+    
+    
     
     let backgroundView: UIView = {
         let view = UIImageView(image: UIImage(named: "background"))
@@ -33,10 +36,9 @@ class SignUp1View: UIViewController {
         bt.contentHorizontalAlignment = .center
         bt.semanticContentAttribute = .forceLeftToRight
         bt.imageEdgeInsets = .init(top: 0, left: 15, bottom: 0, right: 15)
-        bt.tag = 0
-        bt.addTarget(self, action: #selector(buttonClick), for: .touchUpInside)
         return bt
     }()
+    
     
     let peopleButton: UIButton = {
         let bt = UIButton(type: .system)
@@ -47,25 +49,12 @@ class SignUp1View: UIViewController {
         bt.contentHorizontalAlignment = .center
         bt.semanticContentAttribute = .forceLeftToRight
         bt.imageEdgeInsets = .init(top: 0, left: 15, bottom: 0, right: 15)
-        bt.tag = 1
-        bt.addTarget(self, action: #selector(buttonClick), for: .touchUpInside)
         return bt
     }()
     
-    @objc func buttonClick(sender: UIButton) {
-        if sender.tag == 0 {
-            user.type = true
-        } else {
-            user.type = false
-        }
-        let vc = SignUp2View(user: user)
-        vc.modalTransitionStyle = .crossDissolve
-        vc.modalPresentationStyle = .fullScreen
-        self.present(vc, animated: true)
-    }
     
-    init() {
-        self.user = User()
+    init(vm: SignUpViewModel) {
+        self.vm = vm
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -76,7 +65,7 @@ class SignUp1View: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
-        
+        bind()
     }
     
 
@@ -109,6 +98,26 @@ extension SignUp1View: SignUpViewAttributes {
             $0.centerX.centerY.equalToSuperview()
         }
 
+    }
+    
+    func bind() {
+        Observable.merge(
+            artistButton.rx.tap.map { 0 },
+            peopleButton.rx.tap.map { 1 }
+        )
+        .bind(to: vm.stapOne.tap)
+        .disposed(by: disposebag)
+        
+        vm.stapOne.tap.bind { _ in
+            let vc = SignUp2View(vm: self.vm)
+            vc.modalTransitionStyle = .crossDissolve
+            vc.modalPresentationStyle = .fullScreen
+            self.present(vc, animated: true)
+        }
+        .disposed(by: disposebag)
+        
+        
+        
     }
     
 }
