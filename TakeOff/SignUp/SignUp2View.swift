@@ -7,12 +7,18 @@
 
 import UIKit
 
+
 class SignUp2View: UIViewController {
     
-    let user: User
+    let vm: SignUpViewModel
     
-    init(user: User) {
-        self.user = user
+    let backgroundView: UIView = {
+        let view = UIImageView(image: UIImage(named: "background"))
+        return view
+    }()
+    
+    init(vm: SignUpViewModel) {
+        self.vm = vm
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -22,19 +28,20 @@ class SignUp2View: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .red
+        setUI()
         // Do any additional setup after loading the view.
     }
     
 
-    /*
-    // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+}
+
+extension SignUp2View: SignUpViewAttributes {
+    
+    func setUI() {
+        view.addSubview(backgroundView)
+        backgroundView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
     }
-    */
-
 }

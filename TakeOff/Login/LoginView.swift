@@ -65,7 +65,7 @@ class LoginView: UIViewController {
     }()
     
     @objc func handleShowSignUp() {
-        let vc = SignUp1View()
+        let vc = SignUp1View(vm: SignUpViewModel())
         vc.modalTransitionStyle = .crossDissolve
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true)
