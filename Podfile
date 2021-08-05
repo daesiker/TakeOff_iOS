@@ -11,7 +11,7 @@ pod 'RxSwift', '~> 5.0.0'
 pod 'RxCocoa'
 pod 'Then'
 pod 'TextFieldEffects'
-
+pod 'Firebase/Auth', '~> 8.4.0'
   target 'TakeOffTests' do
     inherit! :search_paths
     # Pods for testing
