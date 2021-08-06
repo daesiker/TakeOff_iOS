@@ -1,4 +1,5 @@
 PODS:
+  - DLRadioButton (1.4.12)
   - Firebase/Analytics (8.4.0):
     - Firebase/Core
   - Firebase/Auth (8.4.0):
@@ -107,6 +108,7 @@ PODS:
   - Then (2.7.0)
 
 DEPENDENCIES:
+  - DLRadioButton (~> 1.4)
   - Firebase/Analytics (~> 8.4.0)
   - Firebase/Auth (~> 8.4.0)
   - Firebase/Database (~> 8.4.0)
@@ -118,6 +120,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - DLRadioButton
     - Firebase
     - FirebaseAnalytics
     - FirebaseAuth
@@ -140,6 +143,7 @@ SPEC REPOS:
     - Then
 
 SPEC CHECKSUMS:
+  DLRadioButton: d7c4e225ed0e8013cef7be61455230c7557ad7c1
   Firebase: 54cdc8bc9c9b3de54f43dab86e62f5a76b47034f
   FirebaseAnalytics: 4751d6a49598a2b58da678cc07df696bcd809ab9
   FirebaseAuth: 8ef169751d795f20921d425f7b0131cc1c70935c

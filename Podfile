@@ -4,6 +4,7 @@
 target 'TakeOff' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
+pod 'Firebase/Database', '~> 8.4.0'
 pod 'Firebase/Analytics', '~> 8.4.0'
   # Pods for TakeOff
 pod 'SnapKit', '~> 5.0.0'

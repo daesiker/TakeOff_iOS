@@ -9,7 +9,7 @@ protocol SignUpViewAttributes {
 
 class SignUp1View: UIViewController {
     
-    var vm: SignUpViewModel
+    var vm = SignUpViewModel()
     var disposebag = DisposeBag()
     
     
@@ -52,16 +52,6 @@ class SignUp1View: UIViewController {
         return bt
     }()
     
-    
-    init(vm: SignUpViewModel) {
-        self.vm = vm
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
@@ -102,8 +92,8 @@ extension SignUp1View: SignUpViewAttributes {
     
     func bind() {
         Observable.merge(
-            artistButton.rx.tap.map { 0 },
-            peopleButton.rx.tap.map { 1 }
+            artistButton.rx.tap.map { true },
+            peopleButton.rx.tap.map { false }
         )
         .bind(to: vm.stapOne.tap)
         .disposed(by: disposebag)
