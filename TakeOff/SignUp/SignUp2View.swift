@@ -7,7 +7,6 @@
 
 import UIKit
 import Then
-import DLRadioButton
 import RxSwift
 import RxCocoa
 
@@ -39,61 +38,53 @@ class SignUp2View: UIViewController {
         $0.setTitleColor(UIColor.mainColor, for: .normal)
     }
     
-    let radioButton3 = DLRadioButton().then {
+    let radioButton3 = UIButton(type: .system).then {
         $0.setTitle("선택3", for: .normal)
         $0.setTitleColor(UIColor.mainColor, for: .normal)
-        $0.isMultipleSelectionEnabled = true
     }
     
-    let radioButton4 = DLRadioButton().then {
+    let radioButton4 = UIButton(type: .system).then {
         $0.setTitle("선택4", for: .normal)
         $0.setTitleColor(UIColor.mainColor, for: .normal)
-        $0.isMultipleSelectionEnabled = true
         $0.snp.makeConstraints {
             $0.width.equalTo(100)
         }
     }
     
-    let radioButton5 = DLRadioButton().then {
+    let radioButton5 = UIButton(type: .system).then {
         $0.setTitle("선택5", for: .normal)
         $0.setTitleColor(UIColor.mainColor, for: .normal)
-        $0.isMultipleSelectionEnabled = true
     }
     
-    let radioButton6 = DLRadioButton().then {
+    let radioButton6 = UIButton(type: .system).then {
         $0.setTitle("선택6", for: .normal)
         $0.setTitleColor(UIColor.mainColor, for: .normal)
-        $0.isMultipleSelectionEnabled = true
         $0.snp.makeConstraints {
             $0.width.equalTo(100)
         }
     }
     
-    let radioButton7 = DLRadioButton().then {
+    let radioButton7 = UIButton(type: .system).then {
         $0.setTitle("선택7", for: .normal)
         $0.setTitleColor(UIColor.mainColor, for: .normal)
-        $0.isMultipleSelectionEnabled = true
     }
     
-    let radioButton8 = DLRadioButton().then {
+    let radioButton8 = UIButton(type: .system).then {
         $0.setTitle("선택8", for: .normal)
         $0.setTitleColor(UIColor.mainColor, for: .normal)
-        $0.isMultipleSelectionEnabled = true
     }
     
-    let radioButton9 = DLRadioButton().then {
+    let radioButton9 = UIButton(type: .system).then {
         $0.setTitle("선택9", for: .normal)
         $0.setTitleColor(UIColor.mainColor, for: .normal)
-        $0.isMultipleSelectionEnabled = true
         $0.snp.makeConstraints {
             $0.width.equalTo(100)
         }
     }
     
-    let radioButton10 = DLRadioButton().then {
+    let radioButton10 = UIButton(type: .system).then {
         $0.setTitle("선택10", for: .normal)
         $0.setTitleColor(UIColor.mainColor, for: .normal)
-        $0.isMultipleSelectionEnabled = true
     }
     
     let confirmButton = UIButton().then {
@@ -117,7 +108,7 @@ class SignUp2View: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
-        
+        bind()
     }
     
 
@@ -201,20 +192,46 @@ extension SignUp2View: SignUpViewAttributes {
             $0.height.equalTo(stackLayout.snp.height).multipliedBy(0.8)
         }
         
+        stackLayout.addSubview(confirmButton)
+        confirmButton.snp.makeConstraints {
+            $0.top.equalTo(mainStackView.snp.bottom).offset(5)
+            
+        }
+        
     }
     
     func bind() {
         Observable.merge(
             radioButton1.rx.tap.map { "선택1" },
-            radioButton2.rx.tap.map { "선택2" }
+            radioButton2.rx.tap.map { "선택2" },
+            radioButton3.rx.tap.map { "선택3" },
+            radioButton4.rx.tap.map { "선택4" },
+            radioButton5.rx.tap.map { "선택5" },
+            radioButton6.rx.tap.map { "선택6" },
+            radioButton7.rx.tap.map { "선택7" },
+            radioButton8.rx.tap.map { "선택8" },
+            radioButton9.rx.tap.map { "선택9" },
+            radioButton10.rx.tap.map { "선택10" }
         )
-        .bind(to: vm.stapTwo.radioClick)
+        .bind(to: vm.stepTwo.radioClick)
         .disposed(by: disposeBag)
         
-        vm.stapTwo.radioClick.bind { _ in
-            
+        confirmButton.rx.tap
+            .bind(to: vm.stepTwo.buttonClick)
+            .disposed(by: disposeBag)
+        
+        vm.stepTwo.buttonClick.bind { _ in
+            self.changeScreen()
         }
         .disposed(by: disposeBag)
+        
+    }
+    
+    private func changeScreen() {
+        let vc = SignUp3View(vm: vm)
+        vc.modalTransitionStyle = .crossDissolve
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: true)
     }
     
 }

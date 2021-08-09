@@ -8,6 +8,7 @@
 import Foundation
 import RxSwift
 import RxRelay
+import RxCocoa
 import Firebase
 import FirebaseDatabase
 
@@ -15,32 +16,31 @@ class SignUpViewModel {
     
     private var user = User()
     let disposeBag = DisposeBag()
-    let stapOne = StapOne()
-    let stapTwo = StapTwo()
-    let stapThree = StapThree()
+    let stepOne = StepOne()
+    let stepTwo = StepTwo()
+    let stepThree = StepThree()
     
-    struct StapOne {
+    struct StepOne {
         let tap = PublishRelay<Bool>()
     }
     
-    struct StapTwo {
+    struct StepTwo {
         let radioClick = PublishRelay<String>()
         let buttonClick = PublishRelay<Void>()
     }
     
-    struct StapThree {
+    struct StepThree {
         let firebaseSignUp = PublishRelay<Void>()
     }
     
     
     init() {
-        stapOne.tap.subscribe(onNext: { type in
+        stepOne.tap.subscribe(onNext: { type in
             self.user.type = type
-            print(self.user.type)
         })
         .disposed(by: disposeBag)
         
-        stapTwo.radioClick.subscribe(onNext: { type in
+        stepTwo.radioClick.subscribe(onNext: { type in
             if self.user.hashTag.contains(type) {
                 if let index = self.user.hashTag.firstIndex(of: type) {
                     self.user.hashTag.remove(at: index)
@@ -48,9 +48,11 @@ class SignUpViewModel {
             } else {
                 self.user.hashTag.append(type)
             }
-            print(self.user.hashTag)
         })
         .disposed(by: disposeBag)
+        
+        stepTwo.buttonClick.subscribe().disposed(by: disposeBag)
+        
         
         
     }
