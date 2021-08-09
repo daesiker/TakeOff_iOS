@@ -95,19 +95,16 @@ extension SignUp1View: SignUpViewAttributes {
             artistButton.rx.tap.map { true },
             peopleButton.rx.tap.map { false }
         )
-        .bind(to: vm.stapOne.tap)
+        .bind(to: vm.stepOne.tap)
         .disposed(by: disposebag)
         
-        vm.stapOne.tap.bind { _ in
+        vm.stepOne.tap.bind { _ in
             let vc = SignUp2View(vm: self.vm)
             vc.modalTransitionStyle = .crossDissolve
             vc.modalPresentationStyle = .fullScreen
             self.present(vc, animated: true)
         }
         .disposed(by: disposebag)
-        
-        
-        
     }
     
 }
