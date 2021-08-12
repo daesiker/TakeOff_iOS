@@ -225,6 +225,8 @@ extension SignUp2View: SignUpViewAttributes {
         }
         .disposed(by: disposeBag)
         
+        
+        
     }
     
     private func changeScreen() {

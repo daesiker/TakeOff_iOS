@@ -30,6 +30,12 @@ class SignUpViewModel {
     }
     
     struct StepThree {
+        let emailObserver = BehaviorRelay<String>(value: "")
+        let nameObserver = BehaviorRelay<String>(value: "")
+        let pwObserver = BehaviorRelay<String>(value: "")
+        
+        
+        
         let firebaseSignUp = PublishRelay<Void>()
     }
     
