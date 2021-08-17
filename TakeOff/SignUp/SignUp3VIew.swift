@@ -61,6 +61,7 @@ class SignUp3View: UIViewController {
     let pwTextField = HoshiTextField().then {
         $0.placeholder = "비밀번호를 입력하세요"
         $0.placeholderFontScale = 1.0
+        $0.isSecureTextEntry = true
         $0.placeholderColor = UIColor.mainColor
         $0.borderActiveColor = UIColor.mainColor
         $0.font = UIFont.systemFont(ofSize: 16)
@@ -81,6 +82,7 @@ class SignUp3View: UIViewController {
     let overlapPwTextField = HoshiTextField().then {
         $0.placeholder = "비밀번호 확인"
         $0.placeholderFontScale = 1.0
+        $0.isSecureTextEntry = true
         $0.placeholderColor = UIColor.mainColor
         $0.borderActiveColor = UIColor.mainColor
         $0.font = UIFont.systemFont(ofSize: 16)
@@ -111,6 +113,8 @@ class SignUp3View: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
+        bindInput()
+        bindOutput()
     }
     
     init(vm: SignUpViewModel) {
@@ -178,8 +182,6 @@ extension SignUp3View: SignUpViewAttributes {
         
         let view = UIView()
         
-        
-        
         view.addSubview(textfield)
         view.addSubview(image)
         view.addSubview(label)
@@ -202,10 +204,95 @@ extension SignUp3View: SignUpViewAttributes {
             $0.height.equalTo(10)
         }
         
-        
         return view
     }
     
+    
+    func bindInput() {
+        
+        emailTextField.rx.text.orEmpty
+            .bind(to: vm.stepThree.emailObserver)
+            .disposed(by: disposeBag)
+        
+        nameTextField.rx.controlEvent([.editingDidEnd])
+            .map { self.nameTextField.text ?? "" }
+            .distinctUntilChanged()
+            .bind(to: vm.stepThree.nameObserver)
+            .disposed(by: disposeBag)
+        
+        pwTextField.rx.text.orEmpty
+            .bind(to: vm.stepThree.pwObserver)
+            .disposed(by: disposeBag)
+        
+        overlapPwTextField.rx.text.orEmpty
+            .bind(to: vm.stepThree.overlapPwObserver)
+            .disposed(by: disposeBag)
+        
+        emailTextField.rx.controlEvent([.editingDidEnd])
+            .asObservable()
+            .subscribe(onNext: {
+                print("end")
+            }).disposed(by: disposeBag)
+        
+    }
+    
+    func bindOutput() {
+        vm.stepThree.emailValid.subscribe(onNext: { valid in
+            if valid {
+                self.emailConfirmLabel.text = "올바른 형식의 이메일입니다."
+                self.emailConfirmLabel.textColor = UIColor.mainColor
+            } else {
+                self.emailConfirmLabel.text = "올바르지 않은 형식입니다."
+                self.emailConfirmLabel.textColor = .red
+            }
+        })
+        .disposed(by: disposeBag)
+        
+        vm.stepThree.nameValid.subscribe(onNext: { valid in
+            if valid {
+                self.nameConfirmLabel.text = "이미 존재하는 아이디입니다."
+                self.nameConfirmLabel.textColor = .red
+            } else {
+                self.nameConfirmLabel.text = "사용가능한 아이디입니다."
+                self.nameConfirmLabel.textColor = UIColor.mainColor
+            }
+        })
+        .disposed(by: disposeBag)
+        
+        vm.stepThree.pwValid.subscribe(onNext: {valid in
+            if valid {
+                self.pwConfirmLabel.text = "올바른 형식의 비밀번호입니다."
+                self.pwConfirmLabel.textColor = UIColor.mainColor
+            } else {
+                self.pwConfirmLabel.text = "비밀번호는 6자리이상이어야 합니다."
+                self.pwConfirmLabel.textColor = .red
+            }
+        })
+        .disposed(by: disposeBag)
+        
+        vm.stepThree.overlapPwValid.subscribe(onNext: { valid in
+            if valid {
+                self.overlapPwConfirmLabel.text = "비밀번호가 일치합니다."
+                self.overlapPwConfirmLabel.textColor = UIColor.mainColor
+            } else {
+                self.overlapPwConfirmLabel.text = "비밀번호가 일치하지 않습니다."
+                self.overlapPwConfirmLabel.textColor = .red
+            }
+        })
+        .disposed(by: disposeBag)
+        
+        vm.stepThree.signupButtonValid.subscribe(onNext: { valid in
+            if valid {
+                self.signUpButton.isEnabled = true
+                self.signUpButton.backgroundColor = UIColor.mainColor
+            } else {
+                self.signUpButton.isEnabled = false
+                self.signUpButton.backgroundColor = UIColor.enableMainColor
+            }
+        })
+        .disposed(by: disposeBag)
+        
+    }
     
     
 }
