@@ -101,7 +101,7 @@ class SignUp3View: UIViewController {
     
     let signUpButton = UIButton(type: .system).then {
         $0.setTitle("Sign Up", for: .normal)
-        $0.backgroundColor = UIColor.enableMainColor
+        $0.backgroundColor = $0.isEnabled ? UIColor.mainColor : UIColor.enableMainColor
         $0.layer.cornerRadius = 5.0
         $0.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
         $0.setTitleColor(.white, for: .normal)
@@ -289,16 +289,21 @@ extension SignUp3View: SignUpViewAttributes {
         })
         .disposed(by: disposeBag)
         
-        vm.stepThree.signupButtonValid.subscribe(onNext: { valid in
-            if valid {
-                self.signUpButton.isEnabled = false
-                self.signUpButton.backgroundColor = UIColor.mainColor
-            } else {
-                self.signUpButton.isEnabled = true
-                self.signUpButton.backgroundColor = UIColor.enableMainColor
-            }
-        })
-        .disposed(by: disposeBag)
+        vm.stepThree.signupButtonValid.bind(to: self.signUpButton.rx.isEnabled)
+            .disposed(by: disposeBag)
+        //(onNext: { valid in
+//
+//
+//
+////            if valid {
+////                //self.signUpButton.rx.isEnabled = false
+////                self.signUpButton.backgroundColor = UIColor.mainColor
+////            } else {
+////                self.signUpButton.isEnabled = true
+////                self.signUpButton.backgroundColor = UIColor.enableMainColor
+////            }
+//        })
+//        .disposed(by: disposeBag)
         
         vm.stepThree.firebaseSignUp.subscribe { result in
             switch result {

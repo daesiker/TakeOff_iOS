@@ -17,7 +17,7 @@ class SignUpViewModel {
     let disposeBag = DisposeBag()
     let stepOne = StepOne()
     let stepTwo = StepTwo()
-    let stepThree = StepThree()
+    var stepThree = StepThree()
     
     enum EmailValid {
         case notAvailable
@@ -40,11 +40,14 @@ class SignUpViewModel {
         let pwObserver = BehaviorRelay<String>(value: "")
         let overlapPwObserver = BehaviorRelay<String>(value: "")
         
+        //데이터만 보내면 되니까 굳이 Subject를 쓸필요 없음 Observable
+        //asDriver : 스케줄러 관리
+        //Driver랑 Signal사용
         let emailValid = BehaviorSubject<EmailValid>(value: .notAvailable)
         let nameValid = BehaviorSubject<Bool>(value: false)
         let pwValid = BehaviorSubject<Bool>(value: false)
         let overlapPwValid = BehaviorSubject<Bool>(value: false)
-        let signupButtonValid = BehaviorSubject<Bool>(value: false)
+        var signupButtonValid:Observable<Bool> = Observable.of(false)
         
         
         let tapSignup = PublishSubject<Void>()
@@ -98,10 +101,12 @@ class SignUpViewModel {
         
         
         
-        Observable.combineLatest(stepThree.emailValid, stepThree.nameValid, stepThree.pwValid, stepThree.overlapPwValid)
+        stepThree.signupButtonValid = Observable.combineLatest(stepThree.emailValid, stepThree.nameValid, stepThree.pwValid, stepThree.overlapPwValid)
             .map { $0.0 == .correct && $0.1 && $0.2 && $0.3 }
-            .bind(to: self.stepThree.signupButtonValid)
-            .disposed(by: disposeBag)
+            
+            
+//            .bind(to: self.stepThree.signupButtonValid)
+//            .disposed(by: disposeBag)
         
         stepThree.tapSignup.flatMapLatest(self.createUser).subscribe { event in
             print("viewmodel next")
