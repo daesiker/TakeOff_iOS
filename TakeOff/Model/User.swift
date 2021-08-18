@@ -29,6 +29,17 @@ struct User {
         self.following = []
     }
     
+    func toDic() -> [String: Any] {
+        let dic:[String: Any] = ["email": self.email,
+                                 "name": self.name,
+                                 "type": self.type,
+                                 "follower": self.follower,
+                                 "following": self.following,
+                                 "hashTag": self.hashTag,
+                                 "profileImage": self.profileImage]
+        
+        return dic
+    }
     
     
 }

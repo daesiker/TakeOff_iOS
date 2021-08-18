@@ -99,16 +99,15 @@ class SignUp3View: UIViewController {
         $0.font = UIFont.boldSystemFont(ofSize: 10)
     }
     
-    let signUpButton: UIButton = {
-        let bt = UIButton(type: .system)
-        bt.setTitle("Sign Up", for: .normal)
-        bt.backgroundColor = UIColor.enableMainColor
-        bt.layer.cornerRadius = 5.0
-        bt.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
-        bt.setTitleColor(.white, for: .normal)
-        bt.isEnabled = false
-        return bt
-    }()
+    let signUpButton = UIButton(type: .system).then {
+        $0.setTitle("Sign Up", for: .normal)
+        $0.backgroundColor = UIColor.enableMainColor
+        $0.layer.cornerRadius = 5.0
+        $0.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+        $0.setTitleColor(.white, for: .normal)
+        $0.isEnabled = true
+        
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -126,6 +125,9 @@ class SignUp3View: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
     
 }
 
@@ -161,7 +163,6 @@ extension SignUp3View: SignUpViewAttributes {
             $0.spacing = 15
             $0.distribution = .fillEqually
         }
-        
         
         fieldLayoutView.addSubview(fieldStack)
         fieldStack.snp.makeConstraints {
@@ -210,13 +211,13 @@ extension SignUp3View: SignUpViewAttributes {
     
     func bindInput() {
         
-        emailTextField.rx.text.orEmpty
+        emailTextField.rx.controlEvent([.editingDidEnd])
+            .map { self.emailTextField.text ?? "" }
             .bind(to: vm.stepThree.emailObserver)
             .disposed(by: disposeBag)
         
         nameTextField.rx.controlEvent([.editingDidEnd])
             .map { self.nameTextField.text ?? "" }
-            .distinctUntilChanged()
             .bind(to: vm.stepThree.nameObserver)
             .disposed(by: disposeBag)
         
@@ -234,16 +235,23 @@ extension SignUp3View: SignUpViewAttributes {
                 print("end")
             }).disposed(by: disposeBag)
         
+        signUpButton.rx.tap
+            .bind(to: vm.stepThree.tapSignup)
+            .disposed(by: disposeBag)
     }
     
     func bindOutput() {
         vm.stepThree.emailValid.subscribe(onNext: { valid in
-            if valid {
-                self.emailConfirmLabel.text = "올바른 형식의 이메일입니다."
-                self.emailConfirmLabel.textColor = UIColor.mainColor
-            } else {
+            switch valid {
+            case .notAvailable:
                 self.emailConfirmLabel.text = "올바르지 않은 형식입니다."
                 self.emailConfirmLabel.textColor = .red
+            case .alreadyExsist:
+                self.emailConfirmLabel.text = "이미 존재하는 아이디입니다."
+                self.emailConfirmLabel.textColor = .red
+            case .correct:
+                self.emailConfirmLabel.text = "사용가능한 아이디입니다."
+                self.emailConfirmLabel.textColor = UIColor.mainColor
             }
         })
         .disposed(by: disposeBag)
@@ -283,14 +291,25 @@ extension SignUp3View: SignUpViewAttributes {
         
         vm.stepThree.signupButtonValid.subscribe(onNext: { valid in
             if valid {
-                self.signUpButton.isEnabled = true
+                self.signUpButton.isEnabled = false
                 self.signUpButton.backgroundColor = UIColor.mainColor
             } else {
-                self.signUpButton.isEnabled = false
+                self.signUpButton.isEnabled = true
                 self.signUpButton.backgroundColor = UIColor.enableMainColor
             }
         })
         .disposed(by: disposeBag)
+        
+        vm.stepThree.firebaseSignUp.subscribe { result in
+            switch result {
+            case .completed:
+                print("completed")
+            case .error(let error):
+                print(error)
+            case .next(_):
+                print("next")
+            }
+        }.disposed(by: disposeBag)
         
     }
     
