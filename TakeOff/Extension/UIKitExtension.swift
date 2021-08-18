@@ -26,19 +26,32 @@ extension UIViewController {
                 let guide = self.view.safeAreaLayoutGuide
                 let view = UIView()
                 view.tag = Int(INT_MAX)
-                view.layer.zPosition = CGFloat(Float.greatestFiniteMagnitude)
-                
+//                view.layer.zPosition = CGFloat(Float.greatestFiniteMagnitude)
                 self.view.addSubview(view)
                 view.translatesAutoresizingMaskIntoConstraints = false
                 NSLayoutConstraint.activate([
                     view.topAnchor.constraint(equalTo: guide.topAnchor),
                     view.bottomAnchor.constraint(equalTo: guide.bottomAnchor),
-                    view.leftAnchor.constraint(equalTo: guide.leftAnchor),
-                    view.rightAnchor.constraint(equalTo: guide.rightAnchor)
+                    view.leftAnchor.constraint(equalTo: guide.leftAnchor, constant:20.0),
+                    view.rightAnchor.constraint(equalTo: guide.rightAnchor, constant:-20.0)
                 ])
                 return view
             }
             return safeView
         }
+    }
+}
+
+extension UIButton {
+    func setBackgroundColor(_ color: UIColor, for state: UIControl.State) {
+        UIGraphicsBeginImageContext(CGSize(width: 1.0, height: 1.0))
+        guard let context = UIGraphicsGetCurrentContext() else { return }
+        context.setFillColor(color.cgColor)
+        context.fill(CGRect(x: 0.0, y: 0.0, width: 1.0, height: 1.0))
+        
+        let backgroundImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+         
+        self.setBackgroundImage(backgroundImage, for: state)
     }
 }

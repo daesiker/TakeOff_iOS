@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0497F61426C3A23A002F1ACB /* Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0497F61326C3A23A002F1ACB /* Protocol.swift */; };
+		0497F61926C3A253002F1ACB /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0497F61826C3A253002F1ACB /* UserModel.swift */; };
+		0497F61E26C3A35A002F1ACB /* FirebaseDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0497F61D26C3A35A002F1ACB /* FirebaseDB.swift */; };
 		12976C7C5238AE8E49C94015 /* Pods_TakeOff.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B96FC7B284EF767A99B29A5 /* Pods_TakeOff.framework */; };
 		B98DA3D9814E88F33671E6B8 /* Pods_TakeOff_TakeOffUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 350243CD383F88E0778AB157 /* Pods_TakeOff_TakeOffUITests.framework */; };
 		BF4591A126B7B1F00031E119 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4591A026B7B1F00031E119 /* LoginViewModel.swift */; };
@@ -44,6 +47,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0497F61326C3A23A002F1ACB /* Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocol.swift; sourceTree = "<group>"; };
+		0497F61826C3A253002F1ACB /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
+		0497F61D26C3A35A002F1ACB /* FirebaseDB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseDB.swift; sourceTree = "<group>"; };
 		0F2AD5276708278D88180770 /* Pods-TakeOffTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TakeOffTests.debug.xcconfig"; path = "Target Support Files/Pods-TakeOffTests/Pods-TakeOffTests.debug.xcconfig"; sourceTree = "<group>"; };
 		3262C1A1886FC01C8B0B0EE0 /* Pods_TakeOffTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TakeOffTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		350243CD383F88E0778AB157 /* Pods_TakeOff_TakeOffUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TakeOff_TakeOffUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -188,6 +194,9 @@
 				BF606EF126A28771004091A5 /* LaunchScreen.storyboard */,
 				BF606F1926A287D5004091A5 /* GoogleService-Info.plist */,
 				BF606EF426A28771004091A5 /* Info.plist */,
+				0497F61326C3A23A002F1ACB /* Protocol.swift */,
+				0497F61826C3A253002F1ACB /* UserModel.swift */,
+				0497F61D26C3A35A002F1ACB /* FirebaseDB.swift */,
 			);
 			path = TakeOff;
 			sourceTree = "<group>";
@@ -453,9 +462,12 @@
 				BF606EE726A2876E004091A5 /* AppDelegate.swift in Sources */,
 				BF606EE926A2876E004091A5 /* SceneDelegate.swift in Sources */,
 				BF4591A426B7B25B0031E119 /* UIKitExtension.swift in Sources */,
+				0497F61E26C3A35A002F1ACB /* FirebaseDB.swift in Sources */,
 				BF4591A926B7B3420031E119 /* SignUpView.swift in Sources */,
+				0497F61426C3A23A002F1ACB /* Protocol.swift in Sources */,
 				BF4591A126B7B1F00031E119 /* LoginViewModel.swift in Sources */,
 				BF606F2F26A28F0F004091A5 /* LoginView.swift in Sources */,
+				0497F61926C3A253002F1ACB /* UserModel.swift in Sources */,
 				BF4591A626B7B2D60031E119 /* FoundationExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
