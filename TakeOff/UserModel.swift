@@ -11,16 +11,16 @@ import RxSwift
 import RxRelay
 import Firebase
 
-struct User : Codable {
-    var uid: String
-    var email: String
-    var name: String
-    var type: Bool
-    var profileImage: String
-    var hashTag:[String]
-    var follower:[String]
-    var following:[String]
-}
+//struct User : Codable {
+//    var uid: String
+//    var email: String
+//    var name: String
+//    var type: Bool
+//    var profileImage: String
+//    var hashTag:[String]
+//    var follower:[String]
+//    var following:[String]
+//}
 
 typealias re<T> = (info:T?, error:Error?)
 class UserModel {
@@ -55,8 +55,8 @@ class UserModel {
                         let dic = value as? [String:Any] ?? [:]
                         do {
                             let JsonData = try JSONSerialization.data(withJSONObject: dic, options: .prettyPrinted)
-                            let user = try JSONDecoder().decode(User.self, from: JsonData)
-                            print(user)
+                            //let user = try JSONDecoder().decode(User.self, from: JsonData)
+                            
                             return observer.onNext("success")
                         } catch  {
                             return observer.onError(error)

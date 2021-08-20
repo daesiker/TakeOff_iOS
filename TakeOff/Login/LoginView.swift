@@ -131,7 +131,7 @@ class LoginView: UIViewController {
         
     }
     private func goToSignUp() {
-        let viewController = SignUpView()
+        let viewController = SignUp1View()
         viewController.modalTransitionStyle = .crossDissolve
         viewController.modalPresentationStyle = .fullScreen
         //        self.navigationController?.pushViewController(viewController, animated: true)
@@ -162,9 +162,9 @@ class LoginView: UIViewController {
             .emit(onNext: goToMain)
             .disposed(by: disposeBag)
         
-//        self.vm.output.goSignUp //튜플식 변경시 guard 문으로 체킹 해줘야함
-//            .emit(onNext: goToSignUp)
-//            .disposed(by: disposeBag)
+        self.vm.output.goSignUp //튜플식 변경시 guard 문으로 체킹 해줘야함
+            .emit(onNext: goToSignUp)
+            .disposed(by: disposeBag)
 //            
         self.vm.output.error.debug("aa").emit { e in // 에러 signal로 받으면 따로 체킹 필요없음 
             print("error  \(e)")

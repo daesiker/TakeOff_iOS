@@ -35,10 +35,34 @@ class SignUpViewModel {
     }
     
     struct StepThree {
+        
+        struct Input {
+            let emailObserver = BehaviorRelay<String>(value: "")
+            let nameObserver = BehaviorRelay<String>(value: "")
+            let pwObserver = BehaviorRelay<String>(value: "")
+            let overlapPwObserver = BehaviorRelay<String>(value: "")
+            let signUpTap = PublishRelay<Void>()
+        }
+        
+        struct Output {
+            var emailValid:Driver<EmailValid>
+            let nameValid:Driver<Bool>
+            let pwValid:Driver<Bool>
+            let overlapPwValid:Driver<Bool>
+            let signupButtonValid:Driver<Bool>
+            let goSignUp:Signal<Void>
+            let error:Signal<Error>
+        }
+        
+        
+        //var output = Output()
+        let input = Input()
         let emailObserver = BehaviorRelay<String>(value: "")
         let nameObserver = BehaviorRelay<String>(value: "")
         let pwObserver = BehaviorRelay<String>(value: "")
         let overlapPwObserver = BehaviorRelay<String>(value: "")
+        
+        
         
         //데이터만 보내면 되니까 굳이 Subject를 쓸필요 없음 Observable
         //asDriver : 스케줄러 관리
@@ -82,25 +106,23 @@ class SignUpViewModel {
         }
         .bind(to: self.stepThree.emailValid)
         .disposed(by: disposeBag)
-        
+
         stepThree.pwObserver
             .map { $0.count > 5}
             .bind(to: self.stepThree.pwValid)
             .disposed(by: disposeBag)
-        
+
         stepThree.overlapPwObserver
             .map { $0 == self.stepThree.pwObserver.value }
             .bind(to: self.stepThree.overlapPwValid)
             .disposed(by: disposeBag)
-        
+
         stepThree.nameObserver.flatMapLatest { name in
             self.firebaseNameCheck(name)
         }
         .bind(to: self.stepThree.nameValid)
         .disposed(by: disposeBag)
-        
-        
-        
+
         stepThree.signupButtonValid = Observable.combineLatest(stepThree.emailValid, stepThree.nameValid, stepThree.pwValid, stepThree.overlapPwValid)
             .map { $0.0 == .correct && $0.1 && $0.2 && $0.3 }
             
@@ -117,6 +139,31 @@ class SignUpViewModel {
         } onDisposed: {
             print("viewmodel disposed")
         }.disposed(by: disposeBag)
+        
+        
+        let emailEnable = stepThree.input.emailObserver
+            .flatMap(self.firebaseEmailCheck)
+            .asDriver(onErrorJustReturn: .notAvailable)
+        let nameEnable = stepThree.input.nameObserver
+            .flatMap(self.firebaseNameCheck)
+            .asDriver(onErrorJustReturn: false)
+        let pwEnable = stepThree.input.pwObserver
+            .map { $0.count > 5 }
+            .asDriver(onErrorJustReturn: false)
+        let overlapPwEnable = stepThree.input.overlapPwObserver
+            .map { $0 == self.stepThree.input.pwObserver.value }
+            .asDriver(onErrorJustReturn: false)
+        
+        let signUpEnable = Driver.combineLatest(emailEnable, nameEnable, pwEnable, overlapPwEnable)
+            .map {$0.0 == .correct && $0.1 && $0.2 && $0.3 }
+            .asDriver(onErrorJustReturn: false)
+        let signupRelay = PublishRelay<Void>()
+        let errorRelay = PublishRelay<Error>()
+        
+        let output = StepThree.Output.init(emailValid: emailEnable, nameValid: nameEnable, pwValid: pwEnable, overlapPwValid: overlapPwEnable, signupButtonValid: signUpEnable, goSignUp: signupRelay.asSignal(), error: errorRelay.asSignal())
+        
+        
+        
         
     }
     
@@ -148,6 +195,32 @@ class SignUpViewModel {
             return Disposables.create()
         }
     }
+    
+    
+    func emailCheck(_ text: String) -> EmailValid {
+        if !(!text.isEmpty && text.contains(".") && text.contains("@")) {
+            return .notAvailable
+        } else {
+            var returnValue = EmailValid.correct
+            let ref = Database.database().reference().child("users")
+            ref.observeSingleEvent(of: .value) { snapshot in
+                guard let dictionaries = snapshot.value as? [String: Any] else {  return  } //Error 처리
+                
+                dictionaries.forEach { (key, value) in
+                    guard let userDictionary = value as? [String:Any] else { return  }
+                    guard let email = userDictionary["email"] as? String else {return  }
+                    
+                    if email == text {
+                        returnValue = .alreadyExsist
+                        
+                    }
+                }
+            }
+            
+            return returnValue
+        }
+    }
+    
     
     func firebaseNameCheck(_ text: String) -> Observable<Bool> {
         return Observable.create { valid in
