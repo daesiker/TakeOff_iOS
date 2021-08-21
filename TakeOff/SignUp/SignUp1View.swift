@@ -12,45 +12,34 @@ class SignUp1View: UIViewController {
     var vm = SignUpViewModel()
     var disposebag = DisposeBag()
     
+    let backgroundView = UIImageView(image: UIImage(named: "background"))
+    
+    let chooseLabel = UILabel().then {
+        $0.text = "가입 유형을 선택해주세요"
+        $0.textColor = UIColor.mainColor
+        $0.font = UIFont.boldSystemFont(ofSize: 14)
+    }
+    
+    let artistButton = UIButton(type: .system).then {
+        $0.setImage(UIImage(named: "profile_image"), for: .normal)
+        $0.setTitle("Artist", for: .normal)
+        $0.imageView?.contentMode = .scaleAspectFit
+        $0.titleLabel?.font = .boldSystemFont(ofSize: 12)
+        $0.contentHorizontalAlignment = .center
+        $0.semanticContentAttribute = .forceLeftToRight
+        $0.imageEdgeInsets = .init(top: 0, left: 15, bottom: 0, right: 15)
+    }
     
     
-    let backgroundView: UIView = {
-        let view = UIImageView(image: UIImage(named: "background"))
-        return view
-    }()
-    
-    let chooseLabel: UILabel = {
-       let lb = UILabel()
-        lb.text = "가입 유형을 선택해주세요"
-        lb.textColor = UIColor.mainColor
-        lb.font = UIFont.boldSystemFont(ofSize: 14)
-        return lb
-    }()
-    
-    let artistButton: UIButton = {
-        let bt = UIButton(type: .system)
-        bt.setImage(UIImage(named: "profile_image"), for: .normal)
-        bt.setTitle("Artist", for: .normal)
-        bt.imageView?.contentMode = .scaleAspectFit
-        bt.titleLabel?.font = .boldSystemFont(ofSize: 12)
-        bt.contentHorizontalAlignment = .center
-        bt.semanticContentAttribute = .forceLeftToRight
-        bt.imageEdgeInsets = .init(top: 0, left: 15, bottom: 0, right: 15)
-        return bt
-    }()
-    
-    
-    let peopleButton: UIButton = {
-        let bt = UIButton(type: .system)
-        bt.setImage(UIImage(named: "profile_image"), for: .normal)
-        bt.setTitle("People", for: .normal)
-        bt.imageView?.contentMode = .scaleAspectFit
-        bt.titleLabel?.font = .boldSystemFont(ofSize: 12)
-        bt.contentHorizontalAlignment = .center
-        bt.semanticContentAttribute = .forceLeftToRight
-        bt.imageEdgeInsets = .init(top: 0, left: 15, bottom: 0, right: 15)
-        return bt
-    }()
+    let peopleButton =  UIButton(type: .system).then {
+        $0.setImage(UIImage(named: "profile_image"), for: .normal)
+        $0.setTitle("People", for: .normal)
+        $0.imageView?.contentMode = .scaleAspectFit
+        $0.titleLabel?.font = .boldSystemFont(ofSize: 12)
+        $0.contentHorizontalAlignment = .center
+        $0.semanticContentAttribute = .forceLeftToRight
+        $0.imageEdgeInsets = .init(top: 0, left: 15, bottom: 0, right: 15)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
