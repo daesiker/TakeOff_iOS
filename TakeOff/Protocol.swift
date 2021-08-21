@@ -2,7 +2,7 @@
 //  Protocol.swift
 //  TakeOff
 //
-//  Created by mac on 2021/08/04.
+//  Created by Jun on 2021/08/21.
 //
 
 import Foundation
@@ -17,6 +17,5 @@ protocol ViewModelType {
     
     var input: Input { get }
     var output: Output { get }
-    
 
 }

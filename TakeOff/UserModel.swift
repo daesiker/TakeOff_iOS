@@ -11,17 +11,6 @@ import RxSwift
 import RxRelay
 import Firebase
 
-//struct User : Codable {
-//    var uid: String
-//    var email: String
-//    var name: String
-//    var type: Bool
-//    var profileImage: String
-//    var hashTag:[String]
-//    var follower:[String]
-//    var following:[String]
-//}
-
 typealias re<T> = (info:T?, error:Error?)
 class UserModel {
  
@@ -45,6 +34,7 @@ class UserModel {
             return Disposables.create()
         }
     }
+    
     
     private func saveUser(uid:String) -> Observable<String> {
         return Observable<String>.create { observer in

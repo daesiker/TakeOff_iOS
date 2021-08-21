@@ -101,7 +101,8 @@ class SignUp3View: UIViewController {
     
     let signUpButton = UIButton(type: .system).then {
         $0.setTitle("Sign Up", for: .normal)
-        $0.backgroundColor = $0.isEnabled ? UIColor.mainColor : UIColor.enableMainColor
+        $0.setBackgroundColor(UIColor.enableMainColor, for: .disabled)
+        $0.setBackgroundColor(UIColor.mainColor, for: .normal)
         $0.layer.cornerRadius = 5.0
         $0.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
         $0.setTitleColor(.white, for: .normal)
@@ -127,6 +128,14 @@ class SignUp3View: UIViewController {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
+    }
+    
+    private func goToLoginView() {
+        let viewController = LoginView()
+        viewController.modalTransitionStyle = .crossDissolve
+        viewController.modalPresentationStyle = .fullScreen
+        //        self.navigationController?.pushViewController(viewController, animated: true)
+        self.present(viewController, animated: true)
     }
     
 }
@@ -213,35 +222,30 @@ extension SignUp3View: SignUpViewAttributes {
         
         emailTextField.rx.controlEvent([.editingDidEnd])
             .map { self.emailTextField.text ?? "" }
-            .bind(to: vm.stepThree.emailObserver)
+            .bind(to: vm.stepThree.input.emailObserver)
             .disposed(by: disposeBag)
         
         nameTextField.rx.controlEvent([.editingDidEnd])
             .map { self.nameTextField.text ?? "" }
-            .bind(to: vm.stepThree.nameObserver)
+            .bind(to: vm.stepThree.input.nameObserver)
             .disposed(by: disposeBag)
         
         pwTextField.rx.text.orEmpty
-            .bind(to: vm.stepThree.pwObserver)
+            .bind(to: vm.stepThree.input.pwObserver)
             .disposed(by: disposeBag)
         
         overlapPwTextField.rx.text.orEmpty
-            .bind(to: vm.stepThree.overlapPwObserver)
+            .bind(to: vm.stepThree.input.overlapPwObserver)
             .disposed(by: disposeBag)
         
-        emailTextField.rx.controlEvent([.editingDidEnd])
-            .asObservable()
-            .subscribe(onNext: {
-                print("end")
-            }).disposed(by: disposeBag)
-        
         signUpButton.rx.tap
-            .bind(to: vm.stepThree.tapSignup)
+            .bind(to: vm.stepThree.input.signUpTap)
             .disposed(by: disposeBag)
     }
     
     func bindOutput() {
-        vm.stepThree.emailValid.subscribe(onNext: { valid in
+        
+        vm.stepThree.output.emailValid.drive(onNext : {valid in
             switch valid {
             case .notAvailable:
                 self.emailConfirmLabel.text = "올바르지 않은 형식입니다."
@@ -253,10 +257,9 @@ extension SignUp3View: SignUpViewAttributes {
                 self.emailConfirmLabel.text = "사용가능한 아이디입니다."
                 self.emailConfirmLabel.textColor = UIColor.mainColor
             }
-        })
-        .disposed(by: disposeBag)
+        }).disposed(by: disposeBag)
         
-        vm.stepThree.nameValid.subscribe(onNext: { valid in
+        vm.stepThree.output.nameValid.drive(onNext: {valid in
             if valid {
                 self.nameConfirmLabel.text = "이미 존재하는 아이디입니다."
                 self.nameConfirmLabel.textColor = .red
@@ -264,10 +267,9 @@ extension SignUp3View: SignUpViewAttributes {
                 self.nameConfirmLabel.text = "사용가능한 아이디입니다."
                 self.nameConfirmLabel.textColor = UIColor.mainColor
             }
-        })
-        .disposed(by: disposeBag)
+        }).disposed(by: disposeBag)
         
-        vm.stepThree.pwValid.subscribe(onNext: {valid in
+        vm.stepThree.output.pwValid.drive(onNext: {valid in
             if valid {
                 self.pwConfirmLabel.text = "올바른 형식의 비밀번호입니다."
                 self.pwConfirmLabel.textColor = UIColor.mainColor
@@ -275,10 +277,9 @@ extension SignUp3View: SignUpViewAttributes {
                 self.pwConfirmLabel.text = "비밀번호는 6자리이상이어야 합니다."
                 self.pwConfirmLabel.textColor = .red
             }
-        })
-        .disposed(by: disposeBag)
+        }).disposed(by: disposeBag)
         
-        vm.stepThree.overlapPwValid.subscribe(onNext: { valid in
+        vm.stepThree.output.overlapPwValid.drive(onNext: {valid in
             if valid {
                 self.overlapPwConfirmLabel.text = "비밀번호가 일치합니다."
                 self.overlapPwConfirmLabel.textColor = UIColor.mainColor
@@ -286,35 +287,26 @@ extension SignUp3View: SignUpViewAttributes {
                 self.overlapPwConfirmLabel.text = "비밀번호가 일치하지 않습니다."
                 self.overlapPwConfirmLabel.textColor = .red
             }
-        })
-        .disposed(by: disposeBag)
+        }).disposed(by: disposeBag)
         
-        vm.stepThree.signupButtonValid.bind(to: self.signUpButton.rx.isEnabled)
-            .disposed(by: disposeBag)
-        //(onNext: { valid in
-//
-//
-//
-////            if valid {
-////                //self.signUpButton.rx.isEnabled = false
-////                self.signUpButton.backgroundColor = UIColor.mainColor
-////            } else {
-////                self.signUpButton.isEnabled = true
-////                self.signUpButton.backgroundColor = UIColor.enableMainColor
-////            }
-//        })
-//        .disposed(by: disposeBag)
-        
-        vm.stepThree.firebaseSignUp.subscribe { result in
-            switch result {
-            case .completed:
-                print("completed")
-            case .error(let error):
-                print(error)
-            case .next(_):
-                print("next")
+        vm.stepThree.output.signupButtonValid.drive(onNext: { valid in
+            if valid {
+                self.signUpButton.isEnabled = false
+            } else {
+                self.signUpButton.isEnabled = true
             }
-        }.disposed(by: disposeBag)
+        }).disposed(by: disposeBag)
+        
+        
+        vm.stepThree.output.goSignUp
+            .emit(onNext: goToLoginView)
+            .disposed(by: disposeBag)
+        
+        vm.stepThree.output.error.debug("ee")
+            .emit { e in
+                print("error :", e)
+            }
+            .disposed(by: disposeBag)
         
     }
     

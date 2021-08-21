@@ -46,7 +46,6 @@ class SignUp1View: UIViewController {
         setUI()
         bind()
     }
-    
 
 }
 

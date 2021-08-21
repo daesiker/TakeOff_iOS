@@ -91,21 +91,7 @@ class LoginViewModel : ViewModelType {
         //            .disposed(by: self.disposeBag)
         
         input.signUpTap.bind(to: signUpRelay).disposed(by: self.disposeBag)
-        
-        return Observable.create({ (observer) -> Disposable in
-            print("Firebase Login Function")
-            observer.onNext(User())
-            return Disposables.create()
-        })
-        
-    }
     
-    var isValid:Observable<Bool> {
-        return Observable.combineLatest(emailObserver, passwordObserver)
-            .map { email, password in
-                return !email.isEmpty && email.contains(".") && email.contains("@") && password.count > 3
-            }
     }
-    
 }
 

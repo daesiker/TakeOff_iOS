@@ -45,34 +45,16 @@ class SignUpViewModel {
         }
         
         struct Output {
-            var emailValid:Driver<EmailValid>
-            let nameValid:Driver<Bool>
-            let pwValid:Driver<Bool>
-            let overlapPwValid:Driver<Bool>
-            let signupButtonValid:Driver<Bool>
-            let goSignUp:Signal<Void>
-            let error:Signal<Error>
+            var emailValid:Driver<EmailValid> = PublishRelay<EmailValid>().asDriver(onErrorJustReturn: .notAvailable)
+            var nameValid:Driver<Bool> = PublishRelay<Bool>().asDriver(onErrorJustReturn: false)
+            var pwValid:Driver<Bool> = PublishRelay<Bool>().asDriver(onErrorJustReturn: false)
+            var overlapPwValid:Driver<Bool> = PublishRelay<Bool>().asDriver(onErrorJustReturn: false)
+            var signupButtonValid:Driver<Bool> = PublishRelay<Bool>().asDriver(onErrorJustReturn: false)
+            var goSignUp:Signal<Void> = PublishRelay<Void>().asSignal()
+            var error:Signal<Error> = PublishRelay<Error>().asSignal()
         }
-        
-        
-        //var output = Output()
         let input = Input()
-        let emailObserver = BehaviorRelay<String>(value: "")
-        let nameObserver = BehaviorRelay<String>(value: "")
-        let pwObserver = BehaviorRelay<String>(value: "")
-        let overlapPwObserver = BehaviorRelay<String>(value: "")
-        
-        
-        
-        //데이터만 보내면 되니까 굳이 Subject를 쓸필요 없음 Observable
-        //asDriver : 스케줄러 관리
-        //Driver랑 Signal사용
-        let emailValid = BehaviorSubject<EmailValid>(value: .notAvailable)
-        let nameValid = BehaviorSubject<Bool>(value: false)
-        let pwValid = BehaviorSubject<Bool>(value: false)
-        let overlapPwValid = BehaviorSubject<Bool>(value: false)
-        var signupButtonValid:Observable<Bool> = Observable.of(false)
-        
+        var output = Output()
         
         let tapSignup = PublishSubject<Void>()
         let firebaseSignUp = PublishRelay<Void>()
@@ -101,35 +83,6 @@ class SignUpViewModel {
         stepTwo.buttonClick.subscribe().disposed(by: disposeBag)
         
         //MARK: Step3
-        stepThree.emailObserver.flatMapLatest{ text in
-            self.firebaseEmailCheck(text)
-        }
-        .bind(to: self.stepThree.emailValid)
-        .disposed(by: disposeBag)
-
-        stepThree.pwObserver
-            .map { $0.count > 5}
-            .bind(to: self.stepThree.pwValid)
-            .disposed(by: disposeBag)
-
-        stepThree.overlapPwObserver
-            .map { $0 == self.stepThree.pwObserver.value }
-            .bind(to: self.stepThree.overlapPwValid)
-            .disposed(by: disposeBag)
-
-        stepThree.nameObserver.flatMapLatest { name in
-            self.firebaseNameCheck(name)
-        }
-        .bind(to: self.stepThree.nameValid)
-        .disposed(by: disposeBag)
-
-        stepThree.signupButtonValid = Observable.combineLatest(stepThree.emailValid, stepThree.nameValid, stepThree.pwValid, stepThree.overlapPwValid)
-            .map { $0.0 == .correct && $0.1 && $0.2 && $0.3 }
-            
-            
-//            .bind(to: self.stepThree.signupButtonValid)
-//            .disposed(by: disposeBag)
-        
         stepThree.tapSignup.flatMapLatest(self.createUser).subscribe { event in
             print("viewmodel next")
         } onError: { e in
@@ -140,31 +93,38 @@ class SignUpViewModel {
             print("viewmodel disposed")
         }.disposed(by: disposeBag)
         
-        
-        let emailEnable = stepThree.input.emailObserver
+        stepThree.output.emailValid = stepThree.input.emailObserver
             .flatMap(self.firebaseEmailCheck)
             .asDriver(onErrorJustReturn: .notAvailable)
-        let nameEnable = stepThree.input.nameObserver
+        stepThree.output.nameValid = stepThree.input.nameObserver
             .flatMap(self.firebaseNameCheck)
             .asDriver(onErrorJustReturn: false)
-        let pwEnable = stepThree.input.pwObserver
+        stepThree.output.pwValid = stepThree.input.pwObserver
             .map { $0.count > 5 }
             .asDriver(onErrorJustReturn: false)
-        let overlapPwEnable = stepThree.input.overlapPwObserver
+        stepThree.output.overlapPwValid = stepThree.input.overlapPwObserver
             .map { $0 == self.stepThree.input.pwObserver.value }
             .asDriver(onErrorJustReturn: false)
-        
-        let signUpEnable = Driver.combineLatest(emailEnable, nameEnable, pwEnable, overlapPwEnable)
+        stepThree.output.signupButtonValid = Driver.combineLatest(stepThree.output.emailValid, stepThree.output.nameValid, stepThree.output.pwValid, stepThree.output.overlapPwValid)
             .map {$0.0 == .correct && $0.1 && $0.2 && $0.3 }
             .asDriver(onErrorJustReturn: false)
-        let signupRelay = PublishRelay<Void>()
+        
         let errorRelay = PublishRelay<Error>()
+        let signUpRelay = PublishRelay<Void>()
+        stepThree.input.signUpTap.flatMapLatest(self.createUser).subscribe { event in
+            switch event {
+            case .completed:
+                print("completed")
+            case .next(_):
+                print("next")
+            case .error(let error):
+                errorRelay.accept(error)
+            }
+        }.disposed(by: disposeBag)
         
-        let output = StepThree.Output.init(emailValid: emailEnable, nameValid: nameEnable, pwValid: pwEnable, overlapPwValid: overlapPwEnable, signupButtonValid: signUpEnable, goSignUp: signupRelay.asSignal(), error: errorRelay.asSignal())
-        
-        
-        
-        
+        stepThree.input.signUpTap.bind(to: signUpRelay).disposed(by: disposeBag)
+        stepThree.output.goSignUp = signUpRelay.asSignal()
+        stepThree.output.error = errorRelay.asSignal()
     }
     
     func firebaseEmailCheck(_ text: String) -> Observable<EmailValid> {
@@ -251,11 +211,11 @@ class SignUpViewModel {
     
     func createUser() -> Observable<Void> {
         
-        user.email = stepThree.emailObserver.value
-        user.name = stepThree.nameObserver.value
+        user.email = stepThree.input.emailObserver.value
+        user.name = stepThree.input.nameObserver.value
         
         return Observable.create { result in
-            Auth.auth().createUser(withEmail: self.stepThree.emailObserver.value, password: self.stepThree.pwObserver.value) { (user, error: Error?) in
+            Auth.auth().createUser(withEmail: self.stepThree.input.emailObserver.value, password: self.stepThree.input.pwObserver.value) { (user, error: Error?) in
                 if let err = error {
                     //Alert
                     print("Failed to create user: ", err)

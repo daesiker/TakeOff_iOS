@@ -2,7 +2,7 @@
 //  FirebaseDB.swift
 //  TakeOff
 //
-//  Created by mac on 2021/08/08.
+//  Created by Jun on 2021/08/21.
 //
 
 import Foundation
@@ -13,7 +13,7 @@ import RxSwift
 
 class FirebaseDB {
     static let instance = FirebaseDB()
-    private init () {} 
+    private init () {}
     
     private let ref = Database.database().reference()
     private let disposeBag = DisposeBag()
@@ -26,7 +26,7 @@ class FirebaseDB {
                 }
                 else if let error = error {
                     observer.onError(error)
-                } 
+                }
                 else {
                     let error = NSError(domain: "", code: 3232, userInfo: [NSLocalizedDescriptionKey:"unkown error"])
                     observer.onError(error)
