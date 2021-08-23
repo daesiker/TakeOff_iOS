@@ -10,6 +10,7 @@
 		0497F61926C3A253002F1ACB /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0497F61826C3A253002F1ACB /* UserModel.swift */; };
 		12976C7C5238AE8E49C94015 /* Pods_TakeOff.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B96FC7B284EF767A99B29A5 /* Pods_TakeOff.framework */; };
 		B98DA3D9814E88F33671E6B8 /* Pods_TakeOff_TakeOffUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 350243CD383F88E0778AB157 /* Pods_TakeOff_TakeOffUITests.framework */; };
+		BF270DEB26D3309400C0E6BE /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF270DEA26D3309400C0E6BE /* MainTabView.swift */; };
 		BF4591A126B7B1F00031E119 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4591A026B7B1F00031E119 /* LoginViewModel.swift */; };
 		BF4591A426B7B25B0031E119 /* UIKitExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4591A326B7B25B0031E119 /* UIKitExtension.swift */; };
 		BF4591A626B7B2D60031E119 /* FoundationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4591A526B7B2D60031E119 /* FoundationExtension.swift */; };
@@ -27,6 +28,7 @@
 		BF606F1A26A287D5004091A5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BF606F1926A287D5004091A5 /* GoogleService-Info.plist */; };
 		BF606F2F26A28F0F004091A5 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF606F2E26A28F0F004091A5 /* LoginView.swift */; };
 		BF6854D226B83352000A6EE1 /* SignUp2View.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6854D126B83352000A6EE1 /* SignUp2View.swift */; };
+		BF71170F26D39966006ED7AF /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF71170E26D39966006ED7AF /* HomeViewController.swift */; };
 		BF972DFB26C0F9AC000A1EDA /* SignUp3VIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF972DFA26C0F9AC000A1EDA /* SignUp3VIew.swift */; };
 		BFDD2A8D26D0DFBE0056409C /* FirebaseDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDD2A8C26D0DFBE0056409C /* FirebaseDB.swift */; };
 		BFDD2A9226D0DFF20056409C /* Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDD2A9126D0DFF20056409C /* Protocol.swift */; };
@@ -58,6 +60,7 @@
 		4B96FC7B284EF767A99B29A5 /* Pods_TakeOff.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TakeOff.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		904F2C6911FEEF43C782E968 /* Pods-TakeOff.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TakeOff.debug.xcconfig"; path = "Target Support Files/Pods-TakeOff/Pods-TakeOff.debug.xcconfig"; sourceTree = "<group>"; };
 		9D3799695D1A6873AD9AD76F /* Pods-TakeOff-TakeOffUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TakeOff-TakeOffUITests.release.xcconfig"; path = "Target Support Files/Pods-TakeOff-TakeOffUITests/Pods-TakeOff-TakeOffUITests.release.xcconfig"; sourceTree = "<group>"; };
+		BF270DEA26D3309400C0E6BE /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
 		BF4591A026B7B1F00031E119 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		BF4591A326B7B25B0031E119 /* UIKitExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitExtension.swift; sourceTree = "<group>"; };
 		BF4591A526B7B2D60031E119 /* FoundationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoundationExtension.swift; sourceTree = "<group>"; };
@@ -81,6 +84,7 @@
 		BF606F1926A287D5004091A5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		BF606F2E26A28F0F004091A5 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		BF6854D126B83352000A6EE1 /* SignUp2View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUp2View.swift; sourceTree = "<group>"; };
+		BF71170E26D39966006ED7AF /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		BF972DFA26C0F9AC000A1EDA /* SignUp3VIew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUp3VIew.swift; sourceTree = "<group>"; };
 		BFDD2A8C26D0DFBE0056409C /* FirebaseDB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseDB.swift; sourceTree = "<group>"; };
 		BFDD2A9126D0DFF20056409C /* Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocol.swift; sourceTree = "<group>"; };
@@ -138,6 +142,15 @@
 				C41870B3E414FF79D7F3BDEE /* Pods-TakeOffTests.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		BF270DE926D3303E00C0E6BE /* MainView */ = {
+			isa = PBXGroup;
+			children = (
+				BF71170D26D39957006ED7AF /* Home */,
+				BF270DEA26D3309400C0E6BE /* MainTabView.swift */,
+			);
+			path = MainView;
 			sourceTree = "<group>";
 		};
 		BF45919F26B7B1E30031E119 /* Login */ = {
@@ -202,6 +215,7 @@
 		BF606EE526A2876E004091A5 /* TakeOff */ = {
 			isa = PBXGroup;
 			children = (
+				BF270DE926D3303E00C0E6BE /* MainView */,
 				BF4591AF26B7E8CB0031E119 /* Model */,
 				BF4591A726B7B3370031E119 /* SignUp */,
 				BF4591A226B7B24D0031E119 /* Extension */,
@@ -237,6 +251,14 @@
 				BF606F0A26A28772004091A5 /* Info.plist */,
 			);
 			path = TakeOffUITests;
+			sourceTree = "<group>";
+		};
+		BF71170D26D39957006ED7AF /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				BF71170E26D39966006ED7AF /* HomeViewController.swift */,
+			);
+			path = Home;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -481,6 +503,8 @@
 				BF606EEB26A2876E004091A5 /* ViewController.swift in Sources */,
 				BF972DFB26C0F9AC000A1EDA /* SignUp3VIew.swift in Sources */,
 				BF606EE726A2876E004091A5 /* AppDelegate.swift in Sources */,
+				BF71170F26D39966006ED7AF /* HomeViewController.swift in Sources */,
+				BF270DEB26D3309400C0E6BE /* MainTabView.swift in Sources */,
 				BF4591B326B7E92B0031E119 /* SignUpViewModel.swift in Sources */,
 				BF606EE926A2876E004091A5 /* SceneDelegate.swift in Sources */,
 				BF4591A426B7B25B0031E119 /* UIKitExtension.swift in Sources */,

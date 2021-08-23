@@ -27,6 +27,7 @@ class LoginView: UIViewController {
     let contentLayout = UIView()
     
     
+    
     // Image View
     let backgroundView = UIImageView(image: UIImage(named: "background"))
     let logoImageView = UIImageView(image: UIImage(named: "logo"))
@@ -82,12 +83,16 @@ class LoginView: UIViewController {
         bind()
         // Do any additional setup after loading the view.
     }
+    
+    
+    
     override func viewDidAppear(_ animated: Bool) {
         self.vm.output.autoLogin.emit { _ in
 //                        self.goToSignUp()
 //            print("autologin")
         }.disposed(by: disposeBag)
         
+        navigationController?.isNavigationBarHidden = true
         
         self.handle = Auth.auth().addStateDidChangeListener { auth, user in
             if let user = user {
@@ -135,7 +140,7 @@ class LoginView: UIViewController {
         viewController.modalTransitionStyle = .crossDissolve
         viewController.modalPresentationStyle = .fullScreen
         //        self.navigationController?.pushViewController(viewController, animated: true)
-        self.present(viewController, animated: true)    
+        navigationController?.pushViewController(viewController, animated: true)
     }
     // MARK:- bind
     private func bind() {
@@ -173,7 +178,7 @@ class LoginView: UIViewController {
     // MARK:- Set UI
     private func setUI() {
         self.setLayout()
-        
+        navigationController?.isNavigationBarHidden = true
         // Set Logo
         logoLayout.addSubview(logoImageView)          
         logoImageView.snp.makeConstraints {

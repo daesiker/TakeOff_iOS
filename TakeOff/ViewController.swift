@@ -28,7 +28,9 @@ class ViewController: UIViewController {
         view.addSubview(logoImageView)
         // Do any additional setup after loading the view.
     }
-
+    
+    
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         logoImageView.center = view.center
@@ -52,10 +54,12 @@ class ViewController: UIViewController {
         }, completion: { done in
             if done {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    
                     let viewController = LoginView()
-                    viewController.modalTransitionStyle = .crossDissolve
-                    viewController.modalPresentationStyle = .fullScreen
-                    self.present(viewController, animated: true)
+                    let navController = UINavigationController(rootViewController: viewController)
+                    navController.modalTransitionStyle = .crossDissolve
+                    navController.modalPresentationStyle = .fullScreen
+                    self.present(navController, animated: true)
                 }
             }
         })

@@ -27,6 +27,7 @@ class SignUpViewModel {
     
     struct StepOne {
         let tap = PublishRelay<Bool>()
+        let dismiss = PublishRelay<Void>()
     }
     
     struct StepTwo {
@@ -67,6 +68,8 @@ class SignUpViewModel {
             self.user.type = type
         })
         .disposed(by: disposeBag)
+        
+        stepOne.dismiss.subscribe().disposed(by: disposeBag)
         
         //MARK: Step 2
         stepTwo.radioClick.subscribe(onNext: { type in
@@ -244,6 +247,7 @@ class SignUpViewModel {
             return Disposables.create()
         }
     }
+    
     
     
 }

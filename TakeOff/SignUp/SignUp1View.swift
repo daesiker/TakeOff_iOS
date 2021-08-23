@@ -14,6 +14,13 @@ class SignUp1View: UIViewController {
     
     let backgroundView = UIImageView(image: UIImage(named: "background"))
     
+    let dismissButton = UIBarButtonItem().then {
+        $0.image = UIImage(named: "close")
+        $0.style = .plain
+        $0.target = $0.self
+        $0.tintColor = .black
+    }
+    
     let chooseLabel = UILabel().then {
         $0.text = "가입 유형을 선택해주세요"
         $0.textColor = UIColor.mainColor
@@ -52,6 +59,8 @@ class SignUp1View: UIViewController {
 extension SignUp1View: SignUpViewAttributes {
     
     func setUI() {
+        navigationController?.isNavigationBarHidden = false
+        navigationItem.leftBarButtonItem = dismissButton
         view.addSubview(backgroundView)
         backgroundView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
@@ -93,6 +102,13 @@ extension SignUp1View: SignUpViewAttributes {
             self.present(vc, animated: true)
         }
         .disposed(by: disposebag)
+        
+        dismissButton.rx.tap.bind(to: vm.stepOne.dismiss)
+            .disposed(by: disposebag)
+        
+        vm.stepOne.dismiss.bind { _ in
+            self.navigationController?.popViewController(animated: true)
+        }.disposed(by: disposebag)
     }
     
 }
