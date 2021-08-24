@@ -131,11 +131,7 @@ class SignUp3View: UIViewController {
     }
     
     private func goToLoginView() {
-        let viewController = LoginView()
-        viewController.modalTransitionStyle = .crossDissolve
-        viewController.modalPresentationStyle = .fullScreen
-        //        self.navigationController?.pushViewController(viewController, animated: true)
-        self.present(viewController, animated: true)
+        self.navigationController?.popToRootViewController(animated: true)
     }
     
 }

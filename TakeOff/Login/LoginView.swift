@@ -93,7 +93,6 @@ class LoginView: UIViewController {
         }.disposed(by: disposeBag)
         
         navigationController?.isNavigationBarHidden = true
-        
         self.handle = Auth.auth().addStateDidChangeListener { auth, user in
             if let user = user {
 //                self.vm.input.autoLoginTap.accept(())
@@ -178,7 +177,6 @@ class LoginView: UIViewController {
     // MARK:- Set UI
     private func setUI() {
         self.setLayout()
-        navigationController?.isNavigationBarHidden = true
         // Set Logo
         logoLayout.addSubview(logoImageView)          
         logoImageView.snp.makeConstraints {

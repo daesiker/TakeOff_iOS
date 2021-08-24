@@ -87,12 +87,18 @@ class SignUp2View: UIViewController {
         $0.setTitleColor(UIColor.mainColor, for: .normal)
     }
     
-    let confirmButton = UIButton().then {
-        $0.setTitle("확인", for: .normal)
-        $0.backgroundColor = UIColor.enableMainColor
-        $0.layer.cornerRadius = 5.0
-        $0.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
-        $0.setTitleColor(.white, for: .normal)
+    let confirmButton = UIBarButtonItem().then {
+        $0.title = "다음"
+        $0.style = .plain
+        $0.target = $0.self
+        $0.tintColor = .black
+    }
+    
+    let dismissButton = UIBarButtonItem().then {
+        $0.title = "취소"
+        $0.style = .plain
+        $0.target = $0.self
+        $0.tintColor = .black
     }
     
     
@@ -118,6 +124,8 @@ class SignUp2View: UIViewController {
 extension SignUp2View: SignUpViewAttributes {
     
     func setUI() {
+        navigationItem.backBarButtonItem = dismissButton
+        navigationItem.rightBarButtonItem = confirmButton
         view.addSubview(backgroundView)
         backgroundView.snp.makeConstraints {
             $0.edges.equalToSuperview()
@@ -192,11 +200,7 @@ extension SignUp2View: SignUpViewAttributes {
             $0.height.equalTo(stackLayout.snp.height).multipliedBy(0.8)
         }
         
-        stackLayout.addSubview(confirmButton)
-        confirmButton.snp.makeConstraints {
-            $0.top.equalTo(mainStackView.snp.bottom).offset(5)
-            
-        }
+        
         
     }
     
@@ -217,23 +221,27 @@ extension SignUp2View: SignUpViewAttributes {
         .disposed(by: disposeBag)
         
         confirmButton.rx.tap
-            .bind(to: vm.stepTwo.buttonClick)
+            .bind(to: vm.stepTwo.confirmClick)
             .disposed(by: disposeBag)
         
-        vm.stepTwo.buttonClick.bind { _ in
-            self.changeScreen()
+        vm.stepTwo.confirmClick.bind { _ in
+            let vc = SignUp3View(vm: self.vm)
+            vc.modalTransitionStyle = .crossDissolve
+            vc.modalPresentationStyle = .fullScreen
+            self.navigationController?.pushViewController(vc, animated: true)
         }
         .disposed(by: disposeBag)
         
+        dismissButton.rx.tap
+            .bind(to: vm.stepTwo.dismissClick)
+            .disposed(by: disposeBag)
+        
+        vm.stepTwo.dismissClick.bind{ _ in
+            self.navigationController?.popViewController(animated: true)
+        }.disposed(by: disposeBag)
         
         
     }
     
-    private func changeScreen() {
-        let vc = SignUp3View(vm: vm)
-        vc.modalTransitionStyle = .crossDissolve
-        vc.modalPresentationStyle = .fullScreen
-        self.present(vc, animated: true)
-    }
     
 }

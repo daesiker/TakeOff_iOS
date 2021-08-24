@@ -15,7 +15,7 @@ class SignUp1View: UIViewController {
     let backgroundView = UIImageView(image: UIImage(named: "background"))
     
     let dismissButton = UIBarButtonItem().then {
-        $0.image = UIImage(named: "close")
+        $0.title = "취소"
         $0.style = .plain
         $0.target = $0.self
         $0.tintColor = .black
@@ -96,10 +96,11 @@ extension SignUp1View: SignUpViewAttributes {
         .disposed(by: disposebag)
         
         vm.stepOne.tap.bind { _ in
-            let vc = SignUp2View(vm: self.vm)
-            vc.modalTransitionStyle = .crossDissolve
-            vc.modalPresentationStyle = .fullScreen
-            self.present(vc, animated: true)
+            let viewController = SignUp2View(vm: self.vm)
+            viewController.modalTransitionStyle = .crossDissolve
+            viewController.modalPresentationStyle = .fullScreen
+            //        self.navigationController?.pushViewController(viewController, animated: true)
+            self.navigationController?.pushViewController(viewController, animated: true)
         }
         .disposed(by: disposebag)
         

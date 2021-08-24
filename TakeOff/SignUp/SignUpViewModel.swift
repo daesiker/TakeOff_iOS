@@ -32,7 +32,8 @@ class SignUpViewModel {
     
     struct StepTwo {
         let radioClick = PublishRelay<String>()
-        let buttonClick = PublishRelay<Void>()
+        let confirmClick = PublishRelay<Void>()
+        let dismissClick = PublishRelay<Void>()
     }
     
     struct StepThree {
@@ -83,7 +84,9 @@ class SignUpViewModel {
         })
         .disposed(by: disposeBag)
         
-        stepTwo.buttonClick.subscribe().disposed(by: disposeBag)
+        stepTwo.confirmClick.subscribe().disposed(by: disposeBag)
+        stepTwo.dismissClick.subscribe().disposed(by: disposeBag)
+        
         
         //MARK: Step3
         stepThree.tapSignup.flatMapLatest(self.createUser).subscribe { event in
@@ -106,7 +109,7 @@ class SignUpViewModel {
             .map { $0.count > 5 }
             .asDriver(onErrorJustReturn: false)
         stepThree.output.overlapPwValid = stepThree.input.overlapPwObserver
-            .map { $0 == self.stepThree.input.pwObserver.value }
+            .map { $0 == self.stepThree.input.pwObserver.value && $0.count > 5 }
             .asDriver(onErrorJustReturn: false)
         stepThree.output.signupButtonValid = Driver.combineLatest(stepThree.output.emailValid, stepThree.output.nameValid, stepThree.output.pwValid, stepThree.output.overlapPwValid)
             .map {$0.0 == .correct && $0.1 && $0.2 && $0.3 }
@@ -158,32 +161,6 @@ class SignUpViewModel {
             return Disposables.create()
         }
     }
-    
-    
-    func emailCheck(_ text: String) -> EmailValid {
-        if !(!text.isEmpty && text.contains(".") && text.contains("@")) {
-            return .notAvailable
-        } else {
-            var returnValue = EmailValid.correct
-            let ref = Database.database().reference().child("users")
-            ref.observeSingleEvent(of: .value) { snapshot in
-                guard let dictionaries = snapshot.value as? [String: Any] else {  return  } //Error 처리
-                
-                dictionaries.forEach { (key, value) in
-                    guard let userDictionary = value as? [String:Any] else { return  }
-                    guard let email = userDictionary["email"] as? String else {return  }
-                    
-                    if email == text {
-                        returnValue = .alreadyExsist
-                        
-                    }
-                }
-            }
-            
-            return returnValue
-        }
-    }
-    
     
     func firebaseNameCheck(_ text: String) -> Observable<Bool> {
         return Observable.create { valid in

@@ -57,6 +57,7 @@ class ViewController: UIViewController {
                     
                     let viewController = LoginView()
                     let navController = UINavigationController(rootViewController: viewController)
+                    navController.isNavigationBarHidden = true
                     navController.modalTransitionStyle = .crossDissolve
                     navController.modalPresentationStyle = .fullScreen
                     self.present(navController, animated: true)
