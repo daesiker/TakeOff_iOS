@@ -10,7 +10,11 @@
 		0497F61926C3A253002F1ACB /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0497F61826C3A253002F1ACB /* UserModel.swift */; };
 		12976C7C5238AE8E49C94015 /* Pods_TakeOff.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B96FC7B284EF767A99B29A5 /* Pods_TakeOff.framework */; };
 		B98DA3D9814E88F33671E6B8 /* Pods_TakeOff_TakeOffUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 350243CD383F88E0778AB157 /* Pods_TakeOff_TakeOffUITests.framework */; };
-		BF270DEB26D3309400C0E6BE /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF270DEA26D3309400C0E6BE /* MainTabView.swift */; };
+		BF1B97A126D5CAD5009D1B53 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1B97A026D5CAD5009D1B53 /* CalendarViewController.swift */; };
+		BF1B97A426D5CD2A009D1B53 /* PostUploadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1B97A326D5CD2A009D1B53 /* PostUploadViewController.swift */; };
+		BF1B97A726D5D0DC009D1B53 /* MessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1B97A626D5D0DC009D1B53 /* MessageViewController.swift */; };
+		BF1B97AA26D5D35C009D1B53 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1B97A926D5D35C009D1B53 /* ProfileViewController.swift */; };
+		BF270DEB26D3309400C0E6BE /* MainTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF270DEA26D3309400C0E6BE /* MainTabViewController.swift */; };
 		BF4591A126B7B1F00031E119 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4591A026B7B1F00031E119 /* LoginViewModel.swift */; };
 		BF4591A426B7B25B0031E119 /* UIKitExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4591A326B7B25B0031E119 /* UIKitExtension.swift */; };
 		BF4591A626B7B2D60031E119 /* FoundationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4591A526B7B2D60031E119 /* FoundationExtension.swift */; };
@@ -60,7 +64,11 @@
 		4B96FC7B284EF767A99B29A5 /* Pods_TakeOff.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TakeOff.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		904F2C6911FEEF43C782E968 /* Pods-TakeOff.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TakeOff.debug.xcconfig"; path = "Target Support Files/Pods-TakeOff/Pods-TakeOff.debug.xcconfig"; sourceTree = "<group>"; };
 		9D3799695D1A6873AD9AD76F /* Pods-TakeOff-TakeOffUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TakeOff-TakeOffUITests.release.xcconfig"; path = "Target Support Files/Pods-TakeOff-TakeOffUITests/Pods-TakeOff-TakeOffUITests.release.xcconfig"; sourceTree = "<group>"; };
-		BF270DEA26D3309400C0E6BE /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
+		BF1B97A026D5CAD5009D1B53 /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
+		BF1B97A326D5CD2A009D1B53 /* PostUploadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostUploadViewController.swift; sourceTree = "<group>"; };
+		BF1B97A626D5D0DC009D1B53 /* MessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewController.swift; sourceTree = "<group>"; };
+		BF1B97A926D5D35C009D1B53 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		BF270DEA26D3309400C0E6BE /* MainTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabViewController.swift; sourceTree = "<group>"; };
 		BF4591A026B7B1F00031E119 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		BF4591A326B7B25B0031E119 /* UIKitExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitExtension.swift; sourceTree = "<group>"; };
 		BF4591A526B7B2D60031E119 /* FoundationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoundationExtension.swift; sourceTree = "<group>"; };
@@ -144,11 +152,47 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		BF1B979F26D5CA08009D1B53 /* Calendar */ = {
+			isa = PBXGroup;
+			children = (
+				BF1B97A026D5CAD5009D1B53 /* CalendarViewController.swift */,
+			);
+			path = Calendar;
+			sourceTree = "<group>";
+		};
+		BF1B97A226D5CD17009D1B53 /* PostUpload */ = {
+			isa = PBXGroup;
+			children = (
+				BF1B97A326D5CD2A009D1B53 /* PostUploadViewController.swift */,
+			);
+			path = PostUpload;
+			sourceTree = "<group>";
+		};
+		BF1B97A526D5CECF009D1B53 /* Message */ = {
+			isa = PBXGroup;
+			children = (
+				BF1B97A626D5D0DC009D1B53 /* MessageViewController.swift */,
+			);
+			path = Message;
+			sourceTree = "<group>";
+		};
+		BF1B97A826D5D34E009D1B53 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				BF1B97A926D5D35C009D1B53 /* ProfileViewController.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
 		BF270DE926D3303E00C0E6BE /* MainView */ = {
 			isa = PBXGroup;
 			children = (
+				BF1B97A826D5D34E009D1B53 /* Profile */,
+				BF1B97A526D5CECF009D1B53 /* Message */,
+				BF1B97A226D5CD17009D1B53 /* PostUpload */,
+				BF1B979F26D5CA08009D1B53 /* Calendar */,
 				BF71170D26D39957006ED7AF /* Home */,
-				BF270DEA26D3309400C0E6BE /* MainTabView.swift */,
+				BF270DEA26D3309400C0E6BE /* MainTabViewController.swift */,
 			);
 			path = MainView;
 			sourceTree = "<group>";
@@ -504,8 +548,9 @@
 				BF972DFB26C0F9AC000A1EDA /* SignUp3VIew.swift in Sources */,
 				BF606EE726A2876E004091A5 /* AppDelegate.swift in Sources */,
 				BF71170F26D39966006ED7AF /* HomeViewController.swift in Sources */,
-				BF270DEB26D3309400C0E6BE /* MainTabView.swift in Sources */,
+				BF270DEB26D3309400C0E6BE /* MainTabViewController.swift in Sources */,
 				BF4591B326B7E92B0031E119 /* SignUpViewModel.swift in Sources */,
+				BF1B97A126D5CAD5009D1B53 /* CalendarViewController.swift in Sources */,
 				BF606EE926A2876E004091A5 /* SceneDelegate.swift in Sources */,
 				BF4591A426B7B25B0031E119 /* UIKitExtension.swift in Sources */,
 				BFDD2A8D26D0DFBE0056409C /* FirebaseDB.swift in Sources */,
@@ -513,10 +558,13 @@
 				BF4591B126B7E8D50031E119 /* User.swift in Sources */,
 				BF6854D226B83352000A6EE1 /* SignUp2View.swift in Sources */,
 				BF4591A126B7B1F00031E119 /* LoginViewModel.swift in Sources */,
+				BF1B97A726D5D0DC009D1B53 /* MessageViewController.swift in Sources */,
 				BF606F2F26A28F0F004091A5 /* LoginView.swift in Sources */,
 				0497F61926C3A253002F1ACB /* UserModel.swift in Sources */,
 				BF4591A626B7B2D60031E119 /* FoundationExtension.swift in Sources */,
+				BF1B97AA26D5D35C009D1B53 /* ProfileViewController.swift in Sources */,
 				BFDD2A9226D0DFF20056409C /* Protocol.swift in Sources */,
+				BF1B97A426D5CD2A009D1B53 /* PostUploadViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -622,7 +670,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -677,7 +725,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -694,7 +742,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = LR4FL8A57L;
+				DEVELOPMENT_TEAM = GX47BK9CV6;
 				INFOPLIST_FILE = TakeOff/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -715,7 +763,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = LR4FL8A57L;
+				DEVELOPMENT_TEAM = GX47BK9CV6;
 				INFOPLIST_FILE = TakeOff/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -780,6 +828,7 @@
 			baseConfigurationReference = C945A15D23A9AC95B04DA62C /* Pods-TakeOff-TakeOffUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GX47BK9CV6;
 				INFOPLIST_FILE = TakeOffUITests/Info.plist;
@@ -801,6 +850,7 @@
 			baseConfigurationReference = 9D3799695D1A6873AD9AD76F /* Pods-TakeOff-TakeOffUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GX47BK9CV6;
 				INFOPLIST_FILE = TakeOffUITests/Info.plist;

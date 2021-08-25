@@ -60,7 +60,8 @@ extension SignUp1View: SignUpViewAttributes {
     
     func setUI() {
         navigationController?.isNavigationBarHidden = false
-        navigationItem.leftBarButtonItem = dismissButton
+        navigationItem.backBarButtonItem = dismissButton
+        navigationItem.backBarButtonItem?.tintColor = UIColor.mainColor
         view.addSubview(backgroundView)
         backgroundView.snp.makeConstraints { make in
             make.edges.equalToSuperview()

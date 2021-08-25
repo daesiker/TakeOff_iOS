@@ -125,6 +125,7 @@ extension SignUp2View: SignUpViewAttributes {
     
     func setUI() {
         navigationItem.backBarButtonItem = dismissButton
+        navigationItem.backBarButtonItem?.tintColor = UIColor.mainColor
         navigationItem.rightBarButtonItem = confirmButton
         view.addSubview(backgroundView)
         backgroundView.snp.makeConstraints {

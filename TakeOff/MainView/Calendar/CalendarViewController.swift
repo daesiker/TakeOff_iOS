@@ -1,8 +1,8 @@
 //
-//  HomeViewController.swift
+//  CalendarViewController.swift
 //  TakeOff
 //
-//  Created by Jun on 2021/08/23.
+//  Created by Jun on 2021/08/25.
 //
 
 import Foundation
@@ -10,10 +10,10 @@ import UIKit
 import SnapKit
 import Then
 
-class HomeViewController: UIViewController {
+class CalendarViewController: UIViewController {
     
     let exampleText = UITextField().then {
-        $0.text = "HomeViewController"
+        $0.text = "CalendarViewController"
     }
     
     override func viewDidLoad() {

@@ -131,7 +131,10 @@ class LoginView: UIViewController {
      */
     
     private func goToMain(s:String) {
-        print("go main \(s)")
+        let vc = MainTabViewController()
+        vc.modalTransitionStyle = .crossDissolve
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: true, completion: nil)
         
     }
     private func goToSignUp() {
