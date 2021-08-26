@@ -55,16 +55,16 @@ class ViewController: UIViewController {
             if done {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                     
-//                    let vc = MainTabViewController()
-//                    vc.modalPresentationStyle = .fullScreen
-//                    vc.modalTransitionStyle = .crossDissolve
-//                    self.present(vc, animated: true)
-                    let viewController = LoginView()
-                    let navController = UINavigationController(rootViewController: viewController)
-                    navController.isNavigationBarHidden = true
-                    navController.modalTransitionStyle = .crossDissolve
-                    navController.modalPresentationStyle = .fullScreen
-                    self.present(navController, animated: true)
+                    let vc = MainTabViewController()
+                    vc.modalPresentationStyle = .fullScreen
+                    vc.modalTransitionStyle = .crossDissolve
+                    self.present(vc, animated: true)
+//                    let viewController = LoginView()
+//                    let navController = UINavigationController(rootViewController: viewController)
+//                    navController.isNavigationBarHidden = true
+//                    navController.modalTransitionStyle = .crossDissolve
+//                    navController.modalPresentationStyle = .fullScreen
+//                    self.present(navController, animated: true)
                 }
             }
         })

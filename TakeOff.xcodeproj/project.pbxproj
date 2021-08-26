@@ -36,6 +36,8 @@
 		BF972DFB26C0F9AC000A1EDA /* SignUp3VIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF972DFA26C0F9AC000A1EDA /* SignUp3VIew.swift */; };
 		BFDD2A8D26D0DFBE0056409C /* FirebaseDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDD2A8C26D0DFBE0056409C /* FirebaseDB.swift */; };
 		BFDD2A9226D0DFF20056409C /* Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDD2A9126D0DFF20056409C /* Protocol.swift */; };
+		BFF7B0C626D71D4B001E9EB4 /* PhotoSelectorHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF7B0C526D71D4B001E9EB4 /* PhotoSelectorHeader.swift */; };
+		BFF7B0C826D72099001E9EB4 /* PhotoSelectorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF7B0C726D72099001E9EB4 /* PhotoSelectorCell.swift */; };
 		FEE2F63F1E8D7C2FCF508D6A /* Pods_TakeOffTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3262C1A1886FC01C8B0B0EE0 /* Pods_TakeOffTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -96,6 +98,8 @@
 		BF972DFA26C0F9AC000A1EDA /* SignUp3VIew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUp3VIew.swift; sourceTree = "<group>"; };
 		BFDD2A8C26D0DFBE0056409C /* FirebaseDB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseDB.swift; sourceTree = "<group>"; };
 		BFDD2A9126D0DFF20056409C /* Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocol.swift; sourceTree = "<group>"; };
+		BFF7B0C526D71D4B001E9EB4 /* PhotoSelectorHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoSelectorHeader.swift; sourceTree = "<group>"; };
+		BFF7B0C726D72099001E9EB4 /* PhotoSelectorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoSelectorCell.swift; sourceTree = "<group>"; };
 		C41870B3E414FF79D7F3BDEE /* Pods-TakeOffTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TakeOffTests.release.xcconfig"; path = "Target Support Files/Pods-TakeOffTests/Pods-TakeOffTests.release.xcconfig"; sourceTree = "<group>"; };
 		C4FE371827A1C9A242C5DA3D /* Pods-TakeOff.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TakeOff.release.xcconfig"; path = "Target Support Files/Pods-TakeOff/Pods-TakeOff.release.xcconfig"; sourceTree = "<group>"; };
 		C945A15D23A9AC95B04DA62C /* Pods-TakeOff-TakeOffUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TakeOff-TakeOffUITests.debug.xcconfig"; path = "Target Support Files/Pods-TakeOff-TakeOffUITests/Pods-TakeOff-TakeOffUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -164,6 +168,8 @@
 			isa = PBXGroup;
 			children = (
 				BF1B97A326D5CD2A009D1B53 /* PostUploadViewController.swift */,
+				BFF7B0C526D71D4B001E9EB4 /* PhotoSelectorHeader.swift */,
+				BFF7B0C726D72099001E9EB4 /* PhotoSelectorCell.swift */,
 			);
 			path = PostUpload;
 			sourceTree = "<group>";
@@ -550,6 +556,7 @@
 				BF71170F26D39966006ED7AF /* HomeViewController.swift in Sources */,
 				BF270DEB26D3309400C0E6BE /* MainTabViewController.swift in Sources */,
 				BF4591B326B7E92B0031E119 /* SignUpViewModel.swift in Sources */,
+				BFF7B0C626D71D4B001E9EB4 /* PhotoSelectorHeader.swift in Sources */,
 				BF1B97A126D5CAD5009D1B53 /* CalendarViewController.swift in Sources */,
 				BF606EE926A2876E004091A5 /* SceneDelegate.swift in Sources */,
 				BF4591A426B7B25B0031E119 /* UIKitExtension.swift in Sources */,
@@ -565,6 +572,7 @@
 				BF1B97AA26D5D35C009D1B53 /* ProfileViewController.swift in Sources */,
 				BFDD2A9226D0DFF20056409C /* Protocol.swift in Sources */,
 				BF1B97A426D5CD2A009D1B53 /* PostUploadViewController.swift in Sources */,
+				BFF7B0C826D72099001E9EB4 /* PhotoSelectorCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
