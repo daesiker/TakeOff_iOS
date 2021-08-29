@@ -33,17 +33,14 @@ class LoginViewModel : ViewModelType {
         let autoLogin:Signal<Void>
         let error:Signal<Error>
     } 
-    var mainRelay = PublishRelay<String>() 
-    var signUpRelay = PublishRelay<Void>()
-    var errorRelay = PublishRelay<Error>()
+    
     var disposeBag: DisposeBag = DisposeBag()
-    //    let d:Signal<String>
     private func setInput() {}
     private func setOutput() {}
     init() {
-        mainRelay = PublishRelay<String>()
-        signUpRelay = PublishRelay<Void>()
-        errorRelay = PublishRelay<Error>()
+        let mainRelay = PublishRelay<String>() 
+        let signUpRelay = PublishRelay<Void>()
+        let errorRelay = PublishRelay<Error>()
         
         self.input = Input(emailText: BehaviorRelay<String>(value: ""), 
                            passText: BehaviorRelay<String>(value: ""), 
@@ -62,36 +59,18 @@ class LoginViewModel : ViewModelType {
                              error: errorRelay.asSignal())
         
         input.loginTap.withLatestFrom(Observable.combineLatest(input.emailText, input.passText))
-            .flatMapLatest(userModel.doLogin).subscribe{ event in
+            .flatMapLatest(userModel.doLogin).bind(onNext: { (event:Event<String>) in
                 switch event {
                 case .next(let str):
-                    self.mainRelay.accept(str)
+                    mainRelay.accept(str)
                 case .error(let error):
-                    self.errorRelay.accept(error)
-                case .completed:
-                    print("@#$")
-                    
+                    errorRelay.accept(error)
+                default:
+                    break
                 }
-            }.disposed(by: disposeBag)
-        
-        //            .asSignal(onErrorRecover: { (error:Error) -> Signal<String> in
-        //                defer {
-        //                	errorRelay.accept(error) // error signal 만들어서 에러는 해당 signal이 다 처리
-        //                }
-        ////                Completable
-        //                return  BehaviorRelay(value:"").asSignal(onErrorJustReturn: "")
-        //            })
-        //            .asSignal(onErrorSignalWith: output.error).debug("signal")
-        
-        //            .asSignal(onErrorRecover: { (error:Error) -> Signal<String> in
-        //                print(error) // 저번주에 말한 반환형을 튜플식으로 변경 ->
-        //                return  BehaviorRelay(value:error.localizedDescription).asSignal(onErrorJustReturn: "")
-        //            }).debug("Signal")
-        //            .emit(to: mainRelay)
-        //            .disposed(by: self.disposeBag)
+            }).disposed(by: disposeBag)
         
         input.signUpTap.bind(to: signUpRelay).disposed(by: self.disposeBag)
-    
     }
 }
 

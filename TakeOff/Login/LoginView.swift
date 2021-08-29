@@ -61,6 +61,13 @@ class LoginView: UIViewController {
         $0.isEnabled = true
     }
     
+    let errorTextField = UILabel().then {
+    	$0.lineBreakMode = .byWordWrapping
+        $0.numberOfLines = 3
+     	$0.font = UIFont.systemFont(ofSize: UIFont.systemFontSize)
+        $0.textColor = UIColor.mainColor      
+    }
+    
     let signupButton = UIButton(type: .system).then {
         let signUpText = "Don't have an account? Sign Up"
         // defalut font attribute
@@ -131,17 +138,17 @@ class LoginView: UIViewController {
      */
     
     private func goToMain(s:String) {
-        let vc = MainTabViewController()
-        vc.modalTransitionStyle = .crossDissolve
-        vc.modalPresentationStyle = .fullScreen
-        self.present(vc, animated: true, completion: nil)
-        
+        let viewController = MainTabViewController()
+        let navController = UINavigationController(rootViewController: viewController)
+        navController.isNavigationBarHidden = true
+        navController.modalTransitionStyle = .crossDissolve
+        navController.modalPresentationStyle = .fullScreen
+        self.present(navController, animated: true)
     }
     private func goToSignUp() {
         let viewController = SignUp1View()
         viewController.modalTransitionStyle = .crossDissolve
         viewController.modalPresentationStyle = .fullScreen
-        //        self.navigationController?.pushViewController(viewController, animated: true)
         navigationController?.pushViewController(viewController, animated: true)
     }
     // MARK:- bind
@@ -172,10 +179,14 @@ class LoginView: UIViewController {
         self.vm.output.goSignUp //튜플식 변경시 guard 문으로 체킹 해줘야함
             .emit(onNext: goToSignUp)
             .disposed(by: disposeBag)
-//            
-        self.vm.output.error.debug("aa").emit { e in // 에러 signal로 받으면 따로 체킹 필요없음 
-            print("error  \(e)")
-        }.disposed(by: disposeBag)
+
+        self.vm.output.error
+            .emit {
+                self.errorTextField.text = $0.localizedDescription
+                self.passwordTextField.text = ""
+                self.loginButton.isEnabled = false
+            } 
+            .disposed(by: disposeBag)
     }
     // MARK:- Set UI
     private func setUI() {
@@ -203,6 +214,13 @@ class LoginView: UIViewController {
             $0.top.equalTo(stackView.snp.bottom).inset(-30)
             $0.left.right.equalToSuperview()
             $0.height.greaterThanOrEqualTo(50)
+        }
+        
+        contentLayout.addSubview(errorTextField)
+        errorTextField.snp.makeConstraints {
+        	$0.top.equalTo(loginButton.snp.bottom).inset(-10)
+            $0.left.right.equalToSuperview()
+               
         }
         
         self.setSignUp()   
@@ -244,19 +262,19 @@ class LoginView: UIViewController {
         }
     }
     private func setSignUp() {
+        contentLayout.addSubview(signupButton)
+        signupButton.snp.makeConstraints {
+            $0.top.equalTo(errorTextField.snp.bottom)
+            $0.left.right.equalToSuperview()
+            $0.height.greaterThanOrEqualTo(50)   
+        }
+        
         let otherSignUpView = UIStackView().then{ $0.backgroundColor = UIColor.black}
         contentLayout.addSubview(otherSignUpView)
         otherSignUpView.snp.makeConstraints{
-            $0.top.equalTo(loginButton.snp.bottom).inset(-20)
-            $0.left.right.equalToSuperview()
-            $0.height.equalTo(700)   
-        }
-        
-        contentLayout.addSubview(signupButton)
-        signupButton.snp.makeConstraints {
-            $0.top.equalTo(otherSignUpView.snp.bottom).inset(-50)
-            $0.bottom.equalToSuperview()
-            $0.leading.trailing.equalToSuperview()
+            $0.top.equalTo(signupButton.snp.bottom)
+            $0.bottom.left.right.equalToSuperview()
+            $0.height.equalTo(700)
         }
     }
 }
