@@ -7,6 +7,7 @@ target 'TakeOff' do
 pod 'Firebase/Database', '~> 8.4.0'
 pod 'Firebase/Analytics', '~> 8.4.0'
 pod 'Firebase/Auth', '~> 8.4.0'
+pod 'Firebase/Storage', '~> 8.4.0'
   # Pods for TakeOff
 pod 'SnapKit', '~> 5.0.0'
 pod 'RxSwift', '~> 5.0.0'

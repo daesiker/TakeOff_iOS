@@ -140,7 +140,7 @@ class PostUploadViewController: UICollectionViewController, UICollectionViewDele
     
     @objc func handleNext() {
         let sharePhotoController = SharePhotoController()
-        
+        sharePhotoController.selectedImage = header?.photoImageView.image
         navigationController?.pushViewController(sharePhotoController, animated: true)
     }
     
