@@ -34,6 +34,7 @@
 		BF6854D226B83352000A6EE1 /* SignUp2View.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6854D126B83352000A6EE1 /* SignUp2View.swift */; };
 		BF71170F26D39966006ED7AF /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF71170E26D39966006ED7AF /* HomeViewController.swift */; };
 		BF972DFB26C0F9AC000A1EDA /* SignUp3VIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF972DFA26C0F9AC000A1EDA /* SignUp3VIew.swift */; };
+		BFB9EC1B26DF0468002AA1B6 /* SharePhotoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB9EC1A26DF0467002AA1B6 /* SharePhotoViewModel.swift */; };
 		BFCF9BEC26DB677D00895D14 /* SharePhotoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCF9BEB26DB677D00895D14 /* SharePhotoController.swift */; };
 		BFDD2A8D26D0DFBE0056409C /* FirebaseDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDD2A8C26D0DFBE0056409C /* FirebaseDB.swift */; };
 		BFDD2A9226D0DFF20056409C /* Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDD2A9126D0DFF20056409C /* Protocol.swift */; };
@@ -97,6 +98,7 @@
 		BF6854D126B83352000A6EE1 /* SignUp2View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUp2View.swift; sourceTree = "<group>"; };
 		BF71170E26D39966006ED7AF /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		BF972DFA26C0F9AC000A1EDA /* SignUp3VIew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUp3VIew.swift; sourceTree = "<group>"; };
+		BFB9EC1A26DF0467002AA1B6 /* SharePhotoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharePhotoViewModel.swift; sourceTree = "<group>"; };
 		BFCF9BEB26DB677D00895D14 /* SharePhotoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharePhotoController.swift; sourceTree = "<group>"; };
 		BFDD2A8C26D0DFBE0056409C /* FirebaseDB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseDB.swift; sourceTree = "<group>"; };
 		BFDD2A9126D0DFF20056409C /* Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocol.swift; sourceTree = "<group>"; };
@@ -173,6 +175,7 @@
 				BFF7B0C526D71D4B001E9EB4 /* PhotoSelectorHeader.swift */,
 				BFF7B0C726D72099001E9EB4 /* PhotoSelectorCell.swift */,
 				BFCF9BEB26DB677D00895D14 /* SharePhotoController.swift */,
+				BFB9EC1A26DF0467002AA1B6 /* SharePhotoViewModel.swift */,
 			);
 			path = PostUpload;
 			sourceTree = "<group>";
@@ -570,6 +573,7 @@
 				BF6854D226B83352000A6EE1 /* SignUp2View.swift in Sources */,
 				BF4591A126B7B1F00031E119 /* LoginViewModel.swift in Sources */,
 				BF1B97A726D5D0DC009D1B53 /* MessageViewController.swift in Sources */,
+				BFB9EC1B26DF0468002AA1B6 /* SharePhotoViewModel.swift in Sources */,
 				BF606F2F26A28F0F004091A5 /* LoginView.swift in Sources */,
 				0497F61926C3A253002F1ACB /* UserModel.swift in Sources */,
 				BF4591A626B7B2D60031E119 /* FoundationExtension.swift in Sources */,

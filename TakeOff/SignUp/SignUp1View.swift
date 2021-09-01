@@ -5,6 +5,7 @@ import RxCocoa
 
 protocol SignUpViewAttributes {
     func setUI()
+    func bind()
 }
 
 class SignUp1View: UIViewController {

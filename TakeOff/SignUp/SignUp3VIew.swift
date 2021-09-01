@@ -113,8 +113,7 @@ class SignUp3View: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
-        bindInput()
-        bindOutput()
+        bind()
     }
     
     init(vm: SignUpViewModel) {
@@ -213,6 +212,10 @@ extension SignUp3View: SignUpViewAttributes {
         return view
     }
     
+    func bind() {
+        bindInput()
+        bindOutput()
+    }
     
     func bindInput() {
         

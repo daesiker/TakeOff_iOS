@@ -9,12 +9,21 @@ import Foundation
 import UIKit
 import Firebase
 import Then
+import RxSwift
+
 class SharePhotoController: UIViewController {
+    
+    let vm = SharePhotoViewModel()
+    var disposeBag = DisposeBag()
     
     var selectedImage: UIImage? {
         didSet {
             self.imageView.image = selectedImage
         }
+    }
+    
+    let contentView = UIView().then {
+        $0.backgroundColor = .white
     }
     
     let imageView = UIImageView().then {
@@ -27,39 +36,20 @@ class SharePhotoController: UIViewController {
         $0.font = UIFont.systemFont(ofSize: 14)
     }
     
+    let shareButton = UIBarButtonItem().then {
+        $0.title = "Share"
+        $0.style = .plain
+        $0.target = $0
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor.rgb(red: 240, green: 240, blue: 240)
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Share", style: .plain, target: self, action: #selector(handleShare))
-        setupImageAndTextViews()
+        setUI()
+        bind()
     }
     
     override var prefersStatusBarHidden: Bool {
         return true
-    }
-    
-    fileprivate func setupImageAndTextViews() {
-        let contentView = UIView()
-        contentView.backgroundColor = .white
-        
-        safeView.addSubview(contentView)
-        contentView.snp.makeConstraints {
-            $0.height.equalTo(100)
-            $0.left.right.top.equalToSuperview()
-        }
-        
-        contentView.addSubview(imageView)
-        imageView.snp.makeConstraints {
-            $0.width.equalTo(84)
-            $0.top.left.equalToSuperview().offset(8)
-            $0.bottom.equalToSuperview().offset(-8)
-        }
-        
-        contentView.addSubview(textView)
-        textView.snp.makeConstraints {
-            $0.top.bottom.right.equalToSuperview()
-            $0.left.equalTo(imageView).offset(4)
-        }
     }
     
     @objc func handleShare() {
@@ -119,7 +109,57 @@ class SharePhotoController: UIViewController {
         
     }
     
+}
+
+extension SharePhotoController: SignUpViewAttributes {
+    func setUI() {
+        view.backgroundColor = UIColor.rgb(red: 240, green: 240, blue: 240)
+        navigationItem.rightBarButtonItem = shareButton
+        
+        safeView.addSubview(contentView)
+        contentView.snp.makeConstraints {
+            $0.height.equalTo(100)
+            $0.top.equalToSuperview()
+            $0.left.right.equalTo(self.view)
+        }
+        
+        contentView.addSubview(imageView)
+        imageView.snp.makeConstraints {
+            $0.width.equalTo(view.frame.width / 3)
+            $0.top.left.equalToSuperview().offset(8)
+            $0.bottom.equalToSuperview().offset(-8)
+        }
+        
+        contentView.addSubview(textView)
+        textView.snp.makeConstraints {
+            $0.top.bottom.right.equalToSuperview()
+            $0.left.equalTo(imageView).offset(4)
+        }
+    }
     
+    func bind() {
+        bindInput()
+        bindOutput()
+    }
     
+    func bindInput() {
+        textView.rx.text.orEmpty
+            .bind(to: vm.input.textObserver)
+            .disposed(by: disposeBag)
+        
+        vm.input.imageObserver
+            .bind(to: imageView.rx.image)
+            .disposed(by: disposeBag)
+        
+        shareButton.rx.tap
+            .bind(to: vm.input.buttonObserver)
+            .disposed(by: disposeBag)
+    }
+    
+    func bindOutput() {
+        
+        
+        
+    }
     
 }
