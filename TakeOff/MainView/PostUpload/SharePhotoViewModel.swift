@@ -12,12 +12,12 @@ import RxCocoa
 
 class SharePhotoViewModel {
     
-    let input = Input()
+    var input = Input()
     let output = Output()
     
     struct Input {
         let textObserver = BehaviorRelay<String>(value: "")
-        let imageObserver = BehaviorRelay<UIImage>(value: UIImage(named: "")!)
+        var imageObserver = BehaviorRelay<UIImage>(value: UIImage(named: "")!)
         let buttonObserver = PublishRelay<Void>()
     }
     

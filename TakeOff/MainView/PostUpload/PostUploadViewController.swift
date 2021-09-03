@@ -10,8 +10,9 @@ import UIKit
 import SnapKit
 import Then
 import Photos
+import RxSwift
 
-class PostUploadViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+class PostUploadViewController: UICollectionViewController {
     
     let cellId = "cellId"
     let headerId = "headerId"
@@ -20,6 +21,9 @@ class PostUploadViewController: UICollectionViewController, UICollectionViewDele
     var images = [UIImage]()
     var assets = [PHAsset]()
     
+    
+    
+    let number = Observable<Int>.of(1)
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView.backgroundColor = .white
@@ -36,6 +40,38 @@ class PostUploadViewController: UICollectionViewController, UICollectionViewDele
         fetchOptions.sortDescriptors = [sortDescriptor]
         return fetchOptions
     }
+    
+    func tmp() -> Observable<PHFetchResult<PHAsset>> {
+        let allPhotos = PHAsset.fetchAssets(with: .image, options: self.assetsFetchOptions())
+        return Observable.create { observer in
+            allPhotos.enumerateObjects { asset, count, stop in
+                let imageManager = PHImageManager.default()
+                let targetSize = CGSize(width: 200, height: 200)
+                let options = PHImageRequestOptions()
+                options.isSynchronous = true
+                imageManager.requestImage(for: asset, targetSize: targetSize, contentMode: .aspectFit, options: options) { image, info in
+                    if let image = image {
+                        self.images.append(image)
+                        self.assets.append(asset)
+                        if self.selectedImage == nil {
+                            self.selectedImage = image
+                        }
+                    }
+                    
+                    if count == allPhotos.count - 1 {
+                        
+                    }
+                    
+                }
+                
+            }
+            
+            
+            return Disposables.create()
+        }
+    }
+    
+    
     
     fileprivate func fetchPhotos() {
         let allPhotos = PHAsset.fetchAssets(with: .image, options: assetsFetchOptions())
@@ -75,14 +111,12 @@ class PostUploadViewController: UICollectionViewController, UICollectionViewDele
         collectionView.scrollToItem(at: indexPath, at: .bottom, animated: true)
     }
     
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 1, left: 0, bottom: 0, right: 0)
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        let width = view.frame.width
-        return CGSize(width: width, height: width)
-    }
+    
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as! PhotoSelectorHeader
@@ -151,3 +185,9 @@ class PostUploadViewController: UICollectionViewController, UICollectionViewDele
     
 }
 
+extension PostUploadViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        let width = view.frame.width
+        return CGSize(width: width, height: width)
+    }
+}

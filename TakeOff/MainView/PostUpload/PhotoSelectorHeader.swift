@@ -8,6 +8,9 @@
 import Foundation
 import UIKit
 import Then
+
+
+
 class PhotoSelectorHeader: UICollectionViewCell {
     
     let photoImageView = UIImageView().then {
@@ -26,7 +29,6 @@ class PhotoSelectorHeader: UICollectionViewCell {
     }
     
     func setUI() {
-        backgroundColor = .brown
         addSubview(photoImageView)
         photoImageView.snp.makeConstraints {
             $0.edges.equalToSuperview()

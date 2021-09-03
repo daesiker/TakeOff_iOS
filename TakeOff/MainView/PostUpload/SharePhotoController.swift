@@ -10,6 +10,7 @@ import UIKit
 import Firebase
 import Then
 import RxSwift
+import RxCocoa
 
 class SharePhotoController: UIViewController {
     
@@ -147,9 +148,12 @@ extension SharePhotoController: SignUpViewAttributes {
             .bind(to: vm.input.textObserver)
             .disposed(by: disposeBag)
         
-        vm.input.imageObserver
-            .bind(to: imageView.rx.image)
-            .disposed(by: disposeBag)
+            
+        
+//        vm.input.imageObserver
+//            .bind(to: imageView.rx.image)
+//            .disposed(by: disposeBag)
+        
         
         shareButton.rx.tap
             .bind(to: vm.input.buttonObserver)
