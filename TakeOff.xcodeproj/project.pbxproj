@@ -11,7 +11,6 @@
 		12976C7C5238AE8E49C94015 /* Pods_TakeOff.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B96FC7B284EF767A99B29A5 /* Pods_TakeOff.framework */; };
 		B98DA3D9814E88F33671E6B8 /* Pods_TakeOff_TakeOffUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 350243CD383F88E0778AB157 /* Pods_TakeOff_TakeOffUITests.framework */; };
 		BF1B97A126D5CAD5009D1B53 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1B97A026D5CAD5009D1B53 /* CalendarViewController.swift */; };
-		BF1B97A426D5CD2A009D1B53 /* PostUploadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1B97A326D5CD2A009D1B53 /* PostUploadViewController.swift */; };
 		BF1B97A726D5D0DC009D1B53 /* MessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1B97A626D5D0DC009D1B53 /* MessageViewController.swift */; };
 		BF1B97AA26D5D35C009D1B53 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1B97A926D5D35C009D1B53 /* ProfileViewController.swift */; };
 		BF270DEB26D3309400C0E6BE /* MainTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF270DEA26D3309400C0E6BE /* MainTabViewController.swift */; };
@@ -21,7 +20,7 @@
 		BF4591A926B7B3420031E119 /* SignUp1View.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4591A826B7B3420031E119 /* SignUp1View.swift */; };
 		BF4591B126B7E8D50031E119 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4591B026B7E8D50031E119 /* User.swift */; };
 		BF4591B326B7E92B0031E119 /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4591B226B7E92B0031E119 /* SignUpViewModel.swift */; };
-		BF4B58F626E2135800C47639 /* RxPostUploadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4B58F526E2135800C47639 /* RxPostUploadView.swift */; };
+		BF4B58F626E2135800C47639 /* PostUploadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4B58F526E2135800C47639 /* PostUploadView.swift */; };
 		BF606EE726A2876E004091A5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF606EE626A2876E004091A5 /* AppDelegate.swift */; };
 		BF606EE926A2876E004091A5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF606EE826A2876E004091A5 /* SceneDelegate.swift */; };
 		BF606EEB26A2876E004091A5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF606EEA26A2876E004091A5 /* ViewController.swift */; };
@@ -41,6 +40,8 @@
 		BFDD2A9226D0DFF20056409C /* Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDD2A9126D0DFF20056409C /* Protocol.swift */; };
 		BFF7B0C626D71D4B001E9EB4 /* PhotoSelectorHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF7B0C526D71D4B001E9EB4 /* PhotoSelectorHeader.swift */; };
 		BFF7B0C826D72099001E9EB4 /* PhotoSelectorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF7B0C726D72099001E9EB4 /* PhotoSelectorCell.swift */; };
+		BFFDAE4526E59BCC005707C9 /* PostUpload.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFDAE4426E59BCC005707C9 /* PostUpload.swift */; };
+		BFFDAE4926E5F1EA005707C9 /* PostUploadViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFDAE4826E5F1EA005707C9 /* PostUploadViewModel.swift */; };
 		FEE2F63F1E8D7C2FCF508D6A /* Pods_TakeOffTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3262C1A1886FC01C8B0B0EE0 /* Pods_TakeOffTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -70,7 +71,6 @@
 		904F2C6911FEEF43C782E968 /* Pods-TakeOff.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TakeOff.debug.xcconfig"; path = "Target Support Files/Pods-TakeOff/Pods-TakeOff.debug.xcconfig"; sourceTree = "<group>"; };
 		9D3799695D1A6873AD9AD76F /* Pods-TakeOff-TakeOffUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TakeOff-TakeOffUITests.release.xcconfig"; path = "Target Support Files/Pods-TakeOff-TakeOffUITests/Pods-TakeOff-TakeOffUITests.release.xcconfig"; sourceTree = "<group>"; };
 		BF1B97A026D5CAD5009D1B53 /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
-		BF1B97A326D5CD2A009D1B53 /* PostUploadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostUploadViewController.swift; sourceTree = "<group>"; };
 		BF1B97A626D5D0DC009D1B53 /* MessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewController.swift; sourceTree = "<group>"; };
 		BF1B97A926D5D35C009D1B53 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		BF270DEA26D3309400C0E6BE /* MainTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabViewController.swift; sourceTree = "<group>"; };
@@ -80,7 +80,7 @@
 		BF4591A826B7B3420031E119 /* SignUp1View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUp1View.swift; sourceTree = "<group>"; };
 		BF4591B026B7E8D50031E119 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		BF4591B226B7E92B0031E119 /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
-		BF4B58F526E2135800C47639 /* RxPostUploadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxPostUploadView.swift; sourceTree = "<group>"; };
+		BF4B58F526E2135800C47639 /* PostUploadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostUploadView.swift; sourceTree = "<group>"; };
 		BF606EE326A2876E004091A5 /* TakeOff.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TakeOff.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF606EE626A2876E004091A5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BF606EE826A2876E004091A5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -106,6 +106,8 @@
 		BFDD2A9126D0DFF20056409C /* Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocol.swift; sourceTree = "<group>"; };
 		BFF7B0C526D71D4B001E9EB4 /* PhotoSelectorHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoSelectorHeader.swift; sourceTree = "<group>"; };
 		BFF7B0C726D72099001E9EB4 /* PhotoSelectorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoSelectorCell.swift; sourceTree = "<group>"; };
+		BFFDAE4426E59BCC005707C9 /* PostUpload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostUpload.swift; sourceTree = "<group>"; };
+		BFFDAE4826E5F1EA005707C9 /* PostUploadViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostUploadViewModel.swift; sourceTree = "<group>"; };
 		C41870B3E414FF79D7F3BDEE /* Pods-TakeOffTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TakeOffTests.release.xcconfig"; path = "Target Support Files/Pods-TakeOffTests/Pods-TakeOffTests.release.xcconfig"; sourceTree = "<group>"; };
 		C4FE371827A1C9A242C5DA3D /* Pods-TakeOff.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TakeOff.release.xcconfig"; path = "Target Support Files/Pods-TakeOff/Pods-TakeOff.release.xcconfig"; sourceTree = "<group>"; };
 		C945A15D23A9AC95B04DA62C /* Pods-TakeOff-TakeOffUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TakeOff-TakeOffUITests.debug.xcconfig"; path = "Target Support Files/Pods-TakeOff-TakeOffUITests/Pods-TakeOff-TakeOffUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -173,12 +175,12 @@
 		BF1B97A226D5CD17009D1B53 /* PostUpload */ = {
 			isa = PBXGroup;
 			children = (
-				BF1B97A326D5CD2A009D1B53 /* PostUploadViewController.swift */,
 				BFF7B0C526D71D4B001E9EB4 /* PhotoSelectorHeader.swift */,
 				BFF7B0C726D72099001E9EB4 /* PhotoSelectorCell.swift */,
 				BFCF9BEB26DB677D00895D14 /* SharePhotoController.swift */,
 				BFB9EC1A26DF0467002AA1B6 /* SharePhotoViewModel.swift */,
-				BF4B58F526E2135800C47639 /* RxPostUploadView.swift */,
+				BF4B58F526E2135800C47639 /* PostUploadView.swift */,
+				BFFDAE4826E5F1EA005707C9 /* PostUploadViewModel.swift */,
 			);
 			path = PostUpload;
 			sourceTree = "<group>";
@@ -245,6 +247,7 @@
 			isa = PBXGroup;
 			children = (
 				BF4591B026B7E8D50031E119 /* User.swift */,
+				BFFDAE4426E59BCC005707C9 /* PostUpload.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -566,12 +569,14 @@
 				BF270DEB26D3309400C0E6BE /* MainTabViewController.swift in Sources */,
 				BF4591B326B7E92B0031E119 /* SignUpViewModel.swift in Sources */,
 				BFCF9BEC26DB677D00895D14 /* SharePhotoController.swift in Sources */,
-				BF4B58F626E2135800C47639 /* RxPostUploadView.swift in Sources */,
+				BF4B58F626E2135800C47639 /* PostUploadView.swift in Sources */,
 				BFF7B0C626D71D4B001E9EB4 /* PhotoSelectorHeader.swift in Sources */,
 				BF1B97A126D5CAD5009D1B53 /* CalendarViewController.swift in Sources */,
 				BF606EE926A2876E004091A5 /* SceneDelegate.swift in Sources */,
 				BF4591A426B7B25B0031E119 /* UIKitExtension.swift in Sources */,
+				BFFDAE4526E59BCC005707C9 /* PostUpload.swift in Sources */,
 				BFDD2A8D26D0DFBE0056409C /* FirebaseDB.swift in Sources */,
+				BFFDAE4926E5F1EA005707C9 /* PostUploadViewModel.swift in Sources */,
 				BF4591A926B7B3420031E119 /* SignUp1View.swift in Sources */,
 				BF4591B126B7E8D50031E119 /* User.swift in Sources */,
 				BF6854D226B83352000A6EE1 /* SignUp2View.swift in Sources */,
@@ -583,7 +588,6 @@
 				BF4591A626B7B2D60031E119 /* FoundationExtension.swift in Sources */,
 				BF1B97AA26D5D35C009D1B53 /* ProfileViewController.swift in Sources */,
 				BFDD2A9226D0DFF20056409C /* Protocol.swift in Sources */,
-				BF1B97A426D5CD2A009D1B53 /* PostUploadViewController.swift in Sources */,
 				BFF7B0C826D72099001E9EB4 /* PhotoSelectorCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

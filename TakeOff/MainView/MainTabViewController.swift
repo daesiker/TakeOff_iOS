@@ -15,7 +15,7 @@ class MainTabViewController: UITabBarController, UITabBarControllerDelegate {
         let index = viewControllers?.firstIndex(of: viewController)
         if index == 2 {
             let layout = UICollectionViewFlowLayout()
-            let postUploadViewController = PostUploadViewController(collectionViewLayout: layout)
+            let postUploadViewController = PostUploadView(collectionViewLayout: layout)
             let navController = UINavigationController(rootViewController: postUploadViewController)
             navController.modalTransitionStyle = .crossDissolve
             navController.modalPresentationStyle = .fullScreen

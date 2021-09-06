@@ -12,6 +12,7 @@ pod 'Firebase/Storage', '~> 8.4.0'
 pod 'SnapKit', '~> 5.0.0'
 pod 'RxSwift', '~> 5.0.0'
 pod 'RxCocoa'
+pod 'RxDataSources', '~> 4.0'
 pod 'Then'
 pod 'TextFieldEffects'
   target 'TakeOffTests' do
