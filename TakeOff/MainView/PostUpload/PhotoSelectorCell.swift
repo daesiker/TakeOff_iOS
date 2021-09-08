@@ -19,6 +19,7 @@ class PhotoSelectorCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        setUI()
     }
     
     required init?(coder: NSCoder) {
@@ -26,7 +27,6 @@ class PhotoSelectorCell: UICollectionViewCell {
     }
     
     func setUI() {
-        backgroundColor = .brown
         addSubview(photoImageView)
         photoImageView.snp.makeConstraints {
             $0.edges.equalToSuperview()

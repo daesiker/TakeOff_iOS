@@ -17,8 +17,14 @@ struct PostUpload {
 }
 
 struct PostUploadSectionModel {
-    var header: String
+    
+    var header: [PostUpload]
     var items: [PostUpload]
+    
+    init() {
+        self.header = []
+        self.items = []
+    }
 }
 
 extension PostUploadSectionModel: SectionModelType {

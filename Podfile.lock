@@ -59,6 +59,7 @@ PODS:
   - FirebaseStorage (8.4.0):
     - FirebaseCore (~> 8.0)
     - GTMSessionFetcher/Core (~> 1.5)
+  - FSPagerView (0.8.3)
   - GoogleAppMeasurement (8.4.0):
     - GoogleAppMeasurement/AdIdSupport (= 8.4.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.4)
@@ -122,6 +123,7 @@ DEPENDENCIES:
   - Firebase/Auth (~> 8.4.0)
   - Firebase/Database (~> 8.4.0)
   - Firebase/Storage (~> 8.4.0)
+  - FSPagerView
   - RxCocoa
   - RxDataSources (~> 4.0)
   - RxSwift (~> 5.0.0)
@@ -140,6 +142,7 @@ SPEC REPOS:
     - FirebaseDatabase
     - FirebaseInstallations
     - FirebaseStorage
+    - FSPagerView
     - GoogleAppMeasurement
     - GoogleDataTransport
     - GoogleUtilities
@@ -165,6 +168,7 @@ SPEC CHECKSUMS:
   FirebaseDatabase: 38f21731dea277e454060d0d39c1bf2aaa12bbb9
   FirebaseInstallations: 1585729afc787877763208c2088ed84221161f77
   FirebaseStorage: e6065bcbf70e2a06a8c3ddc66cbe03a395bbddc4
+  FSPagerView: 670405b2f18e2a87fa37f20b00de783e562c25a8
   GoogleAppMeasurement: 6b6a08fd9c71f4dbc89e0e812acca81d797aa342
   GoogleDataTransport: 85fd18ff3019bb85d3f2c551d04c481dedf71fc9
   GoogleUtilities: eea970f4a389963963bffe8d8fabe43540678b9c
@@ -180,6 +184,6 @@ SPEC CHECKSUMS:
   TextFieldEffects: 529b8aff706fb40f82c41c780c0777941a893796
   Then: acfe0be7e98221c6204e12f8161459606d5d822d
 
-PODFILE CHECKSUM: a1d69e7b6f51f9ef94eb5a5a47b63e7530ceb1b9
+PODFILE CHECKSUM: e24742e60b901bd546c028faad61af00c39c8e24
 
 COCOAPODS: 1.10.1
