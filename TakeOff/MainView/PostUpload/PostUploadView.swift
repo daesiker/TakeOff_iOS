@@ -22,6 +22,7 @@ class PostUploadView: UICollectionViewController {
     var dataSource = RxCollectionViewSectionedReloadDataSource<PostUploadSectionModel> { ds, cv, ip, item in
         let cell = cv.dequeueReusableCell(withReuseIdentifier: "cellId", for: ip) as! PhotoSelectorCell
         cell.photoImageView.image = ds.sectionModels[0].items[ip.item].image
+        cell.text.text = String(ds.sectionModels[0].items[ip.item].number)
         return cell
     } configureSupplementaryView: { ds, cv, kind, ip in
         let header = cv.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "headerId", for: ip) as! PhotoSelectorHeader
@@ -33,6 +34,7 @@ class PostUploadView: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView.backgroundColor = .white
+        setupNavigationButtons()
         setupCollectionView()
         setupViewModel()
     }
@@ -54,8 +56,11 @@ extension PostUploadView {
                 return self?.dataSource[indexPath]
             }
             .subscribe(onNext: { [weak self] item in
-                if let item = item {
-                    dataSource.sectionModels[0].header.append(item)
+                if var item = item {
+                    if let vm = self?.vm {
+                        vm.seletedItem(value: item)
+                        item.number = (vm.section.header.firstIndex(of: item) ?? 0) + 1
+                    }
                 }
                 self?.collectionView.reloadData()
             })
@@ -73,7 +78,21 @@ extension PostUploadView {
         
     }
     
+    fileprivate func setupNavigationButtons() {
+        navigationController?.navigationBar.tintColor = UIColor.mainColor
+        navigationController?.title = "New Post"
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(handleCancel))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Next", style: .plain, target: self, action: #selector(handleNext))
+    }
     
+    @objc func handleNext() {
+        let sharePhotoController = SharePhotoController()
+        navigationController?.pushViewController(sharePhotoController, animated: true)
+    }
+    
+    @objc func handleCancel() {
+        dismiss(animated: true, completion: nil)
+    }
 }
 
 
@@ -100,7 +119,5 @@ extension PostUploadView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 1, left: 0, bottom: 0, right: 0)
     }
-    
-    
     
 }

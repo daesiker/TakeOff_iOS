@@ -32,6 +32,8 @@ class PhotoSelectorHeader: UICollectionViewCell {
     let pageControl = FSPageControl().then {
         $0.setStrokeColor(.gray, for: .normal)
         $0.setStrokeColor(UIColor.mainColor, for: .selected)
+        $0.setFillColor(.gray, for: .normal)
+        $0.setFillColor(UIColor.mainColor, for: .selected)
         $0.hidesForSinglePage = false
     }
     
@@ -74,6 +76,9 @@ class PhotoSelectorHeader: UICollectionViewCell {
         
         layoutView.addSubview(pageControl)
         pageControl.snp.makeConstraints {
+            $0.width.equalToSuperview().multipliedBy(0.4)
+            $0.height.equalToSuperview().multipliedBy(0.08)
+            $0.centerX.equalToSuperview()
             $0.bottom.equalToSuperview().offset(-4)
         }
     }
@@ -111,6 +116,10 @@ extension PhotoSelectorHeader: FSPagerViewDelegate, FSPagerViewDataSource {
     
     func pagerView(_ pagerView: FSPagerView, didSelectItemAt index: Int) {
         pagerView.deselectItem(at: index, animated: true)
+    }
+    
+    func pagerView(_ pagerView: FSPagerView, willDisplay cell: FSPagerViewCell, forItemAt index: Int) {
+        self.pageControl.currentPage = index
     }
     
     func pagerViewWillEndDragging(_ pagerView: FSPagerView, targetIndex: Int) {

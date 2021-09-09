@@ -11,7 +11,7 @@ import RxDataSources
 
 
 
-struct PostUpload {
+struct PostUpload: Equatable {
     var number: Int
     var image: UIImage
 }

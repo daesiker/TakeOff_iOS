@@ -17,25 +17,48 @@ class PostUploadViewModel {
     var items = BehaviorRelay<[PostUploadSectionModel]>(value: [])
     let isMultiSelected = BehaviorRelay<Bool>(value: false)
     let disposeBag = DisposeBag()
+    var section = PostUploadSectionModel()
     
     func updateItems() {
-        var section = PostUploadSectionModel()
         fetchPhotos().subscribe { result in
             switch result {
             case .next(let image):
                 var postUpload = PostUpload(number: 0, image: image)
-                if section.header.isEmpty {
-                    postUpload.number += 1
-                    section.header.append(postUpload)
+                if self.section.header.isEmpty {
+                    self.section.header.append(postUpload)
+                    postUpload.number = (self.section.header.firstIndex(of: postUpload) ?? 0) + 1
                 }
-                section.items.append(postUpload)
+                self.section.items.append(postUpload)
             case .completed:
-                self.items.accept([section])
+                self.items.accept([self.section])
             case .error(let error):
                 print(error)
             }
         }
         .disposed(by: disposeBag)
+    }
+    
+    func seletedItem(value: PostUpload) {
+        if isMultiSelected.value {
+            var index = 0
+            let check = section.header.contains { post in
+                if post == value {
+                    index = section.header.firstIndex(of: post) ?? 0
+                    return true
+                }
+                else { return false}
+            }
+            if check {
+                if section.header.count != 1 {
+                    section.header.remove(at: index)
+                }
+            } else {
+                section.header.append(value)
+            }
+        } else {
+            self.section.header = [value]
+        }
+        self.items.accept([self.section])
     }
     
     
