@@ -18,8 +18,8 @@ struct PostUpload: Equatable {
 
 struct PostUploadSectionModel {
     
-    var header: [PostUpload]
-    var items: [PostUpload]
+    var header: [UIImage]
+    var items: [UIImage]
     
     init() {
         self.header = []
@@ -28,7 +28,7 @@ struct PostUploadSectionModel {
 }
 
 extension PostUploadSectionModel: SectionModelType {
-    init(original: PostUploadSectionModel, items: [PostUpload]) {
+    init(original: PostUploadSectionModel, items: [UIImage]) {
         self = original
         self.items = items
     }

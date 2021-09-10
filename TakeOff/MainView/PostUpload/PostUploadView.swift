@@ -21,12 +21,24 @@ class PostUploadView: UICollectionViewController {
     
     var dataSource = RxCollectionViewSectionedReloadDataSource<PostUploadSectionModel> { ds, cv, ip, item in
         let cell = cv.dequeueReusableCell(withReuseIdentifier: "cellId", for: ip) as! PhotoSelectorCell
-        cell.photoImageView.image = ds.sectionModels[0].items[ip.item].image
-        cell.text.text = String(ds.sectionModels[0].items[ip.item].number)
+        let image = ds.sectionModels[0].items[ip.item]
+        cell.photoImageView.image = image
+        var index = -1
+        let selectedImages = ds.sectionModels[0].header
+        if selectedImages.contains(image) {
+            index = selectedImages.firstIndex(of: image) ?? -1
+        }
+        if index != -1 {
+            if selectedImages.count == 1 {
+                cell.text.text = "V"
+            } else {
+                cell.text.text = String(index + 1)
+            }
+        }
         return cell
     } configureSupplementaryView: { ds, cv, kind, ip in
         let header = cv.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "headerId", for: ip) as! PhotoSelectorHeader
-        header.images = ds.sectionModels[ip.section].header
+        header.images = ds.sectionModels[0].header
         header.pagerView.reloadData()
         return header
     }
@@ -52,16 +64,14 @@ extension PostUploadView {
         collectionView.register(PhotoSelectorHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerId)
         collectionView.rx.setDelegate(self).disposed(by: disposeBag)
         collectionView.rx.itemSelected
-            .map { [weak self] indexPath -> PostUpload? in
+            .map { [weak self] indexPath -> UIImage? in
                 return self?.dataSource[indexPath]
             }
             .subscribe(onNext: { [weak self] item in
-                if var item = item {
                     if let vm = self?.vm {
-                        vm.seletedItem(value: item)
-                        item.number = (vm.section.header.firstIndex(of: item) ?? 0) + 1
+                        vm.seletedItem(value: item!)
                     }
-                }
+                
                 self?.collectionView.reloadData()
             })
             .disposed(by: disposeBag)
@@ -87,6 +97,7 @@ extension PostUploadView {
     
     @objc func handleNext() {
         let sharePhotoController = SharePhotoController()
+        sharePhotoController.images = vm.items.value[0].header
         navigationController?.pushViewController(sharePhotoController, animated: true)
     }
     

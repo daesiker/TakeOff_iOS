@@ -14,7 +14,7 @@ import RxSwift
 
 class PhotoSelectorHeader: UICollectionViewCell {
     var disposeBag = DisposeBag()
-    var images:[PostUpload] = []
+    var images:[UIImage] = []
     let vm = PostUploadViewModel.instance
     
     let layoutView = UIView().then {
@@ -34,6 +34,7 @@ class PhotoSelectorHeader: UICollectionViewCell {
         $0.setStrokeColor(UIColor.mainColor, for: .selected)
         $0.setFillColor(.gray, for: .normal)
         $0.setFillColor(UIColor.mainColor, for: .selected)
+        $0.backgroundColor = .blue
         $0.hidesForSinglePage = false
     }
     
@@ -76,8 +77,8 @@ class PhotoSelectorHeader: UICollectionViewCell {
         
         layoutView.addSubview(pageControl)
         pageControl.snp.makeConstraints {
-            $0.width.equalToSuperview().multipliedBy(0.4)
             $0.height.equalToSuperview().multipliedBy(0.08)
+            $0.width.equalToSuperview().multipliedBy(0.5)
             $0.centerX.equalToSuperview()
             $0.bottom.equalToSuperview().offset(-4)
         }
@@ -109,7 +110,7 @@ extension PhotoSelectorHeader: FSPagerViewDelegate, FSPagerViewDataSource {
     
     func pagerView(_ pagerView: FSPagerView, cellForItemAt index: Int) -> FSPagerViewCell {
         let cell = pagerView.dequeueReusableCell(withReuseIdentifier: "cell", at: index)
-        cell.imageView?.image = images[index].image
+        cell.imageView?.image = images[index]
         cell.imageView?.clipsToBounds = true
         return cell
     }

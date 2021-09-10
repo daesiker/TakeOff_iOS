@@ -23,12 +23,10 @@ class PostUploadViewModel {
         fetchPhotos().subscribe { result in
             switch result {
             case .next(let image):
-                var postUpload = PostUpload(number: 0, image: image)
                 if self.section.header.isEmpty {
-                    self.section.header.append(postUpload)
-                    postUpload.number = (self.section.header.firstIndex(of: postUpload) ?? 0) + 1
+                    self.section.header.append(image)
                 }
-                self.section.items.append(postUpload)
+                self.section.items.append(image)
             case .completed:
                 self.items.accept([self.section])
             case .error(let error):
@@ -38,7 +36,7 @@ class PostUploadViewModel {
         .disposed(by: disposeBag)
     }
     
-    func seletedItem(value: PostUpload) {
+    func seletedItem(value: UIImage) {
         if isMultiSelected.value {
             var index = 0
             let check = section.header.contains { post in
@@ -58,6 +56,7 @@ class PostUploadViewModel {
         } else {
             self.section.header = [value]
         }
+        
         self.items.accept([self.section])
     }
     
@@ -65,7 +64,7 @@ class PostUploadViewModel {
     fileprivate func assetsFetchOptions() -> PHFetchOptions {
         let fetchOptions = PHFetchOptions()
         fetchOptions.fetchLimit = 30
-    
+        
         let sortDescriptor = NSSortDescriptor(key: "creationDate", ascending: false)
         fetchOptions.sortDescriptors = [sortDescriptor]
         return fetchOptions

@@ -17,7 +17,7 @@ class SharePhotoViewModel {
     
     struct Input {
         let textObserver = BehaviorRelay<String>(value: "")
-        var imageObserver = BehaviorRelay<UIImage>(value: UIImage(named: "")!)
+        //var imageObserver = BehaviorRelay<UIImage>(value: UIImage(named: "")!)
         let buttonObserver = PublishRelay<Void>()
     }
     
