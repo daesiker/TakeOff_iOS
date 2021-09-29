@@ -21,19 +21,25 @@ class PostUploadView: UICollectionViewController {
     
     var dataSource = RxCollectionViewSectionedReloadDataSource<PostUploadSectionModel> { ds, cv, ip, item in
         let cell = cv.dequeueReusableCell(withReuseIdentifier: "cellId", for: ip) as! PhotoSelectorCell
+        //전체 이미지를 가져옴
         let image = ds.sectionModels[0].items[ip.item]
+        //이미지를 ImageView에 넣고
         cell.photoImageView.image = image
+        //인덱스 값 초기화
         var index = -1
+        //선택된 이미지들을 가져오고
         let selectedImages = ds.sectionModels[0].header
+        //이미지가 선택되어 있으면 인덱스 값을 가져온다.
         if selectedImages.contains(image) {
+        
             index = selectedImages.firstIndex(of: image) ?? -1
         }
         if index != -1 {
-            if selectedImages.count == 1 {
-                cell.text.text = "V"
-            } else {
-                cell.text.text = String(index + 1)
-            }
+            cell.text.text = String(index + 1)
+            cell.text.backgroundColor = UIColor.mainColor
+        } else {
+            cell.text.text = ""
+            cell.text.backgroundColor = UIColor.clear
         }
         return cell
     } configureSupplementaryView: { ds, cv, kind, ip in
@@ -42,7 +48,7 @@ class PostUploadView: UICollectionViewController {
         header.pagerView.reloadData()
         return header
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView.backgroundColor = .white
@@ -51,10 +57,12 @@ class PostUploadView: UICollectionViewController {
         setupViewModel()
     }
     
+    
     override var prefersStatusBarHidden: Bool {
         return true
     }
 }
+
 
 extension PostUploadView {
     private func setupCollectionView() {
@@ -68,10 +76,9 @@ extension PostUploadView {
                 return self?.dataSource[indexPath]
             }
             .subscribe(onNext: { [weak self] item in
-                    if let vm = self?.vm {
-                        vm.seletedItem(value: item!)
-                    }
-                
+                if let vm = self?.vm {
+                    vm.seletedItem(value: item!)
+                }
                 self?.collectionView.reloadData()
             })
             .disposed(by: disposeBag)
@@ -86,6 +93,13 @@ extension PostUploadView {
             .disposed(by: disposeBag)
         vm.updateItems()
         
+        vm.isMultiSelected.bind { value in
+            
+            self.collectionView.reloadData()
+            self.collectionView.collectionViewLayout.invalidateLayout()
+        }
+        .disposed(by: disposeBag)
+        
     }
     
     fileprivate func setupNavigationButtons() {
@@ -96,18 +110,21 @@ extension PostUploadView {
     }
     
     @objc func handleNext() {
+        vm.clear()
         let sharePhotoController = SharePhotoController()
         sharePhotoController.images = vm.items.value[0].header
         navigationController?.pushViewController(sharePhotoController, animated: true)
     }
     
     @objc func handleCancel() {
+        vm.clear()
         dismiss(animated: true, completion: nil)
     }
 }
 
 
 extension PostUploadView: UICollectionViewDelegateFlowLayout {
+    
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 1

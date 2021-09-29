@@ -13,23 +13,31 @@ class PhotoSelectorCell: UICollectionViewCell {
     
     let vm = PostUploadViewModel.instance
     
-    let photoImageView = UIImageView().then {
+    lazy var photoImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFill
         $0.clipsToBounds = true
         $0.backgroundColor = .lightGray
     }
     
-    let text = UILabel().then {
+    lazy var text = UILabel().then {
+        $0.layer.masksToBounds = true
+        $0.layer.cornerRadius = 15.0
+        $0.layer.borderWidth = 1.0
+        $0.layer.borderColor = UIColor.white.cgColor
         $0.text = ""
-        $0.textColor = .black
+        $0.textAlignment = .center
+        $0.textColor = .white
     }
-    
-    
-    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         setUI()
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        if vm.isMultiSelected.value == false { text.isHidden = true }
+        else { text.isHidden = false }
     }
     
     required init?(coder: NSCoder) {
@@ -37,17 +45,18 @@ class PhotoSelectorCell: UICollectionViewCell {
     }
     
     func setUI() {
+        
         addSubview(photoImageView)
         photoImageView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
-        if vm.isMultiSelected.value {
-            addSubview(text)
-            text.snp.makeConstraints {
-                $0.top.equalToSuperview().offset(5)
-                $0.bottom.equalToSuperview().offset(-5)
-                $0.width.height.equalTo(20)
-            }
+        
+        photoImageView.addSubview(text)
+        text.isHidden = true
+        text.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(5)
+            $0.right.equalToSuperview().offset(-5)
+            $0.width.height.equalToSuperview().multipliedBy(0.3)
         }
         
     }

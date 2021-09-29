@@ -38,7 +38,7 @@ class PostUploadViewModel {
     
     func seletedItem(value: UIImage) {
         if isMultiSelected.value {
-            var index = 0
+            var index = -1
             let check = section.header.contains { post in
                 if post == value {
                     index = section.header.firstIndex(of: post) ?? 0
@@ -46,6 +46,7 @@ class PostUploadViewModel {
                 }
                 else { return false}
             }
+            
             if check {
                 if section.header.count != 1 {
                     section.header.remove(at: index)
@@ -60,7 +61,9 @@ class PostUploadViewModel {
         self.items.accept([self.section])
     }
     
-    
+    /**
+        사진 파일 가져오기 옵션값 리턴
+     */
     fileprivate func assetsFetchOptions() -> PHFetchOptions {
         let fetchOptions = PHFetchOptions()
         fetchOptions.fetchLimit = 30
@@ -70,6 +73,10 @@ class PostUploadViewModel {
         return fetchOptions
     }
     
+    
+    /**
+     사진 App에 있는 사진 이미지를 Observable로 하나씩 리턴
+     */
     fileprivate func fetchPhotos() -> Observable<UIImage> {
         let allPhotos = PHAsset.fetchAssets(with: .image, options: assetsFetchOptions())
         
@@ -89,6 +96,13 @@ class PostUploadViewModel {
             observe.onCompleted()
             return Disposables.create()
         }
+    }
+    
+    func clear() {
+        self.section = PostUploadSectionModel()
+        self.items.accept([self.section])
+        
+        
     }
 }
 

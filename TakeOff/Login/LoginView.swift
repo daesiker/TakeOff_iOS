@@ -19,19 +19,20 @@ class LoginView: UIViewController {
     var handle: AuthStateDidChangeListenerHandle!
     
     // Layout View
-    let logoLayout = UIView()
+    let backgroundView = UIImageView(image: UIImage(named: "background"))
+    let logoLayout = UIView().then {
+        $0.backgroundColor = .red
+    }
     let scrollView = UIScrollView().then {
         $0.alwaysBounceVertical = false
-        $0.showsVerticalScrollIndicator = false   
+        $0.showsVerticalScrollIndicator = false
+        $0.backgroundColor = .blue
     }
     let contentLayout = UIView()
     
     
-    
-    // Image View
-    let backgroundView = UIImageView(image: UIImage(named: "background"))
+    // Component View
     let logoImageView = UIImageView(image: UIImage(named: "logo"))
-    
     let emailTextField = HoshiTextField().then {
         $0.placeholder = "Email"
         $0.placeholderColor = UIColor.mainColor
@@ -190,9 +191,9 @@ class LoginView: UIViewController {
     }
     // MARK:- Set UI
     private func setUI() {
-        self.setLayout()
-        // Set Logo
-        logoLayout.addSubview(logoImageView)          
+        setLayout()
+         //Set Logo
+        logoLayout.addSubview(logoImageView)
         logoImageView.snp.makeConstraints {
             $0.height.equalTo(150)
             $0.height.width.lessThanOrEqualToSuperview()
@@ -200,6 +201,7 @@ class LoginView: UIViewController {
             $0.center.equalToSuperview()
         }
         
+        // Set login TextField Stack
         let stackView = UIStackView(arrangedSubviews: [emailTextField, passwordTextField]).then {
             $0.axis = .vertical
             $0.spacing = 15
@@ -207,7 +209,7 @@ class LoginView: UIViewController {
             $0.alignment = .leading
         }
         self.setInputFields(stackView)
-        
+
         // Set LoginButton
         contentLayout.addSubview(loginButton)
         loginButton.snp.makeConstraints {
@@ -225,16 +227,15 @@ class LoginView: UIViewController {
         
         self.setSignUp()   
     }
+    
     private func setLayout() {
         view.addSubview(backgroundView)
         backgroundView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
-        
         self.safeView.addSubview(logoLayout)
         self.safeView.addSubview(scrollView)
         scrollView.addSubview(contentLayout)
-        
         logoLayout.snp.makeConstraints {
             $0.top.left.right.equalToSuperview()
             $0.height.equalToSuperview().multipliedBy(0.3)
@@ -247,6 +248,7 @@ class LoginView: UIViewController {
             $0.width.edges.equalToSuperview()   
         }
     }
+    
     private func setInputFields(_ stackView:UIStackView) {
         contentLayout.addSubview(stackView)
         stackView.snp.makeConstraints {
@@ -261,6 +263,7 @@ class LoginView: UIViewController {
             }
         }
     }
+    
     private func setSignUp() {
         contentLayout.addSubview(signupButton)
         signupButton.snp.makeConstraints {

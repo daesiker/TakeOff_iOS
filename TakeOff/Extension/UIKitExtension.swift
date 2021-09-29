@@ -7,6 +7,7 @@
 
 import UIKit
 import RxDataSources
+import Then
 
 extension UIColor {
     //rgb 컬러 정수로 계산하는 UIColor Extension
@@ -22,12 +23,13 @@ extension UIColor {
 
 extension UIViewController {
     var safeView:UIView {
+        //get 방식을 통해 읽기전용으로 sageView 구현
         get{
             guard let safeView = self.view.viewWithTag(Int(INT_MAX)) else {
                 let guide = self.view.safeAreaLayoutGuide
                 let view = UIView()
                 view.tag = Int(INT_MAX)
-//                view.layer.zPosition = CGFloat(Float.greatestFiniteMagnitude)
+                //view.layer.zPosition = CGFloat(Float.greatestFiniteMagnitude)
                 self.view.addSubview(view)
                 view.translatesAutoresizingMaskIntoConstraints = false
                 NSLayoutConstraint.activate([
@@ -43,6 +45,7 @@ extension UIViewController {
     }
 }
 
+
 extension UIButton {
     func setBackgroundColor(_ color: UIColor, for state: UIControl.State) {
         UIGraphicsBeginImageContext(CGSize(width: 1.0, height: 1.0))
@@ -52,7 +55,7 @@ extension UIButton {
         
         let backgroundImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-         
+        
         self.setBackgroundImage(backgroundImage, for: state)
     }
 }

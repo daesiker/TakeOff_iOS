@@ -8,14 +8,6 @@
 import Foundation
 import RxDataSources
 
-
-
-
-struct PostUpload: Equatable {
-    var number: Int
-    var image: UIImage
-}
-
 struct PostUploadSectionModel {
     
     var header: [UIImage]
@@ -25,6 +17,7 @@ struct PostUploadSectionModel {
         self.header = []
         self.items = []
     }
+    
 }
 
 extension PostUploadSectionModel: SectionModelType {

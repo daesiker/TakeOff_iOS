@@ -34,8 +34,8 @@ class PhotoSelectorHeader: UICollectionViewCell {
         $0.setStrokeColor(UIColor.mainColor, for: .selected)
         $0.setFillColor(.gray, for: .normal)
         $0.setFillColor(UIColor.mainColor, for: .selected)
-        $0.backgroundColor = .blue
-        $0.hidesForSinglePage = false
+        $0.itemSpacing = 16
+        $0.interitemSpacing = 16
     }
     
     override init(frame: CGRect) {
@@ -98,6 +98,11 @@ class PhotoSelectorHeader: UICollectionViewCell {
             })
             .disposed(by: disposeBag)
         
+        
+        vm.isMultiSelected.subscribe {
+            self.reloadInputViews()
+        }
+        .disposed(by: disposeBag)
     }
     
 }
