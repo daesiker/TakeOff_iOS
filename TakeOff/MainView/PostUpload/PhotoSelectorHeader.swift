@@ -34,8 +34,7 @@ class PhotoSelectorHeader: UICollectionViewCell {
         $0.setStrokeColor(UIColor.mainColor, for: .selected)
         $0.setFillColor(.gray, for: .normal)
         $0.setFillColor(UIColor.mainColor, for: .selected)
-        $0.itemSpacing = 16
-        $0.interitemSpacing = 16
+        $0.hidesForSinglePage = true
     }
     
     override init(frame: CGRect) {
@@ -77,7 +76,7 @@ class PhotoSelectorHeader: UICollectionViewCell {
         
         layoutView.addSubview(pageControl)
         pageControl.snp.makeConstraints {
-            $0.height.equalToSuperview().multipliedBy(0.08)
+            $0.height.equalToSuperview().multipliedBy(0.1)
             $0.width.equalToSuperview().multipliedBy(0.5)
             $0.centerX.equalToSuperview()
             $0.bottom.equalToSuperview().offset(-4)

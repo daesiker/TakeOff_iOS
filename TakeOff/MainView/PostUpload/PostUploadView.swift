@@ -110,9 +110,7 @@ extension PostUploadView {
     }
     
     @objc func handleNext() {
-        vm.clear()
-        let sharePhotoController = SharePhotoController()
-        sharePhotoController.images = vm.items.value[0].header
+        let sharePhotoController = SharePhotoController(images: vm.items.value[0].header)
         navigationController?.pushViewController(sharePhotoController, animated: true)
     }
     

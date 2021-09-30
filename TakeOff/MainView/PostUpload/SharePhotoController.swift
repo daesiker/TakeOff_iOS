@@ -17,12 +17,11 @@ class SharePhotoController: UIViewController {
     
     let vm = SharePhotoViewModel()
     var disposeBag = DisposeBag()
+    var images:[UIImage]
     
-    var images:[UIImage] = []
-    
-    
+    let backgroundView = UIImageView(image: UIImage(named: "background"))
     let contentView = UIView().then {
-        $0.backgroundColor = .white
+        $0.backgroundColor = .clear
     }
     
     let pagerView = FSPagerView().then {
@@ -34,13 +33,15 @@ class SharePhotoController: UIViewController {
         $0.setStrokeColor(UIColor.mainColor, for: .selected)
         $0.setFillColor(.gray, for: .normal)
         $0.setFillColor(UIColor.mainColor, for: .selected)
-        $0.hidesForSinglePage = false
+        $0.hidesForSinglePage = true
     }
     
     
     let textView = UITextView().then {
+        $0.text = "문구 입력"
         $0.font = UIFont.systemFont(ofSize: 14)
-        
+        $0.textColor = UIColor.lightGray
+        $0.backgroundColor = UIColor.rgb(red: 240, green: 240, blue: 240)
     }
     
     let shareButton = UIBarButtonItem().then {
@@ -49,12 +50,21 @@ class SharePhotoController: UIViewController {
         $0.target = $0
     }
     
+    init(images: [UIImage]) {
+        self.images = images
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         textView.delegate = self
         setPagerView()
         setUI()
-        bind()
+        //bind()
     }
     
     override var prefersStatusBarHidden: Bool {
@@ -74,7 +84,10 @@ extension SharePhotoController: SignUpViewAttributes {
     }
     
     func setUI() {
-        view.backgroundColor = UIColor.rgb(red: 240, green: 240, blue: 240)
+        view.addSubview(backgroundView)
+        backgroundView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
         navigationItem.rightBarButtonItem = shareButton
         
         safeView.addSubview(contentView)
@@ -86,16 +99,27 @@ extension SharePhotoController: SignUpViewAttributes {
         
         contentView.addSubview(pagerView)
         pagerView.snp.makeConstraints {
-            $0.top.left.right.equalToSuperview()
+            $0.top.equalToSuperview().offset(8)
+            $0.left.right.equalTo(self.safeView)
             $0.height.equalToSuperview().multipliedBy(0.5)
+        }
+
+        pagerView.addSubview(pageControl)
+        pageControl.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.bottom.equalToSuperview().offset(-8)
+            $0.width.equalToSuperview().multipliedBy(0.5)
+            $0.height.equalToSuperview().multipliedBy(0.1)
         }
         
         contentView.addSubview(textView)
         textView.snp.makeConstraints {
-            $0.top.equalTo(pageControl.snp.bottom).offset(2)
-            $0.left.right.equalToSuperview()
+            $0.top.equalTo(pagerView.snp.bottom).offset(8)
+            $0.left.right.equalTo(self.safeView)
             $0.height.equalToSuperview().multipliedBy(0.3)
         }
+        
+        //위치 추가해주기
         
         
     }
@@ -109,13 +133,6 @@ extension SharePhotoController: SignUpViewAttributes {
         textView.rx.text.orEmpty
             .bind(to: vm.input.textObserver)
             .disposed(by: disposeBag)
-        
-            
-        
-//        vm.input.imageObserver
-//            .bind(to: imageView.rx.image)
-//            .disposed(by: disposeBag)
-        
         
         shareButton.rx.tap
             .bind(to: vm.input.buttonObserver)
@@ -160,29 +177,16 @@ extension SharePhotoController: FSPagerViewDelegate, FSPagerViewDataSource {
 extension SharePhotoController: UITextViewDelegate {
     
     func textViewDidBeginEditing(_ textView: UITextView) {
-        textViewSetupView()
+        if textView.textColor == UIColor.lightGray {
+            textView.text = nil
+            textView.textColor = UIColor.black
+        }
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
-        if textView.text == "" {
-            textViewSetupView()
-        }
-    }
-    
-    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        if text == "\n" {
-            textView.resignFirstResponder()
-        }
-        return true
-    }
-    
-    func textViewSetupView() {
-        if textView.text == "내용입력" {
-            textView.text = ""
-            textView.textColor = .black
-        } else if textView.text == "" {
-            textView.text = "내용입력"
-            textView.textColor = .gray
+        if textView.text.isEmpty {
+            textView.text = "문구 입력"
+            textView.textColor = UIColor.lightGray
         }
     }
     
