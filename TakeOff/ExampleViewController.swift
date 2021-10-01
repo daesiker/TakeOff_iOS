@@ -23,22 +23,38 @@ class ExampleViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let bag = DisposeBag()
+        let disposeBag = DisposeBag()
 
+        enum MyError: Error {
+           case error
+        }
+        
+        let b = BehaviorSubject<Int>(value: 4)
 
+        b.onNext(10)
 
-        let o1 = Observable<Int>.interval(.seconds(1), scheduler: MainScheduler.instance)
-            .subscribe {
-                print($0)
-            }
+        b.subscribe {
+            print("BehaviorSubject >> ", $0)
+        }
+        .disposed(by: disposeBag)
 
+        b.onNext(100)
 
-        DispatchQueue.main
-            .asyncAfter(deadline: .now() + 5) {
-                o1.dispose()
-            }
+        b.subscribe {
+            print("BehaviorSubject222 >> ", $0)
+        }
+        .disposed(by: disposeBag)
 
+        //b.onCompleted()
+        b.onError(MyError.error)
 
+        b.subscribe {
+            print("BehaviorSubject333> ", $0)
+        }
+        .disposed(by: disposeBag)
+        
+        
+        
         
         view.backgroundColor = .red
         safeView.backgroundColor = .blue // 처음 부른 시점에 safeView가 생성된다.

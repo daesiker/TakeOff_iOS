@@ -126,7 +126,8 @@ class SignUpViewModel {
             case .error(let error):
                 errorRelay.accept(error)
             }
-        }.disposed(by: disposeBag)
+        }
+        .disposed(by: disposeBag)
         
         stepThree.input.signUpTap.bind(to: signUpRelay).disposed(by: disposeBag)
         stepThree.output.goSignUp = signUpRelay.asSignal()

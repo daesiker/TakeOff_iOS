@@ -64,7 +64,7 @@ class SharePhotoController: UIViewController {
         textView.delegate = self
         setPagerView()
         setUI()
-        //bind()
+        bind()
     }
     
     override var prefersStatusBarHidden: Bool {
@@ -120,8 +120,6 @@ extension SharePhotoController: SignUpViewAttributes {
         }
         
         //위치 추가해주기
-        
-        
     }
     
     func bind() {
@@ -137,6 +135,11 @@ extension SharePhotoController: SignUpViewAttributes {
         shareButton.rx.tap
             .bind(to: vm.input.buttonObserver)
             .disposed(by: disposeBag)
+        
+        Observable.just(images)
+            .bind(to: vm.input.imageObserver)
+            .disposed(by: disposeBag)
+        
     }
     
     func bindOutput() {
@@ -193,59 +196,3 @@ extension SharePhotoController: UITextViewDelegate {
 }
 
 
-//@objc func handleShare() {
-//    guard let caption = textView.text, !caption.isEmpty else { return }
-//    guard let image = selectedImage else { return }
-//    guard let uploadData = image.jpegData(compressionQuality: 0.5) else { return }
-//
-//    navigationItem.rightBarButtonItem?.isEnabled = false
-//
-//    let fileName = NSUUID().uuidString
-//    let storageRef = Storage.storage().reference().child("posts").child(fileName)
-//
-//    storageRef.putData(uploadData, metadata: nil) { (metadata, err) in
-//        if let err = err {
-//            self.navigationItem.rightBarButtonItem?.isEnabled = true
-//            print("Failed to upload post image: ", err)
-//            return
-//        }
-//
-//        storageRef.downloadURL { downloadURL, err in
-//            if let err = err {
-//                print("Failed to fetch downloadURL: ", err)
-//                return
-//            }
-//
-//            guard let imageUrl = downloadURL?.absoluteString else { return }
-//            print("Successfully uploaded post image:", imageUrl)
-//
-//
-//        }
-//
-//    }
-//
-//}
-//
-//fileprivate func saveToDatabaseWithImageUrl(imageUrl: String) {
-//    //guard let postImage = selectedImage else { return }
-//    guard let caption = textView.text else { return }
-//    guard let uid = Auth.auth().currentUser?.uid else { return }
-//
-//    let userPostRef = Database.database().reference().child("posts").child(uid)
-//    let ref = userPostRef.childByAutoId()
-//
-//    let values:[String:Any] = ["imageUrl": imageUrl,
-//                               "caption": caption,
-//                               "creationDate": Date().timeIntervalSince1970 ]
-//    ref.updateChildValues(values) { (err, ref) in
-//        if let err = err {
-//            self.navigationItem.rightBarButtonItem?.isEnabled = true
-//            print("Failed to save post to DB", err)
-//            return
-//        }
-//
-//        self.dismiss(animated: true, completion: nil)
-//
-//    }
-//
-//}
