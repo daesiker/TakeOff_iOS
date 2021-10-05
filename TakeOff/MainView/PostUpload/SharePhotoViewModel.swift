@@ -26,58 +26,62 @@ class SharePhotoViewModel {
     struct Output {
         var shareDB:Signal<Void> = PublishRelay<Void>().asSignal()
         var error:Signal<Error> = PublishRelay<Error>().asSignal()
+        
     }
     
     init() {
-        let shareRelay = PublishRelay<Void>()
         
-        input.buttonObserver.flatMapLatest(handleShare).subscribe { event in
-            var imageURLS:[String] = []
+        let shareRelay = PublishRelay<Void>()
+        input.buttonObserver.flatMap(handleShare).subscribe { event in
             switch event {
             case .completed:
-                self.handleShare(imageURLs: imageURLS)
-            case .next(let imageURL):
-                imageURLS.append(imageURL)
+                print("complete")
+            case .next(let imageURLs):
+                self.uploadPost(imageURLs: imageURLs)
             case .error(let error):
                 print(error)
             }
-        }.disposed(by: disposeBag)
+        }
+        .disposed(by: disposeBag)
         
         input.buttonObserver.bind(to: shareRelay).disposed(by: disposeBag)
-        output.shareDB = shareRelay.asSignal()
+        self.output.shareDB = shareRelay.asSignal()
     }
     
     
-    func handleShare() -> Observable<String>{
+    func handleShare() -> Observable<[String]>{
         
-        Observable<String>.create { valid in
-            for image in self.input.imageObserver.value {
+        Observable<[String]>.create { valid in
+            var imageURLs:[String] = []
+            for i in 0..<self.input.imageObserver.value.count {
                 let fileName = NSUUID().uuidString
                 let storageRef = Storage.storage().reference().child("posts").child(fileName)
-                let uploadData = image.jpegData(compressionQuality: 0.5) ?? Data()
+                let uploadData = self.input.imageObserver.value[i].jpegData(compressionQuality: 0.5) ?? Data()
                 
                 storageRef.putData(uploadData, metadata: nil) { (metadata, err) in
                     if let err = err {
                         valid.onError(err)
                     }
-                    
                     storageRef.downloadURL(completion: { downloadURL, err in
                         if let err = err {
                             valid.onError(err)
                         }
                         let imageUrl = downloadURL?.absoluteString ?? ""
-                        valid.onNext(imageUrl)
+                        imageURLs.append(imageUrl)
+                        if i == self.input.imageObserver.value.count - 1 {
+                            valid.onNext(imageURLs)
+                        }
                     })
                 }
             }
-            valid.onCompleted()
             return Disposables.create()
         }
         
     }
     
-    func handleShare(imageURLs: [String]) {
-        guard let uid = Auth.auth().currentUser?.uid else { return }
+    func uploadPost(imageURLs: [String]) {
+        guard let uid = Auth.auth().currentUser?.uid else { print("유저 없음"); return }
+        print("handleShare")
         let userPostRef = Database.database().reference().child("posts").child(uid)
         let ref = userPostRef.childByAutoId()
         
@@ -88,40 +92,13 @@ class SharePhotoViewModel {
         
         ref.updateChildValues(values) { (err, ref) in
             if let err = err {
-                print(err) //에러처리
+                print(err)
                 return
             }
-            print("성공")
+            
         }
         
-        
     }
-    
-//    fileprivate func saveToDatabaseWithImageUrl(imageUrl: String) {
-//        //guard let postImage = selectedImage else { return }
-//        guard let caption = textView.text else { return }
-//        guard let uid = Auth.auth().currentUser?.uid else { return }
-//
-//        let userPostRef = Database.database().reference().child("posts").child(uid)
-//        let ref = userPostRef.childByAutoId()
-//
-//        let values:[String:Any] = ["imageUrl": imageUrl,
-//                                   "caption": caption,
-//                                   "creationDate": Date().timeIntervalSince1970 ]
-//        ref.updateChildValues(values) { (err, ref) in
-//            if let err = err {
-//                self.navigationItem.rightBarButtonItem?.isEnabled = true
-//                print("Failed to save post to DB", err)
-//                return
-//            }
-//
-//            //self.dismiss(animated: true, completion: nil)
-//
-//        }
-//
-//    }
-
-    
     
     
 }

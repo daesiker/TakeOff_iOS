@@ -55,7 +55,7 @@ class ViewController: UIViewController {
             if done {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                     
-                    let vc = MainTabViewController()
+                    let vc = LoginView()
                     vc.modalPresentationStyle = .fullScreen
                     vc.modalTransitionStyle = .crossDissolve
                     self.present(vc, animated: true)

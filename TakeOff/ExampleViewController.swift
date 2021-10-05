@@ -28,16 +28,19 @@ class ExampleViewController: UIViewController {
         enum MyError: Error {
            case error
         }
-        
+        //기본값 : 4
         let b = BehaviorSubject<Int>(value: 4)
 
+        //이벤트 생성 : 10
         b.onNext(10)
 
+        //이벤트 방출
         b.subscribe {
             print("BehaviorSubject >> ", $0)
         }
         .disposed(by: disposeBag)
-
+        
+        //이벤트 생성 : 100
         b.onNext(100)
 
         b.subscribe {
@@ -53,8 +56,12 @@ class ExampleViewController: UIViewController {
         }
         .disposed(by: disposeBag)
         
-        
-        
+        //BehaviorSubject >>  next(10)
+        //BehaviorSubject >>  next(100)
+        //BehaviorSubject222 >>  next(100)
+        //BehaviorSubject >>  error(error)
+        //BehaviorSubject222 >>  error(error)
+        //BehaviorSubject333>  error(error)
         
         view.backgroundColor = .red
         safeView.backgroundColor = .blue // 처음 부른 시점에 safeView가 생성된다.

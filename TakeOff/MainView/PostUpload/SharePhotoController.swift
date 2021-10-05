@@ -144,8 +144,15 @@ extension SharePhotoController: SignUpViewAttributes {
     
     func bindOutput() {
         
+        vm.output.shareDB
+            .emit(onNext: dismiss)
+            .disposed(by: disposeBag)
+            
         
-        
+    }
+    
+    func dismiss() {
+        self.dismiss(animated: true, completion: nil)
     }
     
 }
