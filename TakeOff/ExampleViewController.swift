@@ -8,6 +8,7 @@
 import UIKit
 import Then
 import RxSwift
+import RxCocoa
 
 class ExampleViewController: UIViewController {
 
@@ -23,45 +24,37 @@ class ExampleViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let disposeBag = DisposeBag()
+        let bag = DisposeBag()
 
-        enum MyError: Error {
-           case error
+        let publishRelay = PublishRelay<Int>()
+
+
+        publishRelay.accept(3)
+
+        publishRelay.subscribe {
+            print("1 : ", $0)
         }
-        //기본값 : 4
-        let b = BehaviorSubject<Int>(value: 4)
+        .disposed(by: bag)
 
-        //이벤트 생성 : 10
-        b.onNext(10)
 
-        //이벤트 방출
-        b.subscribe {
-            print("BehaviorSubject >> ", $0)
+        publishRelay.accept(3)
+
+        let behaviorRelay = BehaviorRelay<Int>(value: 4)
+
+        behaviorRelay.subscribe {
+            print("2 : ", $0)
         }
-        .disposed(by: disposeBag)
+        .disposed(by: bag)
+
+        behaviorRelay.accept(5)
+
+        print(behaviorRelay.value)
         
-        //이벤트 생성 : 100
-        b.onNext(100)
-
-        b.subscribe {
-            print("BehaviorSubject222 >> ", $0)
-        }
-        .disposed(by: disposeBag)
-
-        //b.onCompleted()
-        b.onError(MyError.error)
-
-        b.subscribe {
-            print("BehaviorSubject333> ", $0)
-        }
-        .disposed(by: disposeBag)
+        //1 :  next(3)
+        //2 :  next(4)
+        //2 :  next(5)
+        //5
         
-        //BehaviorSubject >>  next(10)
-        //BehaviorSubject >>  next(100)
-        //BehaviorSubject222 >>  next(100)
-        //BehaviorSubject >>  error(error)
-        //BehaviorSubject222 >>  error(error)
-        //BehaviorSubject333>  error(error)
         
         view.backgroundColor = .red
         safeView.backgroundColor = .blue // 처음 부른 시점에 safeView가 생성된다.

@@ -24,7 +24,7 @@ class SharePhotoViewModel {
     }
     
     struct Output {
-        var shareDB:Signal<Void> = PublishRelay<Void>().asSignal()
+        var shareDB:Signal<Void> = PublishSubject<Void>().asSignal(onErrorJustReturn: print("error"))
         var error:Signal<Error> = PublishRelay<Error>().asSignal()
         
     }
@@ -36,8 +36,8 @@ class SharePhotoViewModel {
             switch event {
             case .completed:
                 print("complete")
-            case .next(let imageURLs):
-                self.uploadPost(imageURLs: imageURLs)
+            case .next(_):
+                print("next")
             case .error(let error):
                 print(error)
             }
@@ -69,33 +69,27 @@ class SharePhotoViewModel {
                         let imageUrl = downloadURL?.absoluteString ?? ""
                         imageURLs.append(imageUrl)
                         if i == self.input.imageObserver.value.count - 1 {
-                            valid.onNext(imageURLs)
+                            guard let uid = Auth.auth().currentUser?.uid else { print("유저 없음"); return }
+                            let userPostRef = Database.database().reference().child("posts").child(uid)
+                            let ref = userPostRef.childByAutoId()
+                            
+                            let values:[String:Any] = ["imageUrl": imageURLs,
+                                                       "contents": self.input.textObserver.value,
+                                                       "likes": 0,
+                                                       "creationDate": Date().timeIntervalSince1970]
+                            
+                            ref.updateChildValues(values) { (err, ref) in
+                                if let err = err {
+                                    print(err)
+                                    return
+                                }
+                                valid.onCompleted()
+                            }
                         }
                     })
                 }
             }
             return Disposables.create()
-        }
-        
-    }
-    
-    func uploadPost(imageURLs: [String]) {
-        guard let uid = Auth.auth().currentUser?.uid else { print("유저 없음"); return }
-        print("handleShare")
-        let userPostRef = Database.database().reference().child("posts").child(uid)
-        let ref = userPostRef.childByAutoId()
-        
-        let values:[String:Any] = ["imageUrl": imageURLs,
-                                   "contents": input.textObserver.value,
-                                   "likes": 0,
-                                   "creationDate": Date().timeIntervalSince1970]
-        
-        ref.updateChildValues(values) { (err, ref) in
-            if let err = err {
-                print(err)
-                return
-            }
-            
         }
         
     }
