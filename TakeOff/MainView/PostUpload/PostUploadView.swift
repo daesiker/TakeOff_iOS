@@ -57,6 +57,9 @@ class PostUploadView: UICollectionViewController {
         setupViewModel()
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        vm.clear()
+    }
     
     override var prefersStatusBarHidden: Bool {
         return true
@@ -115,7 +118,7 @@ extension PostUploadView {
     }
     
     @objc func handleCancel() {
-        vm.clear()
+        
         dismiss(animated: true, completion: nil)
     }
 }

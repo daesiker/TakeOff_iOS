@@ -15,7 +15,7 @@ class PostUploadViewModel {
     init() {}
     
     var items = BehaviorRelay<[PostUploadSectionModel]>(value: [])
-    let isMultiSelected = BehaviorRelay<Bool>(value: false)
+    var isMultiSelected = BehaviorRelay<Bool>(value: false)
     let disposeBag = DisposeBag()
     var section = PostUploadSectionModel()
     
@@ -100,6 +100,7 @@ class PostUploadViewModel {
     
     func clear() {
         self.section = PostUploadSectionModel()
+        self.isMultiSelected = BehaviorRelay<Bool>(value: false)
         self.items.accept([self.section])
         
         
