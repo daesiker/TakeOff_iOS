@@ -36,6 +36,10 @@
 		BF71170F26D39966006ED7AF /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF71170E26D39966006ED7AF /* HomeViewController.swift */; };
 		BF972DFB26C0F9AC000A1EDA /* SignUp3VIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF972DFA26C0F9AC000A1EDA /* SignUp3VIew.swift */; };
 		BFB9EC1B26DF0468002AA1B6 /* SharePhotoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB9EC1A26DF0467002AA1B6 /* SharePhotoViewModel.swift */; };
+		BFC02FAA271019F400FFC816 /* PostListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC02FA9271019F400FFC816 /* PostListView.swift */; };
+		BFC02FAC27101E3000FFC816 /* PostListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC02FAB27101E3000FFC816 /* PostListCell.swift */; };
+		BFC02FAE27101E4A00FFC816 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC02FAD27101E4A00FFC816 /* Post.swift */; };
+		BFC02FB02710275800FFC816 /* CustomImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC02FAF2710275800FFC816 /* CustomImageView.swift */; };
 		BFCF9BEC26DB677D00895D14 /* SharePhotoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCF9BEB26DB677D00895D14 /* SharePhotoController.swift */; };
 		BFDD2A8D26D0DFBE0056409C /* FirebaseDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDD2A8C26D0DFBE0056409C /* FirebaseDB.swift */; };
 		BFDD2A9226D0DFF20056409C /* Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDD2A9126D0DFF20056409C /* Protocol.swift */; };
@@ -103,6 +107,10 @@
 		BF71170E26D39966006ED7AF /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		BF972DFA26C0F9AC000A1EDA /* SignUp3VIew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUp3VIew.swift; sourceTree = "<group>"; };
 		BFB9EC1A26DF0467002AA1B6 /* SharePhotoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharePhotoViewModel.swift; sourceTree = "<group>"; };
+		BFC02FA9271019F400FFC816 /* PostListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostListView.swift; sourceTree = "<group>"; };
+		BFC02FAB27101E3000FFC816 /* PostListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostListCell.swift; sourceTree = "<group>"; };
+		BFC02FAD27101E4A00FFC816 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
+		BFC02FAF2710275800FFC816 /* CustomImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomImageView.swift; sourceTree = "<group>"; };
 		BFCF9BEB26DB677D00895D14 /* SharePhotoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharePhotoController.swift; sourceTree = "<group>"; };
 		BFDD2A8C26D0DFBE0056409C /* FirebaseDB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseDB.swift; sourceTree = "<group>"; };
 		BFDD2A9126D0DFF20056409C /* Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocol.swift; sourceTree = "<group>"; };
@@ -230,6 +238,7 @@
 			children = (
 				BF4591A326B7B25B0031E119 /* UIKitExtension.swift */,
 				BF4591A526B7B2D60031E119 /* FoundationExtension.swift */,
+				BFC02FAF2710275800FFC816 /* CustomImageView.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -250,6 +259,7 @@
 			isa = PBXGroup;
 			children = (
 				BF4591B026B7E8D50031E119 /* User.swift */,
+				BFC02FAD27101E4A00FFC816 /* Post.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -322,6 +332,8 @@
 			isa = PBXGroup;
 			children = (
 				BF71170E26D39966006ED7AF /* HomeViewController.swift */,
+				BFC02FA9271019F400FFC816 /* PostListView.swift */,
+				BFC02FAB27101E3000FFC816 /* PostListCell.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -568,11 +580,13 @@
 				BF606EEB26A2876E004091A5 /* ViewController.swift in Sources */,
 				BF972DFB26C0F9AC000A1EDA /* SignUp3VIew.swift in Sources */,
 				BF606EE726A2876E004091A5 /* AppDelegate.swift in Sources */,
+				BFC02FAC27101E3000FFC816 /* PostListCell.swift in Sources */,
 				BF71170F26D39966006ED7AF /* HomeViewController.swift in Sources */,
 				BF270DEB26D3309400C0E6BE /* MainTabViewController.swift in Sources */,
 				BF4591B326B7E92B0031E119 /* SignUpViewModel.swift in Sources */,
 				BFCF9BEC26DB677D00895D14 /* SharePhotoController.swift in Sources */,
 				BF4B58F626E2135800C47639 /* PostUploadView.swift in Sources */,
+				BFC02FB02710275800FFC816 /* CustomImageView.swift in Sources */,
 				BFF7B0C626D71D4B001E9EB4 /* PhotoSelectorHeader.swift in Sources */,
 				BF1B97A126D5CAD5009D1B53 /* CalendarViewController.swift in Sources */,
 				BF606EE926A2876E004091A5 /* SceneDelegate.swift in Sources */,
@@ -583,6 +597,8 @@
 				BF4591A926B7B3420031E119 /* SignUp1View.swift in Sources */,
 				BF4591B126B7E8D50031E119 /* User.swift in Sources */,
 				BF6854D226B83352000A6EE1 /* SignUp2View.swift in Sources */,
+				BFC02FAA271019F400FFC816 /* PostListView.swift in Sources */,
+				BFC02FAE27101E4A00FFC816 /* Post.swift in Sources */,
 				BF4591A126B7B1F00031E119 /* LoginViewModel.swift in Sources */,
 				BF1B97A726D5D0DC009D1B53 /* MessageViewController.swift in Sources */,
 				BFB9EC1B26DF0468002AA1B6 /* SharePhotoViewModel.swift in Sources */,

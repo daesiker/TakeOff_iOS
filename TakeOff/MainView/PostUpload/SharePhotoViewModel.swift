@@ -75,7 +75,7 @@ class SharePhotoViewModel {
                             
                             let values:[String:Any] = ["imageUrl": imageURLs,
                                                        "contents": self.input.textObserver.value,
-                                                       "likes": 0,
+                                                       "likes": [],
                                                        "creationDate": Date().timeIntervalSince1970]
                             
                             ref.updateChildValues(values) { (err, ref) in
