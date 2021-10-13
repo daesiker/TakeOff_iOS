@@ -92,41 +92,13 @@ class LoginView: UIViewController {
         // Do any additional setup after loading the view.
     }
     
-    
-    
     override func viewDidAppear(_ animated: Bool) {
-        self.vm.output.autoLogin.emit { _ in
-//                        self.goToSignUp()
-//            print("autologin")
-        }.disposed(by: disposeBag)
-        
         navigationController?.isNavigationBarHidden = true
-        self.handle = Auth.auth().addStateDidChangeListener { auth, user in
-            if let user = user {
-//                self.vm.input.autoLoginTap.accept(())
-                // The user's ID, unique to the Firebase project.
-                // Do NOT use this value to authenticate with your backend server,
-                // if you have one. Use getTokenWithCompletion:completion: instead.
-                let uid = user.uid
-                let email = user.email
-                let photoURL = user.photoURL
-                var multiFactorString = "MultiFactor: "
-                for info in user.multiFactor.enrolledFactors {
-                    multiFactorString += info.displayName ?? "[DispayName]"
-                    multiFactorString += " "
-                }
-                //                print("state change", uid, email, photoURL , multiFactorString)
-                // ...
-            }            
-        }
     }
-    override func viewWillDisappear(_ animated: Bool) {
-        Auth.auth().removeStateDidChangeListener(self.handle!)
-    }
+
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
-    
     
     /*
      // MARK: - Navigation
@@ -138,7 +110,7 @@ class LoginView: UIViewController {
      }
      */
     
-    private func goToMain(s:String) {
+    private func goToMain(user:User) {
         let viewController = MainTabViewController()
         let navController = UINavigationController(rootViewController: viewController)
         navController.isNavigationBarHidden = true

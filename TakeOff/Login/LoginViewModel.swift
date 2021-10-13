@@ -28,7 +28,7 @@ class LoginViewModel : ViewModelType {
     
     struct Output {
         let loginIsEnabled:Driver<Bool>
-        let goMain:Signal<String>
+        let goMain:Signal<User>
         var goSignUp:Signal<Void>
         let autoLogin:Signal<Void>
         let error:Signal<Error>
@@ -38,7 +38,7 @@ class LoginViewModel : ViewModelType {
     private func setInput() {}
     private func setOutput() {}
     init() {
-        let mainRelay = PublishRelay<String>() 
+        let mainRelay = PublishRelay<User>() 
         let signUpRelay = PublishRelay<Void>()
         let errorRelay = PublishRelay<Error>()
         
@@ -59,10 +59,10 @@ class LoginViewModel : ViewModelType {
                              error: errorRelay.asSignal())
         
         input.loginTap.withLatestFrom(Observable.combineLatest(input.emailText, input.passText))
-            .flatMapLatest(userModel.doLogin).bind(onNext: { (event:Event<String>) in
+            .flatMapLatest(userModel.doLogin).bind(onNext: { (event:Event<User>) in
                 switch event {
-                case .next(let str):
-                    mainRelay.accept(str)
+                case .next(let user):
+                    mainRelay.accept(user)
                 case .error(let error):
                     errorRelay.accept(error)
                 default:

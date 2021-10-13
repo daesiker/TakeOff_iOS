@@ -7,19 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		046506DA26E0A45A00F07726 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046506D926E0A45A00F07726 /* ProfileViewModel.swift */; };
 		0497F61926C3A253002F1ACB /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0497F61826C3A253002F1ACB /* UserModel.swift */; };
 		12976C7C5238AE8E49C94015 /* Pods_TakeOff.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B96FC7B284EF767A99B29A5 /* Pods_TakeOff.framework */; };
 		B98DA3D9814E88F33671E6B8 /* Pods_TakeOff_TakeOffUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 350243CD383F88E0778AB157 /* Pods_TakeOff_TakeOffUITests.framework */; };
 		BF1B97A126D5CAD5009D1B53 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1B97A026D5CAD5009D1B53 /* CalendarViewController.swift */; };
 		BF1B97A726D5D0DC009D1B53 /* MessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1B97A626D5D0DC009D1B53 /* MessageViewController.swift */; };
-		BF1B97AA26D5D35C009D1B53 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1B97A926D5D35C009D1B53 /* ProfileViewController.swift */; };
+		BF1B97AA26D5D35C009D1B53 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1B97A926D5D35C009D1B53 /* ProfileView.swift */; };
 		BF270DEB26D3309400C0E6BE /* MainTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF270DEA26D3309400C0E6BE /* MainTabViewController.swift */; };
 		BF2DBAFE26EF4C2F00E7EC62 /* ExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2DBAFD26EF4C2F00E7EC62 /* ExampleViewController.swift */; };
 		BF4591A126B7B1F00031E119 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4591A026B7B1F00031E119 /* LoginViewModel.swift */; };
 		BF4591A426B7B25B0031E119 /* UIKitExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4591A326B7B25B0031E119 /* UIKitExtension.swift */; };
 		BF4591A626B7B2D60031E119 /* FoundationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4591A526B7B2D60031E119 /* FoundationExtension.swift */; };
 		BF4591A926B7B3420031E119 /* SignUp1View.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4591A826B7B3420031E119 /* SignUp1View.swift */; };
-		BF4591B126B7E8D50031E119 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4591B026B7E8D50031E119 /* User.swift */; };
 		BF4591B326B7E92B0031E119 /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4591B226B7E92B0031E119 /* SignUpViewModel.swift */; };
 		BF4B58F626E2135800C47639 /* PostUploadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4B58F526E2135800C47639 /* PostUploadView.swift */; };
 		BF606EE726A2876E004091A5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF606EE626A2876E004091A5 /* AppDelegate.swift */; };
@@ -64,6 +64,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		046506D926E0A45A00F07726 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		0497F61826C3A253002F1ACB /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		0F2AD5276708278D88180770 /* Pods-TakeOffTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TakeOffTests.debug.xcconfig"; path = "Target Support Files/Pods-TakeOffTests/Pods-TakeOffTests.debug.xcconfig"; sourceTree = "<group>"; };
 		3262C1A1886FC01C8B0B0EE0 /* Pods_TakeOffTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TakeOffTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -73,14 +74,13 @@
 		9D3799695D1A6873AD9AD76F /* Pods-TakeOff-TakeOffUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TakeOff-TakeOffUITests.release.xcconfig"; path = "Target Support Files/Pods-TakeOff-TakeOffUITests/Pods-TakeOff-TakeOffUITests.release.xcconfig"; sourceTree = "<group>"; };
 		BF1B97A026D5CAD5009D1B53 /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
 		BF1B97A626D5D0DC009D1B53 /* MessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewController.swift; sourceTree = "<group>"; };
-		BF1B97A926D5D35C009D1B53 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		BF1B97A926D5D35C009D1B53 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		BF270DEA26D3309400C0E6BE /* MainTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabViewController.swift; sourceTree = "<group>"; };
 		BF2DBAFD26EF4C2F00E7EC62 /* ExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleViewController.swift; sourceTree = "<group>"; };
 		BF4591A026B7B1F00031E119 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		BF4591A326B7B25B0031E119 /* UIKitExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitExtension.swift; sourceTree = "<group>"; };
 		BF4591A526B7B2D60031E119 /* FoundationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoundationExtension.swift; sourceTree = "<group>"; };
 		BF4591A826B7B3420031E119 /* SignUp1View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUp1View.swift; sourceTree = "<group>"; };
-		BF4591B026B7E8D50031E119 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		BF4591B226B7E92B0031E119 /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
 		BF4B58F526E2135800C47639 /* PostUploadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostUploadView.swift; sourceTree = "<group>"; };
 		BF606EE326A2876E004091A5 /* TakeOff.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TakeOff.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -198,7 +198,8 @@
 		BF1B97A826D5D34E009D1B53 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				BF1B97A926D5D35C009D1B53 /* ProfileViewController.swift */,
+				BF1B97A926D5D35C009D1B53 /* ProfileView.swift */,
+				046506D926E0A45A00F07726 /* ProfileViewModel.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -249,7 +250,7 @@
 		BF4591AF26B7E8CB0031E119 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				BF4591B026B7E8D50031E119 /* User.swift */,
+				0497F61826C3A253002F1ACB /* UserModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -292,7 +293,6 @@
 				BF606EF126A28771004091A5 /* LaunchScreen.storyboard */,
 				BF606F1926A287D5004091A5 /* GoogleService-Info.plist */,
 				BF606EF426A28771004091A5 /* Info.plist */,
-				0497F61826C3A253002F1ACB /* UserModel.swift */,
 				BFDD2A8C26D0DFBE0056409C /* FirebaseDB.swift */,
 				BFDD2A9126D0DFF20056409C /* Protocol.swift */,
 				BF2DBAFD26EF4C2F00E7EC62 /* ExampleViewController.swift */,
@@ -581,7 +581,6 @@
 				BFDD2A8D26D0DFBE0056409C /* FirebaseDB.swift in Sources */,
 				BFFDAE4926E5F1EA005707C9 /* PostUploadViewModel.swift in Sources */,
 				BF4591A926B7B3420031E119 /* SignUp1View.swift in Sources */,
-				BF4591B126B7E8D50031E119 /* User.swift in Sources */,
 				BF6854D226B83352000A6EE1 /* SignUp2View.swift in Sources */,
 				BF4591A126B7B1F00031E119 /* LoginViewModel.swift in Sources */,
 				BF1B97A726D5D0DC009D1B53 /* MessageViewController.swift in Sources */,
@@ -589,8 +588,8 @@
 				BF606F2F26A28F0F004091A5 /* LoginView.swift in Sources */,
 				0497F61926C3A253002F1ACB /* UserModel.swift in Sources */,
 				BF4591A626B7B2D60031E119 /* FoundationExtension.swift in Sources */,
-				BF1B97AA26D5D35C009D1B53 /* ProfileViewController.swift in Sources */,
-				BF2DBAFE26EF4C2F00E7EC62 /* ExampleViewController.swift in Sources */,
+				046506DA26E0A45A00F07726 /* ProfileViewModel.swift in Sources */,
+				BF1B97AA26D5D35C009D1B53 /* ProfileView.swift in Sources */,
 				BFDD2A9226D0DFF20056409C /* Protocol.swift in Sources */,
 				BFF7B0C826D72099001E9EB4 /* PhotoSelectorCell.swift in Sources */,
 			);
