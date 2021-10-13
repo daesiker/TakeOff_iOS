@@ -1,5 +1,10 @@
 PODS:
   - Alamofire (5.4.3)
+  - AppAuth (1.4.0):
+    - AppAuth/Core (= 1.4.0)
+    - AppAuth/ExternalUserAgent (= 1.4.0)
+  - AppAuth/Core (1.4.0)
+  - AppAuth/ExternalUserAgent (1.4.0)
   - Differentiator (4.0.1)
   - Firebase/Analytics (8.4.0):
     - Firebase/Core
@@ -78,6 +83,10 @@ PODS:
     - GoogleUtilities/Environment (~> 7.2)
     - nanopb (~> 2.30908.0)
     - PromisesObjC (< 3.0, >= 1.2)
+  - GoogleSignIn (6.0.2):
+    - AppAuth (~> 1.4)
+    - GTMAppAuth (~> 1.0)
+    - GTMSessionFetcher/Core (~> 1.1)
   - GoogleUtilities/AppDelegateSwizzler (7.5.0):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
@@ -97,6 +106,9 @@ PODS:
     - GoogleUtilities/Logger
   - GoogleUtilities/UserDefaults (7.5.0):
     - GoogleUtilities/Logger
+  - GTMAppAuth (1.2.2):
+    - AppAuth/Core (~> 1.4)
+    - GTMSessionFetcher/Core (~> 1.5)
   - GTMSessionFetcher/Core (1.6.1)
   - leveldb-library (1.22.1)
   - nanopb (2.30908.0):
@@ -127,6 +139,7 @@ DEPENDENCIES:
   - Firebase/Database (~> 8.4.0)
   - Firebase/Storage (~> 8.4.0)
   - FSPagerView
+  - GoogleSignIn
   - naveridlogin-sdk-ios
   - RxCocoa
   - RxDataSources (~> 4.0)
@@ -138,6 +151,7 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - Alamofire
+    - AppAuth
     - Differentiator
     - Firebase
     - FirebaseAnalytics
@@ -150,7 +164,9 @@ SPEC REPOS:
     - FSPagerView
     - GoogleAppMeasurement
     - GoogleDataTransport
+    - GoogleSignIn
     - GoogleUtilities
+    - GTMAppAuth
     - GTMSessionFetcher
     - leveldb-library
     - nanopb
@@ -166,6 +182,7 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   Alamofire: e447a2774a40c996748296fa2c55112fdbbc42f9
+  AppAuth: 31bcec809a638d7bd2f86ea8a52bd45f6e81e7c7
   Differentiator: 886080237d9f87f322641dedbc5be257061b0602
   Firebase: 54cdc8bc9c9b3de54f43dab86e62f5a76b47034f
   FirebaseAnalytics: 4751d6a49598a2b58da678cc07df696bcd809ab9
@@ -178,7 +195,9 @@ SPEC CHECKSUMS:
   FSPagerView: 670405b2f18e2a87fa37f20b00de783e562c25a8
   GoogleAppMeasurement: 6b6a08fd9c71f4dbc89e0e812acca81d797aa342
   GoogleDataTransport: 85fd18ff3019bb85d3f2c551d04c481dedf71fc9
+  GoogleSignIn: fd381840dbe7c1137aa6dc30849a5c3e070c034a
   GoogleUtilities: eea970f4a389963963bffe8d8fabe43540678b9c
+  GTMAppAuth: ad5c2b70b9a8689e1a04033c9369c4915bfcbe89
   GTMSessionFetcher: 36689134877faeb055b27dfa4ccc9ceaa42e029e
   leveldb-library: 50c7b45cbd7bf543c81a468fe557a16ae3db8729
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
@@ -192,6 +211,6 @@ SPEC CHECKSUMS:
   TextFieldEffects: 529b8aff706fb40f82c41c780c0777941a893796
   Then: acfe0be7e98221c6204e12f8161459606d5d822d
 
-PODFILE CHECKSUM: 8b7d01945cb84d38e89258a62e51bea8e4c7102f
+PODFILE CHECKSUM: d99f244d142756acaa626b2526b1573cafdd4802
 
 COCOAPODS: 1.10.1

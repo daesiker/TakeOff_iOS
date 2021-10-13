@@ -17,6 +17,7 @@ pod 'Then'
 pod 'TextFieldEffects'
 pod 'FSPagerView'
 pod 'naveridlogin-sdk-ios'
+pod 'GoogleSignIn'
 pod 'Alamofire', '~> 5.4'
   target 'TakeOffTests' do
     inherit! :search_paths

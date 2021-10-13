@@ -311,6 +311,8 @@ extension LoginView: NaverThirdPartyLoginConnectionDelegate {
             
             
         }.resume()
+        //jwt
+        //firebase custom -> jwt
         
         let viewController = SignUp1View(vm: signVm)
         viewController.modalTransitionStyle = .crossDissolve
