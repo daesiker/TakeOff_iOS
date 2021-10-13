@@ -10,8 +10,11 @@ protocol SignUpViewAttributes {
 
 class SignUp1View: UIViewController {
     
-    var vm = SignUpViewModel()
+    var vm: SignUpViewModel
     var disposebag = DisposeBag()
+    
+    
+    
     
     let backgroundView = UIImageView(image: UIImage(named: "background"))
     
@@ -47,6 +50,15 @@ class SignUp1View: UIViewController {
         $0.contentHorizontalAlignment = .center
         $0.semanticContentAttribute = .forceLeftToRight
         $0.imageEdgeInsets = .init(top: 0, left: 15, bottom: 0, right: 15)
+    }
+    
+    init(vm: SignUpViewModel) {
+        self.vm = vm
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     override func viewDidLoad() {

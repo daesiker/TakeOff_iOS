@@ -16,6 +16,8 @@ pod 'RxDataSources', '~> 4.0'
 pod 'Then'
 pod 'TextFieldEffects'
 pod 'FSPagerView'
+pod 'naveridlogin-sdk-ios'
+pod 'Alamofire', '~> 5.4'
   target 'TakeOffTests' do
     inherit! :search_paths
     # Pods for testing

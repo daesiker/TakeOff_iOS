@@ -1,4 +1,5 @@
 PODS:
+  - Alamofire (5.4.3)
   - Differentiator (4.0.1)
   - Firebase/Analytics (8.4.0):
     - Firebase/Core
@@ -103,6 +104,7 @@ PODS:
     - nanopb/encode (= 2.30908.0)
   - nanopb/decode (2.30908.0)
   - nanopb/encode (2.30908.0)
+  - naveridlogin-sdk-ios (4.1.3)
   - PromisesObjC (2.0.0)
   - RxCocoa (5.1.1):
     - RxRelay (~> 5)
@@ -119,11 +121,13 @@ PODS:
   - Then (2.7.0)
 
 DEPENDENCIES:
+  - Alamofire (~> 5.4)
   - Firebase/Analytics (~> 8.4.0)
   - Firebase/Auth (~> 8.4.0)
   - Firebase/Database (~> 8.4.0)
   - Firebase/Storage (~> 8.4.0)
   - FSPagerView
+  - naveridlogin-sdk-ios
   - RxCocoa
   - RxDataSources (~> 4.0)
   - RxSwift (~> 5.0.0)
@@ -133,6 +137,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - Alamofire
     - Differentiator
     - Firebase
     - FirebaseAnalytics
@@ -149,6 +154,7 @@ SPEC REPOS:
     - GTMSessionFetcher
     - leveldb-library
     - nanopb
+    - naveridlogin-sdk-ios
     - PromisesObjC
     - RxCocoa
     - RxDataSources
@@ -159,6 +165,7 @@ SPEC REPOS:
     - Then
 
 SPEC CHECKSUMS:
+  Alamofire: e447a2774a40c996748296fa2c55112fdbbc42f9
   Differentiator: 886080237d9f87f322641dedbc5be257061b0602
   Firebase: 54cdc8bc9c9b3de54f43dab86e62f5a76b47034f
   FirebaseAnalytics: 4751d6a49598a2b58da678cc07df696bcd809ab9
@@ -175,6 +182,7 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: 36689134877faeb055b27dfa4ccc9ceaa42e029e
   leveldb-library: 50c7b45cbd7bf543c81a468fe557a16ae3db8729
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
+  naveridlogin-sdk-ios: b9d7c20677981177ed994ecb1c8c2b49f223277d
   PromisesObjC: 68159ce6952d93e17b2dfe273b8c40907db5ba58
   RxCocoa: 32065309a38d29b5b0db858819b5bf9ef038b601
   RxDataSources: efee07fa4de48477eca0a4611e6d11e2da9c1114
@@ -184,6 +192,6 @@ SPEC CHECKSUMS:
   TextFieldEffects: 529b8aff706fb40f82c41c780c0777941a893796
   Then: acfe0be7e98221c6204e12f8161459606d5d822d
 
-PODFILE CHECKSUM: e24742e60b901bd546c028faad61af00c39c8e24
+PODFILE CHECKSUM: 8b7d01945cb84d38e89258a62e51bea8e4c7102f
 
 COCOAPODS: 1.10.1

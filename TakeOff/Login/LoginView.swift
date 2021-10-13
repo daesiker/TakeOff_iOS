@@ -11,10 +11,13 @@ import Firebase
 import TextFieldEffects
 import SnapKit
 import Then
-//import RxCocoa
+import NaverThirdPartyLogin
 import RxSwift
+import Alamofire
 
 class LoginView: UIViewController {
+    
+    let loginInstance = NaverThirdPartyLoginConnection.getSharedInstance()
     let vm = LoginViewModel()
     var handle: AuthStateDidChangeListenerHandle!
     
@@ -30,6 +33,16 @@ class LoginView: UIViewController {
     }
     let contentLayout = UIView()
     
+    let naverLoginBt = UIButton(type: .system).then {
+        $0.setImage(UIImage(named: "naverLogin"), for: .normal)
+        $0.addTarget(self, action: #selector(naverLogin), for: .touchUpInside)
+        
+    }
+    
+    @objc private func naverLogin(_ sender: UIButton) {
+        loginInstance?.delegate = self
+        loginInstance?.requestThirdPartyLogin()
+    }
     
     // Component View
     let logoImageView = UIImageView(image: UIImage(named: "logo"))
@@ -119,7 +132,7 @@ class LoginView: UIViewController {
         self.present(navController, animated: true)
     }
     private func goToSignUp() {
-        let viewController = SignUp1View()
+        let viewController = SignUp1View(vm: SignUpViewModel())
         viewController.modalTransitionStyle = .crossDissolve
         viewController.modalPresentationStyle = .fullScreen
         navigationController?.pushViewController(viewController, animated: true)
@@ -197,7 +210,7 @@ class LoginView: UIViewController {
                
         }
         
-        self.setSignUp()   
+        self.setSignUp()
     }
     
     private func setLayout() {
@@ -244,12 +257,87 @@ class LoginView: UIViewController {
             $0.height.greaterThanOrEqualTo(50)   
         }
         
-        let otherSignUpView = UIStackView().then{ $0.backgroundColor = UIColor.black}
-        contentLayout.addSubview(otherSignUpView)
-        otherSignUpView.snp.makeConstraints{
+        
+        contentLayout.addSubview(naverLoginBt)
+        naverLoginBt.snp.makeConstraints {
             $0.top.equalTo(signupButton.snp.bottom)
-            $0.bottom.left.right.equalToSuperview()
-            $0.height.equalTo(700)
+            $0.left.right.equalToSuperview()
+            $0.height.equalToSuperview().multipliedBy(0.05)
         }
+        
+//        let otherSignUpView = UIStackView(arrangedSubviews: [naverLoginBt]).then{
+//            $0.backgroundColor = UIColor.clear
+//            $0.axis = .vertical
+//            $0.spacing = 15
+//            $0.distribution = .fillEqually
+//            $0.alignment = .leading
+//        }
+//        contentLayout.addSubview(naverLoginBt)
+//        naverLoginBt.snp.makeConstraints{
+//            $0.top.equalTo(signupButton.snp.bottom)
+//            $0.bottom.left.right.equalToSuperview()
+//            $0.height.equalTo(700)
+//        }
     }
+    
+}
+
+extension LoginView: NaverThirdPartyLoginConnectionDelegate {
+    
+    private func getNaverInfo() {
+        guard let isValidAccessToken = loginInstance?.isValidAccessTokenExpireTimeNow() else { return }
+        
+        if !isValidAccessToken { return }
+        
+        guard let tokenType = loginInstance?.tokenType else { return }
+        guard let accessToken = loginInstance?.accessToken else { return }
+        let urlStr = "https://openapi.naver.com/v1/nid/me"
+        guard let url = URL(string: urlStr) else { return }
+        let authorization = "\(tokenType) \(accessToken)"
+        
+        
+        let req = AF.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: ["Authorization": authorization])
+        let signVm = SignUpViewModel()
+        req.responseJSON { response in
+            guard let result = response.value as? [String: Any] else { return }
+            guard let object = result["response"] as? [String: Any] else { return }
+            
+            guard let email = object["email"] as? String else { return }
+            
+            signVm.user.email = email
+            signVm.user.uid = authorization
+            
+            
+            
+            
+        }.resume()
+        
+        let viewController = SignUp1View(vm: signVm)
+        viewController.modalTransitionStyle = .crossDissolve
+        viewController.modalPresentationStyle = .fullScreen
+        self.navigationController?.pushViewController(viewController, animated: true)
+        
+    }
+    
+    //로그인에 성공했을 경우 호출
+    func oauth20ConnectionDidFinishRequestACTokenWithAuthCode() {
+        print("[Success] : Success Naver Login")
+        getNaverInfo()
+    }
+    
+    //접속 토큰 갱신
+    func oauth20ConnectionDidFinishRequestACTokenWithRefreshToken() {
+        
+    }
+    
+    //로그아웃 할 경우 호출(토큰 삭제)
+    func oauth20ConnectionDidFinishDeleteToken() {
+        loginInstance?.requestDeleteToken()
+    }
+    
+    //Error 처리
+    func oauth20Connection(_ oauthConnection: NaverThirdPartyLoginConnection!, didFailWithError error: Error!) {
+        print("[Error] :", error.localizedDescription)
+    }
+    
 }

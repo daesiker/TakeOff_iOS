@@ -118,6 +118,10 @@ class SignUp3View: UIViewController {
     
     init(vm: SignUpViewModel) {
         self.vm = vm
+        if vm.user.email != "" {
+            emailTextField.text = vm.user.email
+            emailTextField.isEnabled = true
+        }
         super.init(nibName: nil, bundle: nil)
     }
     

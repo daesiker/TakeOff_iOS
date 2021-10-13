@@ -13,7 +13,7 @@ import Firebase
 
 class SignUpViewModel {
     
-    private var user = User()
+    var user = User()
     let disposeBag = DisposeBag()
     let stepOne = StepOne()
     let stepTwo = StepTwo()
@@ -214,7 +214,7 @@ class SignUpViewModel {
                         //Alert
                         print("Failed to save user info into db", err)
                         result.onError(NSError(domain: "", code: 3, userInfo: nil))
-                        result.onCompleted()
+                        
                     }
                     
                     result.onNext(())
@@ -226,6 +226,26 @@ class SignUpViewModel {
         }
     }
     
+    func createAPIUser() -> Observable<Void> {
+        return Observable.create { result in
+            
+            Auth.auth().signIn(withCustomToken: self.user.uid) { user, err in
+                
+                if let err = err {
+                    print("Failed to save user info into db", err)
+                    result.onError(NSError(domain: "", code: 3, userInfo: nil))
+                }
+                
+                
+                
+            }
+            
+            
+            
+            
+            return Disposables.create()
+        }
+    }
     
     
 }
