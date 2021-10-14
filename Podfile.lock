@@ -136,10 +136,11 @@ DEPENDENCIES:
   - Alamofire (~> 5.4)
   - Firebase/Analytics (~> 8.4.0)
   - Firebase/Auth (~> 8.4.0)
+  - Firebase/Core (~> 8.4.0)
   - Firebase/Database (~> 8.4.0)
   - Firebase/Storage (~> 8.4.0)
   - FSPagerView
-  - GoogleSignIn
+  - GoogleSignIn (~> 6.0.2)
   - naveridlogin-sdk-ios
   - RxCocoa
   - RxDataSources (~> 4.0)
@@ -211,6 +212,6 @@ SPEC CHECKSUMS:
   TextFieldEffects: 529b8aff706fb40f82c41c780c0777941a893796
   Then: acfe0be7e98221c6204e12f8161459606d5d822d
 
-PODFILE CHECKSUM: d99f244d142756acaa626b2526b1573cafdd4802
+PODFILE CHECKSUM: 48236227baf605795204cc71f4ee812142a9ce1b
 
 COCOAPODS: 1.10.1

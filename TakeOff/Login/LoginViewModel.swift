@@ -11,9 +11,11 @@ import Firebase
 import RxSwift
 import RxRelay
 import RxCocoa
+import GoogleSignIn
 
 class LoginViewModel : ViewModelType {
     let userModel = UserModel()
+    let signupViewModel = SignUpViewModel()
     
     var input: Input
     var output: Output
@@ -23,6 +25,7 @@ class LoginViewModel : ViewModelType {
         let passText:BehaviorRelay<String>
         let loginTap:PublishRelay<Void>
         let signUpTap:PublishRelay<Void>
+        let googleSignUpTap:PublishRelay<UIViewController>
         let autoLoginTap:PublishRelay<Void>
     } 
     
@@ -31,6 +34,7 @@ class LoginViewModel : ViewModelType {
         let goMain:Signal<User>
         var goSignUp:Signal<Void>
         let autoLogin:Signal<Void>
+        let apiSignUpRelay: Signal<Bool>
         let error:Signal<Error>
     } 
     
@@ -40,12 +44,14 @@ class LoginViewModel : ViewModelType {
     init() {
         let mainRelay = PublishRelay<User>() 
         let signUpRelay = PublishRelay<Void>()
+        let apiSignUpRelay = PublishRelay<Bool>()
         let errorRelay = PublishRelay<Error>()
         
         self.input = Input(emailText: BehaviorRelay<String>(value: ""), 
                            passText: BehaviorRelay<String>(value: ""), 
                            loginTap: PublishRelay<Void>(), 
                            signUpTap: PublishRelay<Void>(),
+                           googleSignUpTap: PublishRelay<UIViewController>(),
                            autoLoginTap: PublishRelay<Void>())
         
         let isEnabled = Observable.combineLatest(input.emailText, input.passText)
@@ -56,6 +62,7 @@ class LoginViewModel : ViewModelType {
                              goMain: mainRelay.asSignal(), 
                              goSignUp: signUpRelay.asSignal(), 
                              autoLogin: input.autoLoginTap.asSignal(),
+                             apiSignUpRelay: apiSignUpRelay.asSignal(),
                              error: errorRelay.asSignal())
         
         input.loginTap.withLatestFrom(Observable.combineLatest(input.emailText, input.passText))
@@ -70,7 +77,70 @@ class LoginViewModel : ViewModelType {
                 }
             }).disposed(by: disposeBag)
         
+        
+        
         input.signUpTap.bind(to: signUpRelay).disposed(by: self.disposeBag)
+        
+        input.googleSignUpTap.flatMapLatest(doAPILogin(vc:))
+            .subscribe { event in
+                switch event {
+                case .completed:
+                    print("completed")
+                case .next(let value):
+                    apiSignUpRelay.accept(value)
+                case .error(let error):
+                    errorRelay.accept(error)
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        
+    }
+    
+    
+    
+    
+    func doAPILogin(vc: UIViewController) -> Observable<Bool> {
+        return Observable.create { observer in
+            
+            let clientID = FirebaseApp.app()?.options.clientID ?? ""
+            let signInConfig = GIDConfiguration.init(clientID: clientID)
+            
+            GIDSignIn.sharedInstance.signIn(with: signInConfig, presenting: vc) { user, error in
+                if let error = error {
+                    observer.onError(error)
+                }
+                
+                guard let authentication = user?.authentication,
+                      let idToken = authentication.idToken
+                else { return }
+                
+                let credential = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: authentication.accessToken)
+                
+                Auth.auth().signIn(with: credential) { result, error in
+                    if let error = error {
+                        observer.onError(error)
+                    }
+                    
+                    if result != nil {
+                        guard let uid = Auth.auth().currentUser?.uid else { return }
+                        let ref = Database.database().reference().child("users").child(uid)
+                        
+                        ref.getData { error, snapshot in
+                            if let error = error {
+                                observer.onError(error)
+                            } else if snapshot.exists() {
+                                observer.onNext(true)
+                            } else {
+                                self.signupViewModel.user.uid = uid
+                                observer.onNext(false)
+                            }
+                        }
+                    }
+                }
+            }
+            return Disposables.create()
+        }
     }
 }
 

@@ -6,7 +6,6 @@
 //
 
 import UIKit
-
 import Firebase
 import TextFieldEffects
 import SnapKit
@@ -14,11 +13,14 @@ import Then
 import NaverThirdPartyLogin
 import RxSwift
 import Alamofire
+import GoogleSignIn
+
 
 class LoginView: UIViewController {
     
     let loginInstance = NaverThirdPartyLoginConnection.getSharedInstance()
-    let vm = LoginViewModel()
+    let loginViewModel = LoginViewModel()
+    let signupViewModel = SignUpViewModel()
     var handle: AuthStateDidChangeListenerHandle!
     
     // Layout View
@@ -42,6 +44,11 @@ class LoginView: UIViewController {
     @objc private func naverLogin(_ sender: UIButton) {
         loginInstance?.delegate = self
         loginInstance?.requestThirdPartyLogin()
+    }
+    
+    let googleLoginBt = UIButton(type: .system).then {
+        $0.setImage(UIImage(named: "naverLogin"), for: .normal)
+        
     }
     
     // Component View
@@ -99,7 +106,6 @@ class LoginView: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setUI()    
         bind()
         // Do any additional setup after loading the view.
@@ -132,47 +138,59 @@ class LoginView: UIViewController {
         self.present(navController, animated: true)
     }
     private func goToSignUp() {
-        let viewController = SignUp1View(vm: SignUpViewModel())
+        let viewController = SignUp1View(vm: signupViewModel)
         viewController.modalTransitionStyle = .crossDissolve
         viewController.modalPresentationStyle = .fullScreen
         navigationController?.pushViewController(viewController, animated: true)
     }
+    
     // MARK:- bind
     private func bind() {
         // bind intput
         self.emailTextField.rx.text.orEmpty
-            .bind(to: vm.input.emailText)
+            .bind(to: loginViewModel.input.emailText)
             .disposed(by: disposeBag)
         self.passwordTextField.rx.text.orEmpty
-            .bind(to: vm.input.passText)
+            .bind(to: loginViewModel.input.passText)
             .disposed(by: disposeBag)
         self.loginButton.rx.tap
-            .bind(to: vm.input.loginTap)
+            .bind(to: loginViewModel.input.loginTap)
             .disposed(by: disposeBag)
         self.signupButton.rx.tap
-            .bind(to: vm.input.signUpTap)
+            .bind(to: loginViewModel.input.signUpTap)
+            .disposed(by: disposeBag)
+        self.googleLoginBt.rx.tap
+            .map { self }
+            .bind(to: loginViewModel.input.googleSignUpTap)
             .disposed(by: disposeBag)
         
+        
         // bind output
-        self.vm.output.loginIsEnabled
+        self.loginViewModel.output.loginIsEnabled
             .drive(loginButton.rx.isEnabled)
             .disposed(by: disposeBag)
         
-        self.vm.output.goMain
+        self.loginViewModel.output.goMain
             .emit(onNext: goToMain)
             .disposed(by: disposeBag)
         
-        self.vm.output.goSignUp //튜플식 변경시 guard 문으로 체킹 해줘야함
+        self.loginViewModel.output.goSignUp //튜플식 변경시 guard 문으로 체킹 해줘야함
             .emit(onNext: goToSignUp)
             .disposed(by: disposeBag)
 
-        self.vm.output.error
+        self.loginViewModel.output.apiSignUpRelay
+            .emit(onNext: isSigned)
+            .disposed(by: disposeBag)
+        
+        self.loginViewModel.output.error
             .emit {
                 self.errorTextField.text = $0.localizedDescription
                 self.passwordTextField.text = ""
                 self.loginButton.isEnabled = false
             } 
             .disposed(by: disposeBag)
+        
+        
     }
     // MARK:- Set UI
     private func setUI() {
@@ -265,6 +283,13 @@ class LoginView: UIViewController {
             $0.height.equalToSuperview().multipliedBy(0.05)
         }
         
+        contentLayout.addSubview(googleLoginBt)
+        googleLoginBt.snp.makeConstraints {
+            $0.top.equalTo(naverLoginBt.snp.bottom)
+            $0.left.right.equalToSuperview()
+            $0.height.equalToSuperview().multipliedBy(0.05)
+        }
+        
 //        let otherSignUpView = UIStackView(arrangedSubviews: [naverLoginBt]).then{
 //            $0.backgroundColor = UIColor.clear
 //            $0.axis = .vertical
@@ -341,5 +366,23 @@ extension LoginView: NaverThirdPartyLoginConnectionDelegate {
     func oauth20Connection(_ oauthConnection: NaverThirdPartyLoginConnection!, didFailWithError error: Error!) {
         print("[Error] :", error.localizedDescription)
     }
+    
+}
+
+extension LoginView {
+    
+    
+    
+    func isSigned(value: Bool) {
+        if value {
+            
+        } else {
+            let viewController = SignUp1View(vm: loginViewModel.signupViewModel)
+            viewController.modalTransitionStyle = .crossDissolve
+            viewController.modalPresentationStyle = .fullScreen
+            navigationController?.pushViewController(viewController, animated: true)
+        }
+    }
+    
     
 }

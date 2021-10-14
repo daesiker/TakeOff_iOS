@@ -30,13 +30,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         instance?.appName = kServiceAppName
         
         
+        GIDSignIn.sharedInstance.restorePreviousSignIn { user, error in
+            if error == nil, let _ = user {
+                
+            } else {
+                
+            }
+        }
+        
         return true
     }
 
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
-        NaverThirdPartyLoginConnection.getSharedInstance()?.application(app, open: url, options: options)
-        return true
+        
+        let naverSession = NaverThirdPartyLoginConnection.getSharedInstance()?.application(app, open: url, options: options)
+        let googleSession = GIDSignIn.sharedInstance.handle(url)
+        return googleSession || (naverSession != nil)
+        
       }
+    
+    
     
     
     // MARK: UISceneSession Lifecycle

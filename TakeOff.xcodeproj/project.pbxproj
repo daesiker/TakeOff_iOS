@@ -15,7 +15,6 @@
 		BF1B97A726D5D0DC009D1B53 /* MessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1B97A626D5D0DC009D1B53 /* MessageViewController.swift */; };
 		BF1B97AA26D5D35C009D1B53 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1B97A926D5D35C009D1B53 /* ProfileView.swift */; };
 		BF270DEB26D3309400C0E6BE /* MainTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF270DEA26D3309400C0E6BE /* MainTabViewController.swift */; };
-		BF2DBAFE26EF4C2F00E7EC62 /* ExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2DBAFD26EF4C2F00E7EC62 /* ExampleViewController.swift */; };
 		BF4591A126B7B1F00031E119 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4591A026B7B1F00031E119 /* LoginViewModel.swift */; };
 		BF4591A426B7B25B0031E119 /* UIKitExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4591A326B7B25B0031E119 /* UIKitExtension.swift */; };
 		BF4591A626B7B2D60031E119 /* FoundationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4591A526B7B2D60031E119 /* FoundationExtension.swift */; };

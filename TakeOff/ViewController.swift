@@ -34,9 +34,9 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        Auth.auth().removeStateDidChangeListener(self.handle!)
-    }
+//    override func viewWillDisappear(_ animated: Bool) {
+//        Auth.auth().removeStateDidChangeListener(self.handle!)
+//    }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -61,26 +61,26 @@ class ViewController: UIViewController {
         }, completion: { done in
             if done {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                    self.handle = Auth.auth().addStateDidChangeListener { auth, user in
-                        if let user = user {
-                            // UserModel을 싱글톤?...
-                            self.userModel.saveUser(uid: user.uid).asDriver(onErrorJustReturn: User()).drive { (user:User) in
-                                let viewController = MainTabViewController()
-                                let navController = UINavigationController(rootViewController: viewController)
-                                navController.isNavigationBarHidden = true
-                                navController.modalTransitionStyle = .crossDissolve
-                                navController.modalPresentationStyle = .fullScreen
-                                self.present(navController, animated: true)
-                            }.disposed(by: self.disposeBag)
-                        } else {
+//                    self.handle = Auth.auth().addStateDidChangeListener { auth, user in
+//                        if let user = user {
+//                            // UserModel을 싱글톤?...
+//                            self.userModel.saveUser(uid: user.uid).asDriver(onErrorJustReturn: User()).drive { (user:User) in
+//                                let viewController = MainTabViewController()
+//                                let navController = UINavigationController(rootViewController: viewController)
+//                                navController.isNavigationBarHidden = true
+//                                navController.modalTransitionStyle = .crossDissolve
+//                                navController.modalPresentationStyle = .fullScreen
+//                                self.present(navController, animated: true)
+//                            }.disposed(by: self.disposeBag)
+//                        } else {
                             let viewController = LoginView()
                             let navController = UINavigationController(rootViewController: viewController)
                             navController.isNavigationBarHidden = true
                             navController.modalTransitionStyle = .crossDissolve
                             navController.modalPresentationStyle = .fullScreen
-                            self.present(navController, animated: true) 
-                        }           
-                    }
+                            self.present(navController, animated: true)
+//                        }
+//                    }
                 }
             }
         })

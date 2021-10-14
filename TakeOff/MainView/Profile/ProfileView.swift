@@ -50,7 +50,7 @@ class ProfileViewController: UIViewController {
     }
 
     let scrollView = UIScrollView()
-    let collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 200, height: 500))
+    //let collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 200, height: 500))
     let disposBag = DisposeBag()
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -90,16 +90,16 @@ class ProfileViewController: UIViewController {
             $0.left.right.bottom.equalToSuperview()
         }
         
-        postContainer.addSubview(collectionView)
+        //postContainer.addSubview(collectionView)
         postContainer.snp.makeConstraints {
         	$0.top.left.right.bottom.equalToSuperview()
         }
-let colorObservable = Observable.of([UIColor.red, UIColor.blue, UIColor.gray])
-        
-        colorObservable.bind(to: collectionView.rx.items(cellIdentifier: "q")) {index, c, cell in 
-          cell.backgroundColor = c
-        
-        }
+//let colorObservable = Observable.of([UIColor.red, UIColor.blue, UIColor.gray])
+//        
+//        colorObservable.bind(to: collectionView.rx.items(cellIdentifier: "q")) {index, c, cell in 
+//          cell.backgroundColor = c
+//        
+//        }
     }
     private func setUserProfile() {
         self.safeView.addSubview(scrollView)
