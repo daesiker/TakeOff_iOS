@@ -22,12 +22,6 @@ class LoginView: UIViewController {
     let backgroundView = UIImageView(image: UIImage(named: "background"))
     let loginLayout = UIView()
     let signUpLayout = UIView()
-    let scrollView = UIScrollView().then {
-        $0.alwaysBounceVertical = false
-        $0.showsVerticalScrollIndicator = false
-        $0.backgroundColor = .blue
-    }
-    let contentLayout = UIView()
     
     
     // Component View
@@ -145,7 +139,7 @@ class LoginView: UIViewController {
         self.present(navController, animated: true)
     }
     private func goToSignUp() {
-        let viewController = SignUp1View()
+        let viewController = SignUpViewController()
         viewController.modalTransitionStyle = .crossDissolve
         viewController.modalPresentationStyle = .fullScreen
         navigationController?.pushViewController(viewController, animated: true)
@@ -158,10 +152,55 @@ class LoginView: UIViewController {
     }
     
     func bindInput() {
+        emailTextField.rx.controlEvent([.editingDidEnd])
+            .map { self.emailTextField.text ?? "" }
+            .bind(to: self.vm.input.emailObserver)
+            .disposed(by: disposeBag)
+        
+        pwTextField.rx.controlEvent([.editingDidEnd])
+            .map { self.pwTextField.text ?? ""}
+            .bind(to: self.vm.input.pwObserver)
+            .disposed(by: disposeBag)
+        
+        signUpButton.rx.tap.subscribe(onNext: {
+            self.goToSignUp()
+        }).disposed(by: disposeBag)
+        
         
     }
     
     func bindOutput() {
+        
+        vm.output.emailValid.drive { valid in
+            if valid {
+                self.emailAlert.text = ""
+                self.emailTextField.setRight()
+            } else {
+                self.emailAlert.text = "이메일 형식이 올바르지 않습니다."
+                self.emailTextField.setErrorRight()
+            }
+        }.disposed(by: disposeBag)
+        
+        vm.output.pwValid.drive { valid in
+            if valid {
+                self.pwAlert.text = ""
+                self.pwTextField.setRight()
+            } else {
+                self.pwAlert.text = "영문자와 숫자포함 8자 이상 입력해주세요."
+                self.pwTextField.setErrorRight()
+            }
+        }.disposed(by: disposeBag)
+        
+        vm.output.loginValid.drive { valid in
+            if valid {
+                self.logInBt.isEnabled = true
+                self.logInBt.backgroundColor = UIColor.rgb(red: 255, green: 136, blue: 84)
+            } else {
+                self.logInBt.isEnabled = false
+                self.logInBt.backgroundColor = UIColor.rgb(red: 177, green: 177, blue: 177)
+            }
+        }.disposed(by: disposeBag)
+        
         
     }
     

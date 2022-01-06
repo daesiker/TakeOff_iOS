@@ -34,6 +34,8 @@
 		BF606F2F26A28F0F004091A5 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF606F2E26A28F0F004091A5 /* LoginView.swift */; };
 		BF6854D226B83352000A6EE1 /* SignUp2View.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6854D126B83352000A6EE1 /* SignUp2View.swift */; };
 		BF71170F26D39966006ED7AF /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF71170E26D39966006ED7AF /* HomeViewController.swift */; };
+		BF83C47A2786B8CA008FE7BF /* EnumNError.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF83C4792786B8CA008FE7BF /* EnumNError.swift */; };
+		BF83C47C2786DB38008FE7BF /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF83C47B2786DB38008FE7BF /* SignUpViewController.swift */; };
 		BF972DFB26C0F9AC000A1EDA /* SignUp3VIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF972DFA26C0F9AC000A1EDA /* SignUp3VIew.swift */; };
 		BFB9EC1B26DF0468002AA1B6 /* SharePhotoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB9EC1A26DF0467002AA1B6 /* SharePhotoViewModel.swift */; };
 		BFCF9BEC26DB677D00895D14 /* SharePhotoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCF9BEB26DB677D00895D14 /* SharePhotoController.swift */; };
@@ -102,6 +104,8 @@
 		BF606F2E26A28F0F004091A5 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		BF6854D126B83352000A6EE1 /* SignUp2View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUp2View.swift; sourceTree = "<group>"; };
 		BF71170E26D39966006ED7AF /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		BF83C4792786B8CA008FE7BF /* EnumNError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnumNError.swift; sourceTree = "<group>"; };
+		BF83C47B2786DB38008FE7BF /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		BF972DFA26C0F9AC000A1EDA /* SignUp3VIew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUp3VIew.swift; sourceTree = "<group>"; };
 		BFB9EC1A26DF0467002AA1B6 /* SharePhotoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharePhotoViewModel.swift; sourceTree = "<group>"; };
 		BFCF9BEB26DB677D00895D14 /* SharePhotoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharePhotoController.swift; sourceTree = "<group>"; };
@@ -233,6 +237,7 @@
 				BF4591A326B7B25B0031E119 /* UIKitExtension.swift */,
 				BF4591A526B7B2D60031E119 /* FoundationExtension.swift */,
 				BF021F05278563050096E948 /* CustomComponent.swift */,
+				BF83C4792786B8CA008FE7BF /* EnumNError.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -245,6 +250,7 @@
 				BF6854D126B83352000A6EE1 /* SignUp2View.swift */,
 				BF972DFA26C0F9AC000A1EDA /* SignUp3VIew.swift */,
 				BF4591B226B7E92B0031E119 /* SignUpViewModel.swift */,
+				BF83C47B2786DB38008FE7BF /* SignUpViewController.swift */,
 			);
 			path = SignUp;
 			sourceTree = "<group>";
@@ -574,8 +580,10 @@
 				BF270DEB26D3309400C0E6BE /* MainTabViewController.swift in Sources */,
 				BF4591B326B7E92B0031E119 /* SignUpViewModel.swift in Sources */,
 				BFCF9BEC26DB677D00895D14 /* SharePhotoController.swift in Sources */,
+				BF83C47A2786B8CA008FE7BF /* EnumNError.swift in Sources */,
 				BF4B58F626E2135800C47639 /* PostUploadView.swift in Sources */,
 				BFF7B0C626D71D4B001E9EB4 /* PhotoSelectorHeader.swift in Sources */,
+				BF83C47C2786DB38008FE7BF /* SignUpViewController.swift in Sources */,
 				BF1B97A126D5CAD5009D1B53 /* CalendarViewController.swift in Sources */,
 				BF606EE926A2876E004091A5 /* SceneDelegate.swift in Sources */,
 				BF4591A426B7B25B0031E119 /* UIKitExtension.swift in Sources */,

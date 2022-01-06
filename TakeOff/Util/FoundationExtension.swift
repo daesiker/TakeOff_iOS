@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 extension Date {
     //게시물 시간 계산해주는 Date Extension
@@ -43,5 +44,29 @@ extension Date {
         }
         
         return "\(quotient) \(unit)\(quotient == 1 ? "" : "s") ago"
+    }
+}
+
+extension String {
+    
+    func validPassword() -> Bool {
+        let passwordreg = ("(?=.*[A-Za-z])(?=.*[0-9]).{8,20}")
+        let passwordtesting = NSPredicate(format: "SELF MATCHES %@", passwordreg)
+        return passwordtesting.evaluate(with: self)
+    }
+}
+
+extension NSAttributedString {
+    func withLineSpacing(_ spacing: CGFloat) -> NSAttributedString {
+        
+        
+        let attributedString = NSMutableAttributedString(attributedString: self)
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineBreakMode = .byTruncatingTail
+        paragraphStyle.lineSpacing = spacing
+        attributedString.addAttribute(.paragraphStyle,
+                                      value: paragraphStyle,
+                                      range: NSRange(location: 0, length: string.count))
+        return NSAttributedString(attributedString: attributedString)
     }
 }
