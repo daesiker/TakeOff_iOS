@@ -94,6 +94,59 @@ class SignUpViewController: UIViewController {
         $0.textColor = UIColor.rgb(red: 255, green: 108, blue: 0)
     }
     
+    let nameLabel = UILabel().then {
+        $0.text = "닉네임"
+        $0.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 14)
+        $0.textColor = UIColor.rgb(red: 100, green: 98, blue: 94)
+    }
+    
+    let nameTextField = CustomTextField(image: UIImage(named: "tfPeople")!, text: "닉네임 입력").then {
+        $0.backgroundColor = UIColor.rgb(red: 243, green: 243, blue: 243)
+        $0.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 16)
+        $0.isSecureTextEntry = true
+    }
+    
+    let nameAlert = UILabel().then {
+        $0.text = ""
+        $0.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 11)
+        $0.textColor = UIColor.rgb(red: 255, green: 108, blue: 0)
+    }
+    
+    let typeLabel = UILabel().then {
+        $0.text = "가입 유형"
+        $0.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 14)
+        $0.textColor = UIColor.rgb(red: 100, green: 98, blue: 94)
+    }
+    
+    let artistBt = UIButton(type: .custom).then {
+        $0.backgroundColor = UIColor.rgb(red: 243, green: 243, blue: 243)
+        $0.setTitle("🎹 아티스트", for: .normal)
+        $0.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 14)
+        $0.setTitleColor(UIColor.rgb(red: 55, green: 57, blue: 61), for: .normal)
+        $0.layer.cornerRadius = 20.0
+        $0.contentEdgeInsets = UIEdgeInsets(top: 16, left: 61, bottom: 15, right: 61)
+    }
+    
+    let peopleBt = UIButton(type: .custom).then {
+        $0.setTitle("🙋🏼 일반인", for: .normal)
+        $0.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 14)
+        $0.setTitleColor(UIColor.rgb(red: 55, green: 57, blue: 61), for: .normal)
+        $0.backgroundColor = UIColor.rgb(red: 243, green: 243, blue: 243)
+        $0.layer.cornerRadius = 20.0
+        $0.contentEdgeInsets = UIEdgeInsets(top: 16, left: 61, bottom: 15, right: 61)
+    }
+    
+    let hashtagCollectionView: UICollectionView = {
+        let flowLayout = UICollectionViewFlowLayout()
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
+        collectionView.backgroundColor = .white
+        return collectionView
+    }()
+    
+    let hashTagData = Observable<[String]>.of(["#전체", "#버스킹", "#밴드", "#힙합", "#인디", "#공예", "#전시", "#디지털", "#패션", "#기타"])
+    let hashTagDomy = ["#전체", "#버스킹", "#밴드", "#힙합", "#인디", "#공예", "#전시", "#디지털", "#패션", "#기타"]
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
@@ -191,6 +244,46 @@ extension SignUpViewController {
             $0.leading.equalToSuperview().offset(25)
         }
         
+        scrollView.addSubview(nameLabel)
+        nameLabel.snp.makeConstraints {
+            $0.top.equalTo(pwConfirmAlert.snp.bottom).offset(17)
+            $0.leading.equalToSuperview().offset(25)
+        }
+        
+        scrollView.addSubview(nameTextField)
+        nameTextField.snp.makeConstraints {
+            $0.top.equalTo(nameLabel.snp.bottom).offset(8)
+            $0.leading.equalToSuperview().offset(25)
+            $0.width.equalTo(self.view.frame.width - 50)
+        }
+        
+        scrollView.addSubview(nameAlert)
+        nameAlert.snp.makeConstraints {
+            $0.top.equalTo(nameTextField.snp.bottom).offset(6)
+            $0.leading.equalToSuperview().offset(25)
+        }
+        
+        scrollView.addSubview(typeLabel)
+        typeLabel.snp.makeConstraints {
+            $0.top.equalTo(nameAlert.snp.bottom).offset(17)
+            $0.leading.equalToSuperview().offset(25)
+        }
+        
+        let typeStackView = UIStackView(arrangedSubviews: [artistBt, peopleBt]).then {
+            $0.axis = .horizontal
+            $0.distribution = .fillEqually
+            $0.spacing = 28
+        }
+        
+        scrollView.addSubview(typeStackView)
+        typeStackView.snp.makeConstraints {
+            $0.top.equalTo(typeLabel.snp.bottom).offset(8)
+            $0.leading.equalToSuperview().offset(25)
+            $0.width.equalTo(self.view.frame.width - 50)
+        }
+        
+        
+        
         
         
         scrollView.updateContentSize()
@@ -209,4 +302,10 @@ extension SignUpViewController {
     private func bindOutput() {
         
     }
+}
+
+extension SignUpViewController: UICollectionViewDelegateFlowLayout {
+    
+    
+    
 }
