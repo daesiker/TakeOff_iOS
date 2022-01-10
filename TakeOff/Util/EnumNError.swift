@@ -16,3 +16,9 @@ extension TakeOffError: LocalizedError {
         return NSLocalizedString(msg, comment: "")
     }
 }
+
+enum TypeValid {
+    case artist
+    case person
+    case notSelected
+}

@@ -15,9 +15,8 @@ class SignUpViewModel {
     
     private var user = User()
     let disposeBag = DisposeBag()
-    let stepOne = StepOne()
-    let stepTwo = StepTwo()
-    var stepThree = StepThree()
+    let input = Input()
+    var output = Output()
     
     enum EmailValid {
         case notAvailable
@@ -25,113 +24,74 @@ class SignUpViewModel {
         case correct
     }
     
-    struct StepOne {
-        let tap = PublishRelay<Bool>()
-        let dismiss = PublishRelay<Void>()
+    
+    struct Input {
+        let emailObserver = PublishRelay<String>()
+        let pwObserver = PublishRelay<String>()
+        let pwConfirmObserver = PublishRelay<String>()
+        let nameObserver = PublishRelay<String>()
+        let typeObserver = PublishRelay<TypeValid>()
+        let hasTagObserver = PublishRelay<[String]>()
     }
     
-    struct StepTwo {
-        let radioClick = PublishRelay<String>()
-        let confirmClick = PublishRelay<Void>()
-        let dismissClick = PublishRelay<Void>()
-    }
-    
-    struct StepThree {
-        
-        struct Input {
-            let emailObserver = BehaviorRelay<String>(value: "")
-            let nameObserver = BehaviorRelay<String>(value: "")
-            let pwObserver = BehaviorRelay<String>(value: "")
-            let overlapPwObserver = BehaviorRelay<String>(value: "")
-            let signUpTap = PublishRelay<Void>()
-        }
-        
-        struct Output {
-            var emailValid:Driver<EmailValid> = PublishRelay<EmailValid>().asDriver(onErrorJustReturn: .notAvailable)
-            var nameValid:Driver<Bool> = PublishRelay<Bool>().asDriver(onErrorJustReturn: false)
-            var pwValid:Driver<Bool> = PublishRelay<Bool>().asDriver(onErrorJustReturn: false)
-            var overlapPwValid:Driver<Bool> = PublishRelay<Bool>().asDriver(onErrorJustReturn: false)
-            var signupButtonValid:Driver<Bool> = PublishRelay<Bool>().asDriver(onErrorJustReturn: false)
-            var goSignUp:Signal<Void> = PublishRelay<Void>().asSignal()
-            var error:Signal<Error> = PublishRelay<Error>().asSignal()
-        }
-        let input = Input()
-        var output = Output()
-        
-        let tapSignup = PublishSubject<Void>()
-        let firebaseSignUp = PublishRelay<Void>()
+    struct Output {
+        var emailValid = PublishRelay<EmailValid>()
+        var pwValid = PublishRelay<Bool>()
+        var pwConfirmValid = PublishRelay<Bool>()
+        var nameValid = PublishRelay<EmailValid>()
+        var typeValid = PublishRelay<TypeValid>()
     }
     
     
     init() {
-        //MARK: Step 1
-        stepOne.tap.subscribe(onNext: { type in
-            self.user.type = type
-        })
-        .disposed(by: disposeBag)
         
-        stepOne.dismiss.subscribe().disposed(by: disposeBag)
+        input.emailObserver.subscribe(onNext: { value in
+            self.user.email = value
+        }).disposed(by: disposeBag)
         
-        //MARK: Step 2
-        stepTwo.radioClick.subscribe(onNext: { type in
-            if self.user.hashTag.contains(type) {
-                if let index = self.user.hashTag.firstIndex(of: type) {
-                    self.user.hashTag.remove(at: index)
+        input.pwObserver.subscribe(onNext: { value in
+            self.user.pw = value
+        }).disposed(by: disposeBag)
+        
+        input.nameObserver.subscribe(onNext: { value in
+            self.user.name = value
+        }).disposed(by: disposeBag)
+        
+        input.typeObserver.subscribe(onNext: { value in
+            switch value {
+            case .artist:
+                self.user.type = true
+            case .person:
+                self.user.type = false
+            case .notSelected:
+                break
+            }
+        }).disposed(by: disposeBag)
+        
+        
+        input.emailObserver.flatMap(firebaseEmailCheck)
+            .subscribe({ event in
+                switch event {
+                case .next(let valid):
+                    self.output.emailValid.accept(valid)
+                default:
+                    break
                 }
-            } else {
-                self.user.hashTag.append(type)
-            }
-        })
+            }).disposed(by: disposeBag)
+        
+        input.pwObserver.map { $0.validPassword() }
+        .bind(to: self.output.pwValid )
         .disposed(by: disposeBag)
         
-        stepTwo.confirmClick.subscribe().disposed(by: disposeBag)
-        stepTwo.dismissClick.subscribe().disposed(by: disposeBag)
-        
-        
-        //MARK: Step3
-        stepThree.tapSignup.flatMapLatest(self.createUser).subscribe { event in
-            print("viewmodel next")
-        } onError: { e in
-            print(e)
-        } onCompleted: {
-            print("viewmodel completed")
-        } onDisposed: {
-            print("viewmodel disposed")
-        }.disposed(by: disposeBag)
-        
-        stepThree.output.emailValid = stepThree.input.emailObserver
-            .flatMap(self.firebaseEmailCheck)
-            .asDriver(onErrorJustReturn: .notAvailable)
-        stepThree.output.nameValid = stepThree.input.nameObserver
-            .flatMap(self.firebaseNameCheck)
-            .asDriver(onErrorJustReturn: false)
-        stepThree.output.pwValid = stepThree.input.pwObserver
-            .map { $0.count > 5 }
-            .asDriver(onErrorJustReturn: false)
-        stepThree.output.overlapPwValid = stepThree.input.overlapPwObserver
-            .map { $0 == self.stepThree.input.pwObserver.value && $0.count > 5 }
-            .asDriver(onErrorJustReturn: false)
-        stepThree.output.signupButtonValid = Driver.combineLatest(stepThree.output.emailValid, stepThree.output.nameValid, stepThree.output.pwValid, stepThree.output.overlapPwValid)
-            .map {$0.0 == .correct && $0.1 && $0.2 && $0.3 }
-            .asDriver(onErrorJustReturn: false)
-        
-        let errorRelay = PublishRelay<Error>()
-        let signUpRelay = PublishRelay<Void>()
-        stepThree.input.signUpTap.flatMapLatest(self.createUser).subscribe { event in
-            switch event {
-            case .completed:
-                print("completed")
-            case .next(_):
-                print("next")
-            case .error(let error):
-                errorRelay.accept(error)
-            }
-        }
+        input.pwConfirmObserver.map { $0 != "" && $0 == self.user.pw }
+        .bind(to: self.output.pwConfirmValid)
         .disposed(by: disposeBag)
         
-        stepThree.input.signUpTap.bind(to: signUpRelay).disposed(by: disposeBag)
-        stepThree.output.goSignUp = signUpRelay.asSignal()
-        stepThree.output.error = errorRelay.asSignal()
+        input.typeObserver
+            .bind(to: self.output.typeValid)
+            .disposed(by: disposeBag)
+        
+        
     }
     
     func firebaseEmailCheck(_ text: String) -> Observable<EmailValid> {
@@ -190,41 +150,41 @@ class SignUpViewModel {
         }
     }
     
-    func createUser() -> Observable<Void> {
-        
-        user.email = stepThree.input.emailObserver.value
-        user.name = stepThree.input.nameObserver.value
-        
-        return Observable.create { result in
-            Auth.auth().createUser(withEmail: self.stepThree.input.emailObserver.value, password: self.stepThree.input.pwObserver.value) { (user, error: Error?) in
-                if let err = error {
-                    //Alert
-                    print("Failed to create user: ", err)
-                    result.onError(NSError(domain: "", code: 3, userInfo: nil))
-                    result.onCompleted()
-                }
-                
-                guard let uid = user?.user.uid else { return result.onCompleted() }
-                let dictionaryValues = self.user.toDic()
-                
-                let values = [uid: dictionaryValues]
-                
-                Database.database().reference().child("users").updateChildValues(values) { err, ref in
-                    if let err = err {
-                        //Alert
-                        print("Failed to save user info into db", err)
-                        result.onError(NSError(domain: "", code: 3, userInfo: nil))
-                        result.onCompleted()
-                    }
-                    
-                    result.onNext(())
-                    result.onCompleted()
-                }
-                
-            }
-            return Disposables.create()
-        }
-    }
+//    func createUser() -> Observable<Void> {
+//
+//        user.email = input.emailObserver.value
+//        user.name = input.nameObserver.value
+//
+//        return Observable.create { result in
+//            Auth.auth().createUser(withEmail: self.stepThree.input.emailObserver.value, password: self.stepThree.input.pwObserver.value) { (user, error: Error?) in
+//                if let err = error {
+//                    //Alert
+//                    print("Failed to create user: ", err)
+//                    result.onError(NSError(domain: "", code: 3, userInfo: nil))
+//                    result.onCompleted()
+//                }
+//
+//                guard let uid = user?.user.uid else { return result.onCompleted() }
+//                let dictionaryValues = self.user.toDic()
+//
+//                let values = [uid: dictionaryValues]
+//
+//                Database.database().reference().child("users").updateChildValues(values) { err, ref in
+//                    if let err = err {
+//                        //Alert
+//                        print("Failed to save user info into db", err)
+//                        result.onError(NSError(domain: "", code: 3, userInfo: nil))
+//                        result.onCompleted()
+//                    }
+//
+//                    result.onNext(())
+//                    result.onCompleted()
+//                }
+//
+//            }
+//            return Disposables.create()
+//        }
+//    }
     
     
     

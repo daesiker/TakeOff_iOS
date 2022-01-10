@@ -37,6 +37,7 @@ struct User:Codable {
     var uid: String = ""
     var email: String = ""
     var name: String = ""
+    var pw: String = ""
     var type: Bool = false
     var profileImage: String = ""
     var hashTag:[String] = [String]()

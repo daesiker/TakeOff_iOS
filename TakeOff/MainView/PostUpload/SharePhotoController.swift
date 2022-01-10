@@ -73,7 +73,7 @@ class SharePhotoController: UIViewController {
     
 }
 
-extension SharePhotoController: SignUpViewAttributes {
+extension SharePhotoController {
     
     func setPagerView() {
         pagerView.delegate = self
