@@ -22,6 +22,7 @@ class SignUpViewModel {
         case notAvailable
         case alreadyExsist
         case correct
+        case serverError
     }
     
     
@@ -38,7 +39,7 @@ class SignUpViewModel {
         var emailValid = PublishRelay<EmailValid>()
         var pwValid = PublishRelay<Bool>()
         var pwConfirmValid = PublishRelay<Bool>()
-        var nameValid = PublishRelay<EmailValid>()
+        var nameValid = PublishRelay<Bool>()
         var typeValid = PublishRelay<TypeValid>()
     }
     
@@ -87,6 +88,16 @@ class SignUpViewModel {
         .bind(to: self.output.pwConfirmValid)
         .disposed(by: disposeBag)
         
+        input.nameObserver.flatMap(firebaseNameCheck)
+            .subscribe({ event in
+                switch event {
+                case .next(let value):
+                    self.output.nameValid.accept(value)
+                default:
+                    break
+                }
+            }).disposed(by: disposeBag)
+        
         input.typeObserver
             .bind(to: self.output.typeValid)
             .disposed(by: disposeBag)
@@ -102,12 +113,11 @@ class SignUpViewModel {
             } else {
                 let ref = Database.database().reference().child("users")
                 ref.observeSingleEvent(of: .value) { snapshot in
-                    guard let dictionaries = snapshot.value as? [String: Any] else {  return valid.onCompleted() } //Error 처리
+                    guard let dictionaries = snapshot.value as? [String: Any] else {  return valid.onNext(.serverError) } //Error 처리
                     
                     dictionaries.forEach { (key, value) in
                         guard let userDictionary = value as? [String:Any] else { return valid.onCompleted() }
                         guard let email = userDictionary["email"] as? String else {return valid.onCompleted() }
-                        
                         if email == text {
                             valid.onNext(.alreadyExsist)
                             valid.onCompleted()
@@ -126,12 +136,11 @@ class SignUpViewModel {
     func firebaseNameCheck(_ text: String) -> Observable<Bool> {
         return Observable.create { valid in
             if text.isEmpty {
-                valid.onNext(false)
                 valid.onCompleted()
             } else {
                 let ref = Database.database().reference().child("users")
                 ref.observeSingleEvent(of: .value) { snapshot in
-                    guard let dictionaries = snapshot.value as? [String: Any] else {  return valid.onCompleted() } //Error 처리
+                    guard let dictionaries = snapshot.value as? [String: Any] else {  return valid.onNext(true) } //Error 처리
                     
                     dictionaries.forEach { (key, value) in
                         guard let userDictionary = value as? [String:Any] else { return valid.onCompleted() }

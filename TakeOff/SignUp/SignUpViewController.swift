@@ -366,6 +366,77 @@ extension SignUpViewController {
     
     private func bindOutput() {
         
+        vm.output.emailValid.asDriver(onErrorJustReturn: .notAvailable)
+            .drive(onNext: { value in
+                
+                switch value {
+                case .correct:
+                    self.emailAlert.text = ""
+                    self.emailTextField.setRight()
+                case .alreadyExsist:
+                    self.emailTextField.setErrorRight()
+                    self.emailAlert.text = "이미 존재하는 이메일입니다."
+                case .notAvailable:
+                    self.emailAlert.text = "이메일 형식이 올바르지 않습니다."
+                    self.emailTextField.setErrorRight()
+                case .serverError:
+                    self.emailAlert.text = "인터넷 연결상태를 확인해 주세요."
+                    self.emailTextField.setErrorRight()
+                }
+                
+            }).disposed(by: disposeBag)
+        
+        vm.output.pwValid.asDriver(onErrorJustReturn: false)
+            .drive(onNext: { value in
+                if value {
+                    self.pwAlert.text = ""
+                    self.pwTextField.setRight()
+                } else {
+                    self.pwAlert.text = "영문자와 숫자 포함 8자 이상 입력해주세요."
+                    self.pwTextField.setErrorRight()
+                }
+            }).disposed(by: disposeBag)
+        
+        vm.output.pwConfirmValid.asDriver(onErrorJustReturn: false)
+            .drive(onNext: { value in
+                if value {
+                    self.pwConfirmAlert.text = ""
+                    self.pwConfirmTextField.setRight()
+                } else {
+                    self.pwConfirmAlert.text = "비밀번호가 일치하지 않습니다."
+                    self.pwConfirmTextField.setErrorRight()
+                }
+            }).disposed(by: disposeBag)
+        
+        vm.output.nameValid.asDriver(onErrorJustReturn: false)
+            .drive(onNext: {value in
+                if value {
+                    self.nameAlert.text = "이미 존재하는 닉네임입니다."
+                    self.nameTextField.setErrorRight()
+                } else {
+                    self.nameAlert.text = ""
+                    self.nameTextField.setRight()
+                }
+            }).disposed(by: disposeBag)
+        
+        vm.output.typeValid.asDriver(onErrorJustReturn: .notSelected)
+            .drive(onNext: { value in
+                switch value {
+                case .notSelected:
+                    break
+                case .person:
+                    self.peopleBt.setTitleColor(.white, for: .normal)
+                    self.peopleBt.backgroundColor = UIColor.rgb(red: 255, green: 147, blue: 81)
+                    self.artistBt.setTitleColor(UIColor.rgb(red: 55, green: 57, blue: 61), for: .normal)
+                    self.artistBt.backgroundColor = UIColor.rgb(red: 195, green: 195, blue: 195)
+                case .artist:
+                    self.artistBt.setTitleColor(.white, for: .normal)
+                    self.artistBt.backgroundColor = UIColor.rgb(red: 255, green: 147, blue: 81)
+                    self.peopleBt.setTitleColor(UIColor.rgb(red: 55, green: 57, blue: 61), for: .normal)
+                    self.peopleBt.backgroundColor = UIColor.rgb(red: 195, green: 195, blue: 195)
+                }
+            }).disposed(by: disposeBag)
+        
     }
 }
 
