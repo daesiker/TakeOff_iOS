@@ -13,7 +13,7 @@ import Firebase
 
 class SignUpViewModel {
     
-    private var user = User()
+    var user = User()
     let disposeBag = DisposeBag()
     let input = Input()
     var output = Output()
@@ -32,7 +32,7 @@ class SignUpViewModel {
         let pwConfirmObserver = PublishRelay<String>()
         let nameObserver = PublishRelay<String>()
         let typeObserver = PublishRelay<TypeValid>()
-        let hasTagObserver = PublishRelay<[String]>()
+        let hasTagObserver = PublishRelay<String>()
     }
     
     struct Output {
@@ -41,6 +41,8 @@ class SignUpViewModel {
         var pwConfirmValid = PublishRelay<Bool>()
         var nameValid = PublishRelay<Bool>()
         var typeValid = PublishRelay<TypeValid>()
+        var hastagValid = PublishRelay<Bool>()
+        var buttonValid = PublishRelay<Bool>().asDriver(onErrorJustReturn: false)
     }
     
     
@@ -69,6 +71,24 @@ class SignUpViewModel {
             }
         }).disposed(by: disposeBag)
         
+        input.hasTagObserver.subscribe(onNext: { value in
+            if self.user.hashTag.contains(value) {
+                if let index = self.user.hashTag.firstIndex(of: value) {
+                    self.user.hashTag.remove(at: index)
+                }
+                
+            } else {
+                self.user.hashTag.append(value)
+            }
+            
+            if self.user.hashTag.count != 0 {
+                self.output.hastagValid.accept(true)
+            } else {
+                self.output.hastagValid.accept(false)
+            }
+            
+            
+        }).disposed(by: disposeBag)
         
         input.emailObserver.flatMap(firebaseEmailCheck)
             .subscribe({ event in
@@ -102,6 +122,14 @@ class SignUpViewModel {
             .bind(to: self.output.typeValid)
             .disposed(by: disposeBag)
         
+        
+        
+        output.buttonValid = Observable.combineLatest(output.emailValid, output.pwValid, output.pwConfirmValid, output.nameValid, output.typeValid, output.hastagValid)
+            .map { $0 == .correct && $1 && $2 && $3 && $4 != .notSelected && $5 }
+            .asDriver(onErrorJustReturn: false)
+            
+            
+            
         
     }
     

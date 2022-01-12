@@ -106,7 +106,6 @@ class SignUpViewController: UIViewController {
     let nameTextField = CustomTextField(image: UIImage(named: "tfPeople")!, text: "닉네임 입력").then {
         $0.backgroundColor = UIColor.rgb(red: 243, green: 243, blue: 243)
         $0.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 16)
-        $0.isSecureTextEntry = true
     }
     
     let nameAlert = UILabel().then {
@@ -123,20 +122,20 @@ class SignUpViewController: UIViewController {
     
     let artistBt = UIButton(type: .custom).then {
         $0.backgroundColor = UIColor.rgb(red: 243, green: 243, blue: 243)
-        $0.setTitle("아티스트", for: .normal)
+        $0.setTitle("🎸 아티스트", for: .normal)
         $0.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 14)
         $0.setTitleColor(UIColor.rgb(red: 55, green: 57, blue: 61), for: .normal)
         $0.layer.cornerRadius = 20.0
-        $0.contentEdgeInsets = UIEdgeInsets(top: 16, left: 61, bottom: 15, right: 61)
+        $0.contentEdgeInsets = UIEdgeInsets(top: 16, left: 50, bottom: 15, right: 50)
     }
     
     let peopleBt = UIButton(type: .custom).then {
-        $0.setTitle("일반인", for: .normal)
+        $0.setTitle("🙋🏼 일반인", for: .normal)
         $0.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 14)
         $0.setTitleColor(UIColor.rgb(red: 55, green: 57, blue: 61), for: .normal)
         $0.backgroundColor = UIColor.rgb(red: 243, green: 243, blue: 243)
         $0.layer.cornerRadius = 20.0
-        $0.contentEdgeInsets = UIEdgeInsets(top: 16, left: 61, bottom: 15, right: 61)
+        $0.contentEdgeInsets = UIEdgeInsets(top: 16, left: 50, bottom: 15, right: 50)
     }
     
     let hashTagLabel = UILabel().then {
@@ -152,18 +151,18 @@ class SignUpViewController: UIViewController {
         return collectionView
     }()
     
-    let hashTagData = Observable<[String]>.of(["#전체", "#버스킹", "#밴드", "#힙합", "#인디", "#공예", "#전시", "#디지털", "#패션", "#기타"])
-    let hashTagDomy = ["#전체", "#버스킹", "#밴드", "#힙합", "#인디", "#공예", "#전시", "#디지털", "#패션", "#기타"]
+    let hashTagData = Observable<[String]>.of(["#재즈", "#버스킹", "#밴드", "#힙합", "#인디", "#공예", "#전시", "#디지털", "#패션", "#기타"])
+    let hashTagDomy = ["#재즈", "#버스킹", "#밴드", "#힙합", "#인디", "#공예", "#전시", "#디지털", "#패션", "#기타"]
     
     let signInBt = UIButton(type: .custom).then {
-            $0.setTitle("회원가입", for: .normal)
-            $0.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 16)
-            $0.titleLabel?.textColor = .white
-            $0.backgroundColor = UIColor.rgb(red: 195, green: 195, blue: 195)
-            $0.layer.cornerRadius = 27.0
-            $0.contentEdgeInsets = UIEdgeInsets(top: 15, left: 134, bottom: 13, right: 131)
-            $0.isEnabled = false
-        }
+        $0.setTitle("회원가입", for: .normal)
+        $0.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 16)
+        $0.titleLabel?.textColor = .white
+        $0.backgroundColor = UIColor.rgb(red: 195, green: 195, blue: 195)
+        $0.layer.cornerRadius = 27.0
+        $0.contentEdgeInsets = UIEdgeInsets(top: 15, left: 134, bottom: 13, right: 131)
+        $0.isEnabled = false
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -331,6 +330,10 @@ extension SignUpViewController {
     }
     
     private func bindInput() {
+        backBt.rx.tap.subscribe(onNext: {
+            self.dismiss(animated: true, completion: nil)
+        }).disposed(by: disposeBag)
+        
         emailTextField.rx.controlEvent([.editingDidEnd])
             .map { self.emailTextField.text ?? "" }
             .bind(to: vm.input.emailObserver)
@@ -437,6 +440,16 @@ extension SignUpViewController {
                 }
             }).disposed(by: disposeBag)
         
+        vm.output.buttonValid.asDriver(onErrorJustReturn: false)
+            .drive(onNext: { value in
+                if value {
+                    self.signInBt.isEnabled = true
+                    self.signInBt.backgroundColor = UIColor.rgb(red: 251, green: 136, blue: 85)
+                } else {
+                    self.signInBt.isEnabled = false
+                    self.signInBt.backgroundColor = UIColor.rgb(red: 195, green: 195, blue: 195)
+                }
+            }).disposed(by: disposeBag)
     }
 }
 
@@ -451,6 +464,35 @@ extension SignUpViewController: UICollectionViewDelegateFlowLayout {
             .bind(to: hashtagCollectionView.rx.items(cellIdentifier: "cellID", cellType: HashTagCell.self)) { row, element, cell in
                 cell.title.text = element
             }.disposed(by: disposeBag)
+        
+        hashtagCollectionView.rx.itemSelected
+            .map { index in
+                let cell = self.hashtagCollectionView.cellForItem(at: index) as? HashTagCell
+                return cell?.title.text ?? ""
+            }
+            .bind(to: vm.input.hasTagObserver)
+            .disposed(by: disposeBag)
+        
+        hashtagCollectionView.rx.itemSelected
+            .subscribe(onNext: { value in
+                
+                for i in 0..<self.hashTagDomy.count {
+                    let cell = self.hashtagCollectionView.cellForItem(at: [0, i]) as? HashTagCell
+                    
+                    if self.vm.user.hashTag.contains(self.hashTagDomy[i]) {
+                        cell?.title.textColor = .white
+                        cell?.title.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 14)
+                        cell?.view.backgroundColor = UIColor.rgb(red: 255, green: 147, blue: 81)
+                    } else {
+                        cell?.title.textColor = UIColor.rgb(red: 108, green: 108, blue: 108)
+                        cell?.title.font = UIFont(name: "AppleSDGothicNeo-Medium", size: 14)
+                        cell?.view.backgroundColor = UIColor.rgb(red: 255, green: 238, blue: 211)
+                    }
+                    
+                }
+                
+                
+            }).disposed(by: disposeBag)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
