@@ -54,6 +54,7 @@ class SignUpViewModel {
         
         input.pwObserver.subscribe(onNext: { value in
             self.user.pw = value
+            self.output.pwValid.accept(value.validPassword())
         }).disposed(by: disposeBag)
         
         input.nameObserver.subscribe(onNext: { value in
@@ -64,8 +65,10 @@ class SignUpViewModel {
             switch value {
             case .artist:
                 self.user.type = true
+                self.output.typeValid.accept(value)
             case .person:
                 self.user.type = false
+                self.output.typeValid.accept(value)
             case .notSelected:
                 break
             }
@@ -100,12 +103,11 @@ class SignUpViewModel {
                 }
             }).disposed(by: disposeBag)
         
-        input.pwObserver.map { $0.validPassword() }
-        .bind(to: self.output.pwValid )
-        .disposed(by: disposeBag)
         
         input.pwConfirmObserver.map { $0 != "" && $0 == self.user.pw }
-        .bind(to: self.output.pwConfirmValid)
+        .subscribe(onNext: { value in
+            self.output.pwConfirmValid.accept(value)
+        })
         .disposed(by: disposeBag)
         
         input.nameObserver.flatMap(firebaseNameCheck)
@@ -118,13 +120,10 @@ class SignUpViewModel {
                 }
             }).disposed(by: disposeBag)
         
-        input.typeObserver
-            .bind(to: self.output.typeValid)
-            .disposed(by: disposeBag)
         
         
         
-        output.buttonValid = Observable.combineLatest(output.emailValid, output.pwValid, output.pwConfirmValid, output.nameValid, output.typeValid, output.hastagValid)
+        output.buttonValid = Driver.combineLatest(output.emailValid.asDriver(onErrorJustReturn: .serverError), output.pwValid.asDriver(onErrorJustReturn: false), output.pwConfirmValid.asDriver(onErrorJustReturn: false), output.nameValid.asDriver(onErrorJustReturn: false), output.typeValid.asDriver(onErrorJustReturn: .notSelected), output.hastagValid.asDriver(onErrorJustReturn: false))
             .map { $0 == .correct && $1 && $2 && $3 && $4 != .notSelected && $5 }
             .asDriver(onErrorJustReturn: false)
             
