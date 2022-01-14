@@ -36,12 +36,12 @@ class SignUpViewModel {
     }
     
     struct Output {
-        var emailValid = PublishRelay<EmailValid>()
-        var pwValid = PublishRelay<Bool>()
-        var pwConfirmValid = PublishRelay<Bool>()
-        var nameValid = PublishRelay<Bool>()
-        var typeValid = PublishRelay<TypeValid>()
-        var hastagValid = PublishRelay<Bool>()
+        var emailValid = PublishRelay<EmailValid>().asDriver(onErrorJustReturn: .notAvailable)
+        var pwValid = PublishRelay<Bool>().asDriver(onErrorJustReturn: false)
+        var pwConfirmValid = PublishRelay<Bool>().asDriver(onErrorJustReturn: false)
+        var nameValid = PublishRelay<Bool>().asDriver(onErrorJustReturn: false)
+        var typeValid = PublishRelay<Bool>().asDriver(onErrorJustReturn: false)
+        var hastagValid = PublishRelay<Bool>().asDriver(onErrorJustReturn: false)
         var buttonValid = PublishRelay<Bool>().asDriver(onErrorJustReturn: false)
     }
     
@@ -52,27 +52,34 @@ class SignUpViewModel {
             self.user.email = value
         }).disposed(by: disposeBag)
         
+        output.emailValid = input.emailObserver.flatMap(self.firebaseEmailCheck).asDriver(onErrorJustReturn: .notAvailable)
+        
         input.pwObserver.subscribe(onNext: { value in
             self.user.pw = value
-            self.output.pwValid.accept(value.validPassword())
         }).disposed(by: disposeBag)
+        
+        output.pwValid = input.pwObserver.map { $0.validPassword() }.asDriver(onErrorJustReturn: false)
+        
+        output.pwConfirmValid = input.pwConfirmObserver.map { $0 == self.user.pw && $0 != "" }.asDriver(onErrorJustReturn: false)
         
         input.nameObserver.subscribe(onNext: { value in
             self.user.name = value
         }).disposed(by: disposeBag)
         
+        output.nameValid = input.nameObserver.flatMap(firebaseNameCheck).asDriver(onErrorJustReturn: false)
+        
         input.typeObserver.subscribe(onNext: { value in
             switch value {
             case .artist:
                 self.user.type = true
-                self.output.typeValid.accept(value)
             case .person:
                 self.user.type = false
-                self.output.typeValid.accept(value)
             case .notSelected:
                 break
             }
         }).disposed(by: disposeBag)
+        
+        output.typeValid = input.typeObserver.map { $0 != .notSelected }.asDriver(onErrorJustReturn: false)
         
         input.hasTagObserver.subscribe(onNext: { value in
             if self.user.hashTag.contains(value) {
@@ -84,50 +91,20 @@ class SignUpViewModel {
                 self.user.hashTag.append(value)
             }
             
-            if self.user.hashTag.count != 0 {
-                self.output.hastagValid.accept(true)
-            } else {
-                self.output.hastagValid.accept(false)
-            }
-            
-            
         }).disposed(by: disposeBag)
         
-        input.emailObserver.flatMap(firebaseEmailCheck)
-            .subscribe({ event in
-                switch event {
-                case .next(let valid):
-                    self.output.emailValid.accept(valid)
-                default:
-                    break
-                }
-            }).disposed(by: disposeBag)
+        output.hastagValid = input.hasTagObserver.map { _ in
+            if self.user.hashTag.count == 0 {
+                return false
+            } else {
+                return true
+            }
+        }.asDriver(onErrorJustReturn: false)
         
         
-        input.pwConfirmObserver.map { $0 != "" && $0 == self.user.pw }
-        .subscribe(onNext: { value in
-            self.output.pwConfirmValid.accept(value)
-        })
-        .disposed(by: disposeBag)
-        
-        input.nameObserver.flatMap(firebaseNameCheck)
-            .subscribe({ event in
-                switch event {
-                case .next(let value):
-                    self.output.nameValid.accept(value)
-                default:
-                    break
-                }
-            }).disposed(by: disposeBag)
-        
-        
-        
-        
-        output.buttonValid = Driver.combineLatest(output.emailValid.asDriver(onErrorJustReturn: .serverError), output.pwValid.asDriver(onErrorJustReturn: false), output.pwConfirmValid.asDriver(onErrorJustReturn: false), output.nameValid.asDriver(onErrorJustReturn: false), output.typeValid.asDriver(onErrorJustReturn: .notSelected), output.hastagValid.asDriver(onErrorJustReturn: false))
-            .map { $0 == .correct && $1 && $2 && $3 && $4 != .notSelected && $5 }
+        output.buttonValid = Driver.combineLatest(output.emailValid, output.pwValid, output.pwConfirmValid, output.nameValid, output.typeValid, output.hastagValid)
+            .map { $0 != .notAvailable && $1 && $2 && $3 && $4 && $5}
             .asDriver(onErrorJustReturn: false)
-            
-            
             
         
     }
@@ -167,18 +144,18 @@ class SignUpViewModel {
             } else {
                 let ref = Database.database().reference().child("users")
                 ref.observeSingleEvent(of: .value) { snapshot in
-                    guard let dictionaries = snapshot.value as? [String: Any] else {  return valid.onNext(true) } //Error 처리
+                    guard let dictionaries = snapshot.value as? [String: Any] else {  return valid.onNext(false) } //Error 처리
                     
                     dictionaries.forEach { (key, value) in
                         guard let userDictionary = value as? [String:Any] else { return valid.onCompleted() }
                         guard let name = userDictionary["name"] as? String else {return valid.onCompleted() }
                         
                         if name == text {
-                            valid.onNext(true)
+                            valid.onNext(false)
                             valid.onCompleted()
                         }
                     }
-                    valid.onNext(false)
+                    valid.onNext(true)
                     valid.onCompleted()
                 }
             }
@@ -186,41 +163,36 @@ class SignUpViewModel {
         }
     }
     
-//    func createUser() -> Observable<Void> {
-//
-//        user.email = input.emailObserver.value
-//        user.name = input.nameObserver.value
-//
-//        return Observable.create { result in
-//            Auth.auth().createUser(withEmail: self.stepThree.input.emailObserver.value, password: self.stepThree.input.pwObserver.value) { (user, error: Error?) in
-//                if let err = error {
-//                    //Alert
-//                    print("Failed to create user: ", err)
-//                    result.onError(NSError(domain: "", code: 3, userInfo: nil))
-//                    result.onCompleted()
-//                }
-//
-//                guard let uid = user?.user.uid else { return result.onCompleted() }
-//                let dictionaryValues = self.user.toDic()
-//
-//                let values = [uid: dictionaryValues]
-//
-//                Database.database().reference().child("users").updateChildValues(values) { err, ref in
-//                    if let err = err {
-//                        //Alert
-//                        print("Failed to save user info into db", err)
-//                        result.onError(NSError(domain: "", code: 3, userInfo: nil))
-//                        result.onCompleted()
-//                    }
-//
-//                    result.onNext(())
-//                    result.onCompleted()
-//                }
-//
-//            }
-//            return Disposables.create()
-//        }
-//    }
+    func createUser() -> Observable<Void> {
+
+
+        return Observable.create { result in
+            Auth.auth().createUser(withEmail: self.user.email, password: self.user.pw) { user, error in
+                if let error = error {
+                    //Alert
+                    result.onError(error)
+                    result.onCompleted()
+                }
+
+                guard let uid = user?.user.uid else { return result.onCompleted() }
+                let dictionaryValues = self.user.toDic()
+
+                let values = [uid: dictionaryValues]
+
+                Database.database().reference().child("users").updateChildValues(values) { error, ref in
+                    if let error = error {
+                        result.onError(error)
+                        result.onCompleted()
+                    }
+
+                    result.onNext(())
+                    result.onCompleted()
+                }
+
+            }
+            return Disposables.create()
+        }
+    }
     
     
     

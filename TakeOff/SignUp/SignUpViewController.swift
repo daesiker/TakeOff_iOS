@@ -369,7 +369,7 @@ extension SignUpViewController {
     
     private func bindOutput() {
         
-        vm.output.emailValid.asDriver(onErrorJustReturn: .notAvailable)
+        vm.output.emailValid
             .drive(onNext: { value in
                 
                 switch value {
@@ -389,7 +389,7 @@ extension SignUpViewController {
                 
             }).disposed(by: disposeBag)
         
-        vm.output.pwValid.asDriver(onErrorJustReturn: false)
+        vm.output.pwValid
             .drive(onNext: { value in
                 if value {
                     self.pwAlert.text = ""
@@ -400,7 +400,7 @@ extension SignUpViewController {
                 }
             }).disposed(by: disposeBag)
         
-        vm.output.pwConfirmValid.asDriver(onErrorJustReturn: false)
+        vm.output.pwConfirmValid
             .drive(onNext: { value in
                 if value {
                     self.pwConfirmAlert.text = ""
@@ -411,7 +411,7 @@ extension SignUpViewController {
                 }
             }).disposed(by: disposeBag)
         
-        vm.output.nameValid.asDriver(onErrorJustReturn: false)
+        vm.output.nameValid
             .drive(onNext: {value in
                 if value {
                     self.nameAlert.text = "이미 존재하는 닉네임입니다."
@@ -422,17 +422,14 @@ extension SignUpViewController {
                 }
             }).disposed(by: disposeBag)
         
-        vm.output.typeValid.asDriver(onErrorJustReturn: .notSelected)
+        vm.output.typeValid
             .drive(onNext: { value in
-                switch value {
-                case .notSelected:
-                    break
-                case .person:
+                if value {
                     self.peopleBt.setTitleColor(.white, for: .normal)
                     self.peopleBt.backgroundColor = UIColor.rgb(red: 255, green: 147, blue: 81)
                     self.artistBt.setTitleColor(UIColor.rgb(red: 55, green: 57, blue: 61), for: .normal)
                     self.artistBt.backgroundColor = UIColor.rgb(red: 195, green: 195, blue: 195)
-                case .artist:
+                } else {
                     self.artistBt.setTitleColor(.white, for: .normal)
                     self.artistBt.backgroundColor = UIColor.rgb(red: 255, green: 147, blue: 81)
                     self.peopleBt.setTitleColor(UIColor.rgb(red: 55, green: 57, blue: 61), for: .normal)
@@ -440,7 +437,7 @@ extension SignUpViewController {
                 }
             }).disposed(by: disposeBag)
         
-        vm.output.buttonValid.asDriver(onErrorJustReturn: false)
+        vm.output.buttonValid
             .drive(onNext: { value in
                 if value {
                     self.signInBt.isEnabled = true
