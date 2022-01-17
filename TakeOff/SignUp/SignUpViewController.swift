@@ -4,11 +4,9 @@
 //
 //  Created by Jun on 2022/01/06.
 //
-
 import UIKit
 import RxSwift
 import RxCocoa
-import AVFAudio
 
 class SignUpViewController: UIViewController {
     
@@ -364,6 +362,9 @@ extension SignUpViewController {
             .bind(to: vm.input.typeObserver)
             .disposed(by: disposeBag)
         
+        signInBt.rx.tap
+            .bind(to: vm.input.signUpObserver)
+            .disposed(by: disposeBag)
         
     }
     
@@ -414,26 +415,29 @@ extension SignUpViewController {
         vm.output.nameValid
             .drive(onNext: {value in
                 if value {
-                    self.nameAlert.text = "이미 존재하는 닉네임입니다."
-                    self.nameTextField.setErrorRight()
-                } else {
                     self.nameAlert.text = ""
                     self.nameTextField.setRight()
+                } else {
+                    self.nameAlert.text = "이미 존재하는 닉네임입니다."
+                    self.nameTextField.setErrorRight()
                 }
             }).disposed(by: disposeBag)
         
         vm.output.typeValid
             .drive(onNext: { value in
-                if value {
-                    self.peopleBt.setTitleColor(.white, for: .normal)
-                    self.peopleBt.backgroundColor = UIColor.rgb(red: 255, green: 147, blue: 81)
-                    self.artistBt.setTitleColor(UIColor.rgb(red: 55, green: 57, blue: 61), for: .normal)
-                    self.artistBt.backgroundColor = UIColor.rgb(red: 195, green: 195, blue: 195)
-                } else {
+                switch value {
+                case .artist:
                     self.artistBt.setTitleColor(.white, for: .normal)
                     self.artistBt.backgroundColor = UIColor.rgb(red: 255, green: 147, blue: 81)
                     self.peopleBt.setTitleColor(UIColor.rgb(red: 55, green: 57, blue: 61), for: .normal)
                     self.peopleBt.backgroundColor = UIColor.rgb(red: 195, green: 195, blue: 195)
+                case .person:
+                    self.peopleBt.setTitleColor(.white, for: .normal)
+                    self.peopleBt.backgroundColor = UIColor.rgb(red: 255, green: 147, blue: 81)
+                    self.artistBt.setTitleColor(UIColor.rgb(red: 55, green: 57, blue: 61), for: .normal)
+                    self.artistBt.backgroundColor = UIColor.rgb(red: 195, green: 195, blue: 195)
+                case .notSelected:
+                    break
                 }
             }).disposed(by: disposeBag)
         
@@ -446,6 +450,23 @@ extension SignUpViewController {
                     self.signInBt.isEnabled = false
                     self.signInBt.backgroundColor = UIColor.rgb(red: 195, green: 195, blue: 195)
                 }
+            }).disposed(by: disposeBag)
+        
+        vm.output.signUp.asSignal()
+            .emit(onNext: { value in
+                let vc = MainTabViewController()
+                let nav = UINavigationController(rootViewController: vc)
+                nav.navigationController?.isNavigationBarHidden = true
+                nav.modalTransitionStyle = .crossDissolve
+                nav.modalPresentationStyle = .fullScreen
+                self.present(nav, animated: true)
+            }).disposed(by: disposeBag)
+        
+        vm.output.errorValid.asSignal()
+            .emit(onNext: { error in
+                let alertController = UIAlertController(title: "에러", message: error.localizedDescription, preferredStyle: .alert)
+                alertController.addAction(UIAlertAction(title: "확인", style: .cancel, handler: nil))
+                self.present(alertController, animated: true)
             }).disposed(by: disposeBag)
     }
 }
@@ -487,9 +508,9 @@ extension SignUpViewController: UICollectionViewDelegateFlowLayout {
                     }
                     
                 }
-                
-                
             }).disposed(by: disposeBag)
+        
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {

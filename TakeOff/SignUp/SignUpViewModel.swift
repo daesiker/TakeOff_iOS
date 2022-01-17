@@ -33,6 +33,7 @@ class SignUpViewModel {
         let nameObserver = PublishRelay<String>()
         let typeObserver = PublishRelay<TypeValid>()
         let hasTagObserver = PublishRelay<String>()
+        let signUpObserver = PublishRelay<Void>()
     }
     
     struct Output {
@@ -40,9 +41,13 @@ class SignUpViewModel {
         var pwValid = PublishRelay<Bool>().asDriver(onErrorJustReturn: false)
         var pwConfirmValid = PublishRelay<Bool>().asDriver(onErrorJustReturn: false)
         var nameValid = PublishRelay<Bool>().asDriver(onErrorJustReturn: false)
-        var typeValid = PublishRelay<Bool>().asDriver(onErrorJustReturn: false)
+        var typeValid = PublishRelay<TypeValid>().asDriver(onErrorJustReturn: .notSelected)
         var hastagValid = PublishRelay<Bool>().asDriver(onErrorJustReturn: false)
         var buttonValid = PublishRelay<Bool>().asDriver(onErrorJustReturn: false)
+        
+        var errorValid = PublishRelay<Error>()
+        var signUp = PublishRelay<User>()
+        
     }
     
     
@@ -79,7 +84,7 @@ class SignUpViewModel {
             }
         }).disposed(by: disposeBag)
         
-        output.typeValid = input.typeObserver.map { $0 != .notSelected }.asDriver(onErrorJustReturn: false)
+        output.typeValid = input.typeObserver.asDriver(onErrorJustReturn: .notSelected)
         
         input.hasTagObserver.subscribe(onNext: { value in
             if self.user.hashTag.contains(value) {
@@ -103,9 +108,19 @@ class SignUpViewModel {
         
         
         output.buttonValid = Driver.combineLatest(output.emailValid, output.pwValid, output.pwConfirmValid, output.nameValid, output.typeValid, output.hastagValid)
-            .map { $0 != .notAvailable && $1 && $2 && $3 && $4 && $5}
+            .map { $0 != .notAvailable && $1 && $2 && $3 && $4 != .notSelected && $5}
             .asDriver(onErrorJustReturn: false)
-            
+        
+        input.signUpObserver.flatMap(createUser).subscribe( { event in
+            switch event {
+            case .next(let user):
+                self.output.signUp.accept(user)
+            case .error(let error):
+                self.output.errorValid.accept(error)
+            case .completed:
+                break
+            }
+        }).disposed(by: disposeBag)
         
     }
     
@@ -163,9 +178,7 @@ class SignUpViewModel {
         }
     }
     
-    func createUser() -> Observable<Void> {
-
-
+    func createUser() -> Observable<User> {
         return Observable.create { result in
             Auth.auth().createUser(withEmail: self.user.email, password: self.user.pw) { user, error in
                 if let error = error {
@@ -185,10 +198,9 @@ class SignUpViewModel {
                         result.onCompleted()
                     }
 
-                    result.onNext(())
+                    result.onNext(self.user)
                     result.onCompleted()
                 }
-
             }
             return Disposables.create()
         }
