@@ -29,26 +29,10 @@ class MainTabViewController: UITabBarController, UITabBarControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.delegate = self
-        
-        if Auth.auth().currentUser == nil {
-            
-        }
         
         setupViewControllers()
     }
     
-//    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
-//        let index = viewControllers?.firstIndex(of: viewController)
-//
-//        if index == 2 {
-//            let layout = UICollectionViewFlowLayout()
-//
-//        }
-//
-//        return true
-//
-//    }
     
     func setupViewControllers() {
         let homeNavController = templateNavController(unselectedImage: UIImage(named: "home_unselected")!, selectedImage: UIImage(named: "home_selected")!, rootViewController: HomeViewController())

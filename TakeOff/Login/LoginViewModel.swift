@@ -13,7 +13,7 @@ import RxRelay
 import RxCocoa
 
 class LoginViewModel : ViewModelType {
-    let userModel = User()
+    var user = User()
     
     let input =  Input()
     var output = Output()
@@ -21,20 +21,28 @@ class LoginViewModel : ViewModelType {
     struct Input {
         let emailObserver = PublishRelay<String>()
         let pwObserver = PublishRelay<String>()
-        let loginObserver = PublishRelay<String>()
+        let loginObserver = PublishRelay<Void>()
     } 
     
     struct Output {
         var emailValid:Driver<Bool> = PublishRelay<Bool>().asDriver(onErrorJustReturn: false)
         var pwValid:Driver<Bool> = PublishRelay<Bool>().asDriver(onErrorJustReturn: false)
         var loginValid:Driver<Bool> = PublishRelay<Bool>().asDriver(onErrorJustReturn: false)
-        var doLogin:PublishRelay<User> = PublishRelay<User>()
-        var doError:PublishRelay<TakeOffError> = PublishRelay<TakeOffError>()
+        var doLogin:PublishRelay<Void> = PublishRelay<Void>()
+        var doError:PublishRelay<Error> = PublishRelay<Error>()
     } 
     
     var disposeBag: DisposeBag = DisposeBag()
     
     init() {
+        
+        input.emailObserver.subscribe(onNext: { value in
+            self.user.email = value
+        }).disposed(by: disposeBag)
+        
+        input.pwObserver.subscribe(onNext: { value in
+            self.user.pw = value
+        }).disposed(by: disposeBag)
         
         output.emailValid = input.emailObserver
             .map { !$0.isEmpty && $0.contains(".") && $0.contains("@") }
@@ -48,12 +56,35 @@ class LoginViewModel : ViewModelType {
             .map { $0 && $1 }
             .asDriver(onErrorJustReturn: false)
         
-        
+        input.loginObserver.flatMap(doLogin).subscribe( { event in
+            
+            switch event {
+            case .next(()):
+                self.output.doLogin.accept(())
+            case .completed:
+                break
+            case .error(let error):
+                self.output.doError.accept(error)
+            }
+            
+        }).disposed(by: disposeBag)
         
     }
     
-    func doLogin(_ email: String, pw: String) {
-        
+    func doLogin() -> Observable<Void> {
+        return Observable<Void>.create{ observer in
+            Auth.auth().signIn(withEmail: self.user.email, password: self.user.pw) { result, error in
+                if let _ = result?.user {
+                    observer.onNext(())
+                } else if let error = error {
+                    observer.onError(error)
+                } else {
+                    let error = NSError(domain: "", code: 0, userInfo: nil)
+                    observer.onError(error)
+                }
+            }
+            return Disposables.create()
+        }
     }
     
     

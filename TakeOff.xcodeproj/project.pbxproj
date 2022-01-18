@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		046506DA26E0A45A00F07726 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046506D926E0A45A00F07726 /* ProfileViewModel.swift */; };
-		0497F61926C3A253002F1ACB /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0497F61826C3A253002F1ACB /* UserModel.swift */; };
+		0497F61926C3A253002F1ACB /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0497F61826C3A253002F1ACB /* User.swift */; };
 		12976C7C5238AE8E49C94015 /* Pods_TakeOff.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B96FC7B284EF767A99B29A5 /* Pods_TakeOff.framework */; };
 		B98DA3D9814E88F33671E6B8 /* Pods_TakeOff_TakeOffUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 350243CD383F88E0778AB157 /* Pods_TakeOff_TakeOffUITests.framework */; };
 		BF021F06278563050096E948 /* CustomComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF021F05278563050096E948 /* CustomComponent.swift */; };
@@ -30,7 +30,7 @@
 		BF606EFE26A28772004091A5 /* TakeOffTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF606EFD26A28772004091A5 /* TakeOffTests.swift */; };
 		BF606F0926A28772004091A5 /* TakeOffUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF606F0826A28772004091A5 /* TakeOffUITests.swift */; };
 		BF606F1A26A287D5004091A5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BF606F1926A287D5004091A5 /* GoogleService-Info.plist */; };
-		BF606F2F26A28F0F004091A5 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF606F2E26A28F0F004091A5 /* LoginView.swift */; };
+		BF606F2F26A28F0F004091A5 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF606F2E26A28F0F004091A5 /* LoginViewController.swift */; };
 		BF71170F26D39966006ED7AF /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF71170E26D39966006ED7AF /* HomeViewController.swift */; };
 		BF83C47A2786B8CA008FE7BF /* EnumNError.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF83C4792786B8CA008FE7BF /* EnumNError.swift */; };
 		BF83C47C2786DB38008FE7BF /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF83C47B2786DB38008FE7BF /* SignUpViewController.swift */; };
@@ -66,7 +66,7 @@
 
 /* Begin PBXFileReference section */
 		046506D926E0A45A00F07726 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
-		0497F61826C3A253002F1ACB /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
+		0497F61826C3A253002F1ACB /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		0F2AD5276708278D88180770 /* Pods-TakeOffTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TakeOffTests.debug.xcconfig"; path = "Target Support Files/Pods-TakeOffTests/Pods-TakeOffTests.debug.xcconfig"; sourceTree = "<group>"; };
 		3262C1A1886FC01C8B0B0EE0 /* Pods_TakeOffTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TakeOffTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		350243CD383F88E0778AB157 /* Pods_TakeOff_TakeOffUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TakeOff_TakeOffUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -99,7 +99,7 @@
 		BF606F0826A28772004091A5 /* TakeOffUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TakeOffUITests.swift; sourceTree = "<group>"; };
 		BF606F0A26A28772004091A5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BF606F1926A287D5004091A5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		BF606F2E26A28F0F004091A5 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		BF606F2E26A28F0F004091A5 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		BF71170E26D39966006ED7AF /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		BF83C4792786B8CA008FE7BF /* EnumNError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnumNError.swift; sourceTree = "<group>"; };
 		BF83C47B2786DB38008FE7BF /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
@@ -223,7 +223,7 @@
 		BF45919F26B7B1E30031E119 /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				BF606F2E26A28F0F004091A5 /* LoginView.swift */,
+				BF606F2E26A28F0F004091A5 /* LoginViewController.swift */,
 				BF4591A026B7B1F00031E119 /* LoginViewModel.swift */,
 			);
 			path = Login;
@@ -253,7 +253,7 @@
 		BF4591AF26B7E8CB0031E119 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				0497F61826C3A253002F1ACB /* UserModel.swift */,
+				0497F61826C3A253002F1ACB /* User.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -600,8 +600,8 @@
 				BF4591A126B7B1F00031E119 /* LoginViewModel.swift in Sources */,
 				BF1B97A726D5D0DC009D1B53 /* MessageViewController.swift in Sources */,
 				BFB9EC1B26DF0468002AA1B6 /* SharePhotoViewModel.swift in Sources */,
-				BF606F2F26A28F0F004091A5 /* LoginView.swift in Sources */,
-				0497F61926C3A253002F1ACB /* UserModel.swift in Sources */,
+				BF606F2F26A28F0F004091A5 /* LoginViewController.swift in Sources */,
+				0497F61926C3A253002F1ACB /* User.swift in Sources */,
 				BF4591A626B7B2D60031E119 /* FoundationExtension.swift in Sources */,
 				046506DA26E0A45A00F07726 /* ProfileViewModel.swift in Sources */,
 				BF1B97AA26D5D35C009D1B53 /* ProfileView.swift in Sources */,

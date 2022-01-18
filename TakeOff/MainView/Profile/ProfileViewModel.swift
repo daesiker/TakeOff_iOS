@@ -10,12 +10,11 @@ import RxSwift
 import RxCocoa
 
 class ProfileViewModel: ViewModelType {
-    var input: Input
-    var output: Output
-    var disposeBag: DisposeBag
-    let um = UserModel()
+    var input = Input()
+    var output = Output()
+    var disposeBag = DisposeBag()
     struct Input {
-        let refresh:PublishRelay<Void>
+        let refresh = PublishRelay<Void>()
         //        let tab:BehaviorRelay<String>
         //        let tab:PublishRelay<Void>
         //        let signUpTap:PublishRelay<Void>
@@ -26,22 +25,13 @@ class ProfileViewModel: ViewModelType {
         //        let loginIsEnabled:Driver<Bool>
         //        let goMain:Signal<User>
         //        var goSignUp:Signal<Void>
-        let refreshEnd:Signal<User>
+        let refreshEnd = PublishRelay<Void>()
         //        let error:Signal<Error>
         
     } 
     
     init() {
-        self.disposeBag = DisposeBag()
-        let refreshRealy = PublishRelay<User>()
-        self.input = Input(refresh: PublishRelay<Void>())
         
-        self.output = Output(refreshEnd: refreshRealy.asSignal())
-        
-        input.refresh.flatMapFirst { self.um.refreshLoginedUser()}
-            .asSignal(onErrorJustReturn: User.loginedUser)
-            .emit(to: refreshRealy)
-            .disposed(by: disposeBag)
     }
     
 }

@@ -8,15 +8,13 @@
 import UIKit
 
 import Firebase
-import TextFieldEffects
 import SnapKit
 import Then
 import RxCocoa
 import RxSwift
 
-class LoginView: UIViewController {
+class LoginViewController: UIViewController {
     let vm = LoginViewModel()
-    var handle: AuthStateDidChangeListenerHandle!
     
     // Layout View
     let backgroundView = UIImageView(image: UIImage(named: "background"))
@@ -142,7 +140,7 @@ class LoginView: UIViewController {
         let viewController = SignUpViewController()
         viewController.modalTransitionStyle = .crossDissolve
         viewController.modalPresentationStyle = .fullScreen
-        navigationController?.pushViewController(viewController, animated: true)
+        self.present(viewController, animated: true)
     }
     
     // MARK:- bind
@@ -152,6 +150,7 @@ class LoginView: UIViewController {
     }
     
     func bindInput() {
+        
         emailTextField.rx.controlEvent([.editingDidEnd])
             .map { self.emailTextField.text ?? "" }
             .bind(to: self.vm.input.emailObserver)
@@ -166,6 +165,9 @@ class LoginView: UIViewController {
             self.goToSignUp()
         }).disposed(by: disposeBag)
         
+        logInBt.rx.tap
+            .bind(to: vm.input.loginObserver)
+            .disposed(by: disposeBag)
         
     }
     
@@ -201,6 +203,22 @@ class LoginView: UIViewController {
             }
         }.disposed(by: disposeBag)
         
+        vm.output.doLogin.asSignal()
+            .emit(onNext: {
+                let vc = MainTabViewController()
+                let nav = UINavigationController(rootViewController: vc)
+                nav.navigationController?.isNavigationBarHidden = true
+                nav.modalTransitionStyle = .crossDissolve
+                nav.modalPresentationStyle = .fullScreen
+                self.present(nav, animated: true)
+            }).disposed(by: disposeBag)
+        
+        vm.output.doError.asSignal()
+            .emit(onNext: { error in
+                let alertController = UIAlertController(title: "에러", message: error.localizedDescription, preferredStyle: .alert)
+                alertController.addAction(UIAlertAction(title: "확인", style: .cancel, handler: nil))
+                self.present(alertController, animated: true)
+            }).disposed(by: disposeBag)
         
     }
     

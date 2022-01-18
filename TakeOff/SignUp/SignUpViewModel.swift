@@ -132,7 +132,7 @@ class SignUpViewModel {
             } else {
                 let ref = Database.database().reference().child("users")
                 ref.observeSingleEvent(of: .value) { snapshot in
-                    guard let dictionaries = snapshot.value as? [String: Any] else {  return valid.onNext(.serverError) } //Error 처리
+                    guard let dictionaries = snapshot.value as? [String: Any] else {  return valid.onNext(.correct) } //Error 처리
                     
                     dictionaries.forEach { (key, value) in
                         guard let userDictionary = value as? [String:Any] else { return valid.onCompleted() }
@@ -159,7 +159,7 @@ class SignUpViewModel {
             } else {
                 let ref = Database.database().reference().child("users")
                 ref.observeSingleEvent(of: .value) { snapshot in
-                    guard let dictionaries = snapshot.value as? [String: Any] else {  return valid.onNext(false) } //Error 처리
+                    guard let dictionaries = snapshot.value as? [String: Any] else {  return valid.onNext(true) } //Error 처리
                     
                     dictionaries.forEach { (key, value) in
                         guard let userDictionary = value as? [String:Any] else { return valid.onCompleted() }
