@@ -37,6 +37,8 @@
 		BFAFB971278C0C0600BDEF01 /* GodoB.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BFAFB96F278C0C0600BDEF01 /* GodoB.ttf */; };
 		BFAFB972278C0C0600BDEF01 /* GodoM.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BFAFB970278C0C0600BDEF01 /* GodoM.ttf */; };
 		BFB9EC1B26DF0468002AA1B6 /* SharePhotoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB9EC1A26DF0467002AA1B6 /* SharePhotoViewModel.swift */; };
+		BFC38EC12797FAF8004520EA /* PostUploadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC38EC02797FAF8004520EA /* PostUploadViewController.swift */; };
+		BFC38EC32798039A004520EA /* PostUploadTmp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC38EC22798039A004520EA /* PostUploadTmp.swift */; };
 		BFCF9BEC26DB677D00895D14 /* SharePhotoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCF9BEB26DB677D00895D14 /* SharePhotoController.swift */; };
 		BFDD2A8D26D0DFBE0056409C /* FirebaseDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDD2A8C26D0DFBE0056409C /* FirebaseDB.swift */; };
 		BFDD2A9226D0DFF20056409C /* Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDD2A9126D0DFF20056409C /* Protocol.swift */; };
@@ -106,6 +108,8 @@
 		BFAFB96F278C0C0600BDEF01 /* GodoB.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GodoB.ttf; sourceTree = "<group>"; };
 		BFAFB970278C0C0600BDEF01 /* GodoM.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GodoM.ttf; sourceTree = "<group>"; };
 		BFB9EC1A26DF0467002AA1B6 /* SharePhotoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharePhotoViewModel.swift; sourceTree = "<group>"; };
+		BFC38EC02797FAF8004520EA /* PostUploadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostUploadViewController.swift; sourceTree = "<group>"; };
+		BFC38EC22798039A004520EA /* PostUploadTmp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostUploadTmp.swift; sourceTree = "<group>"; };
 		BFCF9BEB26DB677D00895D14 /* SharePhotoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharePhotoController.swift; sourceTree = "<group>"; };
 		BFDD2A8C26D0DFBE0056409C /* FirebaseDB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseDB.swift; sourceTree = "<group>"; };
 		BFDD2A9126D0DFF20056409C /* Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocol.swift; sourceTree = "<group>"; };
@@ -186,6 +190,7 @@
 				BFB9EC1A26DF0467002AA1B6 /* SharePhotoViewModel.swift */,
 				BF4B58F526E2135800C47639 /* PostUploadView.swift */,
 				BFFDAE4826E5F1EA005707C9 /* PostUploadViewModel.swift */,
+				BFC38EC02797FAF8004520EA /* PostUploadViewController.swift */,
 			);
 			path = PostUpload;
 			sourceTree = "<group>";
@@ -254,6 +259,7 @@
 			isa = PBXGroup;
 			children = (
 				0497F61826C3A253002F1ACB /* User.swift */,
+				BFC38EC22798039A004520EA /* PostUploadTmp.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -591,7 +597,9 @@
 				BFF7B0C626D71D4B001E9EB4 /* PhotoSelectorHeader.swift in Sources */,
 				BF83C47C2786DB38008FE7BF /* SignUpViewController.swift in Sources */,
 				BF1B97A126D5CAD5009D1B53 /* CalendarViewController.swift in Sources */,
+				BFC38EC12797FAF8004520EA /* PostUploadViewController.swift in Sources */,
 				BF606EE926A2876E004091A5 /* SceneDelegate.swift in Sources */,
+				BFC38EC32798039A004520EA /* PostUploadTmp.swift in Sources */,
 				BF4591A426B7B25B0031E119 /* UIKitExtension.swift in Sources */,
 				BFFDAE4526E59BCC005707C9 /* PostUpload.swift in Sources */,
 				BFDD2A8D26D0DFBE0056409C /* FirebaseDB.swift in Sources */,

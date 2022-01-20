@@ -16,12 +16,10 @@ class MainTabViewController: UITabBarController, UITabBarControllerDelegate {
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
         let index = viewControllers?.firstIndex(of: viewController)
         if index == 2 {
-            let layout = UICollectionViewFlowLayout()
-            let postUploadViewController = PostUploadView(collectionViewLayout: layout)
-            let navController = UINavigationController(rootViewController: postUploadViewController)
-            navController.modalTransitionStyle = .crossDissolve
-            navController.modalPresentationStyle = .fullScreen
-            present(navController, animated: true, completion: nil)
+            let vc = PostUploadViewController()
+            vc.modalTransitionStyle = .crossDissolve
+            vc.modalPresentationStyle = .fullScreen
+            present(vc, animated: true, completion: nil)
             return false
         }
         return true
@@ -29,7 +27,7 @@ class MainTabViewController: UITabBarController, UITabBarControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.delegate = self
         setupViewControllers()
     }
     
