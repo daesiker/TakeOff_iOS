@@ -81,6 +81,7 @@ class PostUploadViewModel {
         let allPhotos = PHAsset.fetchAssets(with: .image, options: assetsFetchOptions())
         
         return Observable.create { observe in
+            //여기서 이미지를 하나씩 뿌려줌
             allPhotos.enumerateObjects { asset, count, stop in
                 let imageManager = PHImageManager.default()
                 let targetSize = CGSize(width: 100, height: 100)
