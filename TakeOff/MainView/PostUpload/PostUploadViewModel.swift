@@ -19,6 +19,11 @@ class PostUploadViewModel {
     let disposeBag = DisposeBag()
     var section = PostUploadSectionModel()
     
+    var totalImage:[UIImage] = []
+    var selectedImage:[UIImage] = []
+    
+    var total1Image = BehaviorRelay<[UIImage]>(value: [])
+    
     func updateItems() {
         fetchPhotos().subscribe { result in
             switch result {
@@ -102,7 +107,6 @@ class PostUploadViewModel {
     func clear() {
         self.section = PostUploadSectionModel()
         self.items.accept([self.section])
-        
         
     }
 }

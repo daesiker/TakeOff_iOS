@@ -11,11 +11,27 @@ import RxSwift
 import RxCocoa
 import Photos
 import RxDataSources
-
+import FSPagerView
 
 class PostUploadViewController: UIViewController {
     
     let disposeBag = DisposeBag()
+    
+    let vm = PostUploadViewModel()
+    
+    //이미지 바인딩
+    
+    let headerPagerView = FSPagerView().then {
+        $0.transformer = FSPagerViewTransformer(type: .linear)
+    }
+    
+    let headerPageControl = FSPageControl().then {
+        $0.setStrokeColor(.gray, for: .normal)
+        $0.setStrokeColor(UIColor.mainColor, for: .selected)
+        $0.setFillColor(.gray, for: .normal)
+        $0.setFillColor(UIColor.mainColor, for: .selected)
+        $0.hidesForSinglePage = true
+    }
     
     let photoCV: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
@@ -27,26 +43,52 @@ class PostUploadViewController: UIViewController {
         return collectionView
     }()
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
+        setupNavigationButtons()
         setCV()
         bind()
-        // Do any additional setup after loading the view.
     }
     
-    
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
     
 }
 
 extension PostUploadViewController {
+    
     private func setUI() {
         view.backgroundColor = .white
+        
+        safeView.addSubview(headerPagerView)
+        headerPagerView.snp.makeConstraints {
+            $0.top.leading.trailing.equalToSuperview()
+            $0.height.equalTo(self.view.frame.height).multipliedBy(0.5)
+        }
+        
+        headerPagerView.addSubview(headerPageControl)
+        headerPageControl.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.bottom.equalToSuperview().offset(-8)
+            $0.width.equalToSuperview().multipliedBy(0.5)
+            $0.height.equalToSuperview().multipliedBy(0.1)
+        }
+        
         safeView.addSubview(photoCV)
         photoCV.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+            $0.top.equalTo(headerPagerView.snp.bottom)
+            $0.bottom.leading.trailing.equalToSuperview()
         }
+    }
+    
+    fileprivate func setupNavigationButtons() {
+        navigationController?.navigationBar.tintColor = UIColor.mainColor
+        navigationController?.title = "New Post"
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: nil)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Next", style: .plain, target: self, action: nil)
+        
     }
     
     private func bind() {
@@ -54,12 +96,15 @@ extension PostUploadViewController {
     }
     
     private func setCV() {
-        
+        headerPagerView.delegate = self
+        headerPagerView.dataSource = self
+        headerPagerView.register(FSPagerViewCell.self, forCellWithReuseIdentifier: "headerCell")
+        headerPageControl.contentHorizontalAlignment = .center
+        headerPageControl.numberOfPages = vm.selectedImage.count
     }
 }
 
 extension PostUploadViewController: UICollectionViewDelegateFlowLayout {
-    
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 1
@@ -74,13 +119,36 @@ extension PostUploadViewController: UICollectionViewDelegateFlowLayout {
         return CGSize(width: width, height: width)
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        let width = view.frame.width
-        return CGSize(width: width, height: width)
-    }
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 1, left: 0, bottom: 0, right: 0)
+    }
+    
+}
+
+extension PostUploadViewController: FSPagerViewDelegate, FSPagerViewDataSource {
+    
+    
+    func numberOfItems(in pagerView: FSPagerView) -> Int {
+        return vm.selectedImage.count
+    }
+    
+    func pagerView(_ pagerView: FSPagerView, cellForItemAt index: Int) -> FSPagerViewCell {
+        let cell = pagerView.dequeueReusableCell(withReuseIdentifier: "headerCell", at: index)
+        cell.imageView?.image = vm.selectedImage[index]
+        cell.imageView?.clipsToBounds = true
+        return cell
+    }
+    
+    func pagerView(_ pagerView: FSPagerView, didSelectItemAt index: Int) {
+        pagerView.deselectItem(at: index, animated: true)
+    }
+    
+    func pagerView(_ pagerView: FSPagerView, willDisplay cell: FSPagerViewCell, forItemAt index: Int) {
+        self.headerPageControl.currentPage = index
+    }
+    
+    func pagerViewWillEndDragging(_ pagerView: FSPagerView, targetIndex: Int) {
+        self.headerPageControl.currentPage = targetIndex
     }
     
 }
