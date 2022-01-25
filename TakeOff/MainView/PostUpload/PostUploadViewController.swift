@@ -33,6 +33,18 @@ class PostUploadViewController: UIViewController {
         $0.hidesForSinglePage = true
     }
     
+    
+    let selectedPhotoSV = UIScrollView().then {
+        $0.showsVerticalScrollIndicator = false
+        $0.showsHorizontalScrollIndicator = false
+        $0.isPagingEnabled = true
+        $0.alwaysBounceVertical = false
+        $0.isScrollEnabled = true
+        $0.bounces = false
+    }
+    
+    let pageControl = UIPageControl()
+    
     let photoCV: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = UICollectionView.ScrollDirection.horizontal
@@ -95,6 +107,8 @@ extension PostUploadViewController {
         
     }
     
+    
+    
     private func setCV() {
         headerPagerView.delegate = self
         headerPagerView.dataSource = self
@@ -150,5 +164,16 @@ extension PostUploadViewController: FSPagerViewDelegate, FSPagerViewDataSource {
     func pagerViewWillEndDragging(_ pagerView: FSPagerView, targetIndex: Int) {
         self.headerPageControl.currentPage = targetIndex
     }
+    
+}
+
+extension PostUploadViewController: UIScrollViewDelegate {
+    
+    private func setScrollView() {
+        selectedPhotoSV.delegate = self
+        
+        
+    }
+    
     
 }
