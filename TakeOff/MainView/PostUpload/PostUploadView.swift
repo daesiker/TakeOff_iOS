@@ -91,7 +91,7 @@ extension PostUploadView {
             .asDriver()
             .drive(self.collectionView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
-        vm.updateItems()
+        
         
         vm.isMultiSelected.bind { value in
             

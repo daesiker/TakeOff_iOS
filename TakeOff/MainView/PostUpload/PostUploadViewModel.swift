@@ -9,37 +9,34 @@ import Foundation
 import RxSwift
 import RxCocoa
 import Photos
+import UIKit
 
 class PostUploadViewModel {
     static let instance = PostUploadViewModel()
-    init() {}
+   
     
     var items = BehaviorRelay<[PostUploadSectionModel]>(value: [])
     let isMultiSelected = BehaviorRelay<Bool>(value: false)
     let disposeBag = DisposeBag()
     var section = PostUploadSectionModel()
     
-    var totalImage:[UIImage] = []
     var selectedImage:[UIImage] = []
     
-    var total1Image = BehaviorRelay<[UIImage]>(value: [])
+    var totalImage = PublishRelay<[UIImage]>()
     
-    func updateItems() {
-        fetchPhotos().subscribe { result in
-            switch result {
-            case .next(let image):
-                if self.section.header.isEmpty {
-                    self.section.header.append(image)
-                }
-                self.section.items.append(image)
-            case .completed:
-                self.items.accept([self.section])
-            case .error(let error):
-                print(error)
+    init() {
+        
+        fetchPhotos()
+            .asSignal(onErrorJustReturn: [])
+            .emit { event in
+                self.totalImage.accept(event)
             }
-        }
         .disposed(by: disposeBag)
+        
+        
     }
+    
+    
     
     func seletedItem(value: UIImage) {
         if isMultiSelected.value {
@@ -82,11 +79,11 @@ class PostUploadViewModel {
     /**
      사진 App에 있는 사진 이미지를 Observable로 하나씩 리턴
      */
-    fileprivate func fetchPhotos() -> Observable<UIImage> {
+    fileprivate func fetchPhotos() -> Observable<[UIImage]> {
         let allPhotos = PHAsset.fetchAssets(with: .image, options: assetsFetchOptions())
         
         return Observable.create { observe in
-            //여기서 이미지를 하나씩 뿌려줌
+            var images:[UIImage] = []
             allPhotos.enumerateObjects { asset, count, stop in
                 let imageManager = PHImageManager.default()
                 let targetSize = CGSize(width: 100, height: 100)
@@ -95,10 +92,11 @@ class PostUploadViewModel {
                 options.isSynchronous = true
                 imageManager.requestImage(for: asset, targetSize: targetSize, contentMode: .aspectFit, options: options) { image, info in
                     if let image = image {
-                        observe.onNext(image)
+                        images.append(image)
                     }
                 }
             }
+            observe.onNext(images)
             observe.onCompleted()
             return Disposables.create()
         }
