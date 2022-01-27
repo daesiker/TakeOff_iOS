@@ -26,13 +26,6 @@ class PostUploadViewModel {
     
     init() {
         
-        fetchPhotos()
-            .asSignal(onErrorJustReturn: [])
-            .emit { event in
-                self.totalImage.accept(event)
-            }
-        .disposed(by: disposeBag)
-        
         
     }
     
@@ -79,7 +72,7 @@ class PostUploadViewModel {
     /**
      사진 App에 있는 사진 이미지를 Observable로 하나씩 리턴
      */
-    fileprivate func fetchPhotos() -> Observable<[UIImage]> {
+    func fetchPhotos() -> Observable<[UIImage]> {
         let allPhotos = PHAsset.fetchAssets(with: .image, options: assetsFetchOptions())
         
         return Observable.create { observe in

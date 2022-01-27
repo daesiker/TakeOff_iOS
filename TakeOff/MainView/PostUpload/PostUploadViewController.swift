@@ -49,6 +49,15 @@ class PostUploadViewController: UIViewController {
         bind()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        vm.fetchPhotos()
+            .asSignal(onErrorJustReturn: [])
+            .emit { images in
+                self.vm.totalImage.accept(images)
+                self.photoCV.reloadData()
+            }.disposed(by: disposeBag)
+    }
+    
     override var prefersStatusBarHidden: Bool {
         return true
     }
