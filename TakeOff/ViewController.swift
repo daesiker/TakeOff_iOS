@@ -53,17 +53,45 @@ class ViewController: UIViewController {
         UIView.animate(withDuration: 1.5, animations: {
             self.logoImageView.alpha = 0
         }, completion: { done in
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                let viewController = LoginViewController()
-                let navController = UINavigationController(rootViewController: viewController)
-                navController.isNavigationBarHidden = true
-                navController.modalTransitionStyle = .crossDissolve
-                navController.modalPresentationStyle = .fullScreen
-                self.present(navController, animated: true)
-                
-            }
             
+            if let id = UserDefaults.standard.string(forKey: "email"),
+               let pw = UserDefaults.standard.string(forKey: "pw") {
+                
+                Auth.auth().signIn(withEmail: id, password: pw) { auth, error in
+                    if let _ = error {
+                        self.goToLoginView()
+                    }
+                    self.goToMainView()
+                }
+            } else {
+                self.goToLoginView()
+            }
         })
+    }
+    
+    
+    private func goToLoginView() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            let viewController = LoginViewController()
+            let navController = UINavigationController(rootViewController: viewController)
+            navController.isNavigationBarHidden = true
+            navController.modalTransitionStyle = .crossDissolve
+            navController.modalPresentationStyle = .fullScreen
+            self.present(navController, animated: true)
+            
+        }
+    }
+    
+    private func goToMainView() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            let viewController = MainTabViewController()
+            let navController = UINavigationController(rootViewController: viewController)
+            navController.isNavigationBarHidden = true
+            navController.modalTransitionStyle = .crossDissolve
+            navController.modalPresentationStyle = .fullScreen
+            self.present(navController, animated: true)
+            
+        }
     }
 }
 

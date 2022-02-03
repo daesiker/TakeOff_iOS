@@ -197,7 +197,10 @@ class SignUpViewModel {
                         result.onError(error)
                         result.onCompleted()
                     }
-
+                    
+                    UserDefaults.standard.set(self.user.email, forKey: "email")
+                    UserDefaults.standard.set(self.user.pw, forKey: "pw")
+                    
                     result.onNext(self.user)
                     result.onCompleted()
                 }
@@ -205,8 +208,6 @@ class SignUpViewModel {
             return Disposables.create()
         }
     }
-    
-    
     
 }
 

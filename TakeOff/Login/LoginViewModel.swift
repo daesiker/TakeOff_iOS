@@ -75,6 +75,10 @@ class LoginViewModel : ViewModelType {
         return Observable<Void>.create{ observer in
             Auth.auth().signIn(withEmail: self.user.email, password: self.user.pw) { result, error in
                 if let _ = result?.user {
+                    
+                    UserDefaults.standard.set(self.user.email, forKey: "email")
+                    UserDefaults.standard.set(self.user.pw, forKey: "pw")
+                    
                     observer.onNext(())
                 } else if let error = error {
                     observer.onError(error)
