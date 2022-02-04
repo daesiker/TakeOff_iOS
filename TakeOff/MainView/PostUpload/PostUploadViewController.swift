@@ -20,6 +20,11 @@ class PostUploadViewController: UIViewController {
     
     //이미지 바인딩
     
+    
+    var selectedImage:[UIImage] = []
+    
+    
+    
     let selectedPhotoSV = UIScrollView().then {
         $0.showsVerticalScrollIndicator = false
         $0.showsHorizontalScrollIndicator = false
@@ -33,11 +38,11 @@ class PostUploadViewController: UIViewController {
     
     let photoCV: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
-        flowLayout.scrollDirection = UICollectionView.ScrollDirection.horizontal
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
         collectionView.backgroundColor = UIColor.rgb(red: 255, green: 228, blue: 182)
         collectionView.showsVerticalScrollIndicator = false
         collectionView.showsHorizontalScrollIndicator = false
+        collectionView.allowsMultipleSelection = false
         return collectionView
     }()
     
@@ -69,6 +74,7 @@ extension PostUploadViewController {
     private func setUI() {
         view.backgroundColor = .white
         
+        //add ScrollView
         
         safeView.addSubview(photoCV)
         photoCV.snp.makeConstraints {
@@ -89,17 +95,37 @@ extension PostUploadViewController {
     }
     
     
-    
+    //전체 사진 CollectionView에 바인딩
     private func setCV() {
         self.photoCV.dataSource = nil
         self.photoCV.delegate = nil
         photoCV.register(PhotoSelectorCell.self, forCellWithReuseIdentifier: "photoCell")
         photoCV.rx.setDelegate(self).disposed(by: disposeBag)
         
+        
+        
+        photoCV.rx.itemSelected.subscribe(onNext: { indexPath in
+            let cell = self.photoCV.cellForItem(at: indexPath) as! PhotoSelectorCell
+            
+            if self.photoCV.allowsMultipleSelection {
+                
+            }
+            
+            if cell.isSelected == true {
+                
+                self.selectedImage.append(cell.photoImageView.image!)
+            } else {
+                print("선택 x")
+            }
+            
+        }).disposed(by: disposeBag)
+        
         vm.totalImage
             .bind(to: self.photoCV.rx.items(cellIdentifier: "photoCell", cellType: PhotoSelectorCell.self)) { indexPath, image, cell in
                 cell.photoImageView.image = image
             }.disposed(by: disposeBag)
+        
+        
         
         
     }
@@ -116,12 +142,12 @@ extension PostUploadViewController: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = (view.frame.width - 3) / 4
+        let width = (view.frame.width - 5) / 4
         return CGSize(width: width, height: width)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 1, left: 0, bottom: 0, right: 0)
+        return UIEdgeInsets(top: 1, left: 1, bottom: 1, right: 1)
     }
     
 }
