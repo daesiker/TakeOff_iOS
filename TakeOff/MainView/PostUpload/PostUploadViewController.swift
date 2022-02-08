@@ -32,14 +32,23 @@ class PostUploadViewController: UIViewController {
         $0.alwaysBounceVertical = false
         $0.isScrollEnabled = true
         $0.bounces = false
+        $0.backgroundColor = .red
     }
     
+    let middleView = UIView()
+    
     let pageControl = UIPageControl()
+    
+    let multiSelectedButton = UIButton(type: .custom).then {
+        $0.setImage(UIImage(systemName: "aspectratio"), for: .normal)
+        $0.tintColor = .gray
+    }
+    
     
     let photoCV: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
-        collectionView.backgroundColor = UIColor.rgb(red: 255, green: 228, blue: 182)
+        collectionView.backgroundColor = .clear
         collectionView.showsVerticalScrollIndicator = false
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.allowsMultipleSelection = false
@@ -52,20 +61,20 @@ class PostUploadViewController: UIViewController {
         setupNavigationButtons()
         setCV()
         bind()
+        setScrollView()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         vm.fetchPhotos()
             .asSignal(onErrorJustReturn: [])
             .emit { images in
+                self.selectedImage = images
                 self.vm.totalImage.accept(images)
                 self.photoCV.reloadData()
+                self.setScrollView()
             }.disposed(by: disposeBag)
     }
     
-    override var prefersStatusBarHidden: Bool {
-        return true
-    }
     
 }
 
@@ -75,10 +84,38 @@ extension PostUploadViewController {
         view.backgroundColor = .white
         
         //add ScrollView
+        safeView.addSubview(selectedPhotoSV)
+        selectedPhotoSV.snp.makeConstraints {
+            $0.top.equalToSuperview()
+            $0.leading.equalToSuperview().offset(10)
+            $0.trailing.equalToSuperview().offset(-10)
+            $0.width.equalTo(view.frame.width - 20)
+            $0.height.equalToSuperview().multipliedBy(0.5)
+        }
+        
+        safeView.addSubview(middleView)
+        middleView.snp.makeConstraints {
+            $0.top.equalTo(selectedPhotoSV.snp.bottom)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalToSuperview().multipliedBy(0.05)
+        }
+        
+        middleView.addSubview(pageControl)
+        pageControl.snp.makeConstraints {
+            $0.centerX.centerY.equalToSuperview()
+        }
+        
+        middleView.addSubview(multiSelectedButton)
+        multiSelectedButton.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.trailing.equalToSuperview().offset(-8)
+        }
         
         safeView.addSubview(photoCV)
         photoCV.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+            $0.top.equalTo(middleView.snp.bottom)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalToSuperview().multipliedBy(0.45)
         }
     }
     
@@ -91,7 +128,20 @@ extension PostUploadViewController {
     
     
     private func bind() {
-        self.photoCV.reloadData()
+        
+        multiSelectedButton.rx.tap.subscribe(onNext: {
+            
+            if self.photoCV.allowsMultipleSelection {
+                self.multiSelectedButton.tintColor = .gray
+                self.photoCV.allowsMultipleSelection = false
+            } else {
+                self.multiSelectedButton.tintColor = .mainColor
+                self.photoCV.allowsMultipleSelection = true
+            }
+            
+        }).disposed(by: disposeBag)
+        
+        
     }
     
     
@@ -102,31 +152,27 @@ extension PostUploadViewController {
         photoCV.register(PhotoSelectorCell.self, forCellWithReuseIdentifier: "photoCell")
         photoCV.rx.setDelegate(self).disposed(by: disposeBag)
         
-        
-        
         photoCV.rx.itemSelected.subscribe(onNext: { indexPath in
             let cell = self.photoCV.cellForItem(at: indexPath) as! PhotoSelectorCell
             
             if self.photoCV.allowsMultipleSelection {
-                
+                if cell.isSelected {
+                    
+                } else {
+                    
+                }
+            } else {
+                self.selectedImage = [cell.photoImageView.image!]
             }
             
-            if cell.isSelected == true {
-                
-                self.selectedImage.append(cell.photoImageView.image!)
-            } else {
-                print("선택 x")
-            }
             
         }).disposed(by: disposeBag)
         
         vm.totalImage
             .bind(to: self.photoCV.rx.items(cellIdentifier: "photoCell", cellType: PhotoSelectorCell.self)) { indexPath, image, cell in
+               
                 cell.photoImageView.image = image
             }.disposed(by: disposeBag)
-        
-        
-        
         
     }
 }
@@ -156,9 +202,38 @@ extension PostUploadViewController: UIScrollViewDelegate {
     
     private func setScrollView() {
         selectedPhotoSV.delegate = self
-        
+        selectedPhotoSV.contentSize = CGSize(width: (UIScreen.main.bounds.width - 20) * CGFloat(selectedImage.count), height: UIScreen.main.bounds.height / 2)
+        pageControl.currentPage = 0
+        pageControl.numberOfPages = selectedImage.count
+        pageControl.pageIndicatorTintColor = UIColor.rgb(red: 171, green: 171, blue: 171)
+        pageControl.currentPageIndicatorTintColor = UIColor.mainColor
+        addContentScrollView()
         
     }
+    
+    private func addContentScrollView() {
+        for i in 0..<selectedImage.count {
+            let imageView = UIImageView()
+            let xPos = (self.view.frame.width - 20) * CGFloat(i)
+            imageView.frame = CGRect(x: xPos, y: 0, width: selectedPhotoSV.bounds.width, height: selectedPhotoSV.bounds.height)
+            imageView.image = selectedImage[i]
+            selectedPhotoSV.addSubview(imageView)
+            selectedPhotoSV.contentSize.width = imageView.frame.width * CGFloat(i + 1)
+            
+        }
+        
+        selectedPhotoSV.layoutIfNeeded()
+    }
+    
+    private func setPageControlSelectedPage(currentPage:Int) {
+        pageControl.currentPage = currentPage
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let value = scrollView.contentOffset.x / scrollView.frame.size.width
+        setPageControlSelectedPage(currentPage: Int(round(value)))
+    }
+    
     
     
 }
