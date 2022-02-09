@@ -23,7 +23,8 @@ class PostUploadViewController: UIViewController {
     
     var selectedImage:[UIImage] = []
     
-    
+    let rightBarButton = UIBarButtonItem(title: "Next", style: .plain, target: self, action: nil)
+    let leftBarButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: nil)
     
     let selectedPhotoSV = UIScrollView().then {
         $0.showsVerticalScrollIndicator = false
@@ -68,7 +69,7 @@ class PostUploadViewController: UIViewController {
         vm.fetchPhotos()
             .asSignal(onErrorJustReturn: [])
             .emit { images in
-                self.selectedImage = images
+                self.selectedImage = [images[0]]
                 self.vm.totalImage.accept(images)
                 self.photoCV.reloadData()
                 self.setScrollView()
@@ -122,12 +123,23 @@ extension PostUploadViewController {
     fileprivate func setupNavigationButtons() {
         navigationController?.navigationBar.tintColor = UIColor.mainColor
         navigationController?.title = "New Post"
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Next", style: .plain, target: self, action: nil)
-        
+        navigationItem.rightBarButtonItem = rightBarButton
+        navigationItem.leftBarButtonItem = leftBarButton
     }
     
     
     private func bind() {
+        
+        leftBarButton.rx.tap.subscribe(onNext: {
+            self.dismiss(animated: true, completion: nil)
+        }).disposed(by: disposeBag)
+        
+        rightBarButton.rx.tap.subscribe(onNext: {
+            
+            let vc = SharePhotoController(images: self.selectedImage)
+            self.navigationController?.pushViewController(vc, animated: true)
+            
+        }).disposed(by: disposeBag)
         
         multiSelectedButton.rx.tap.subscribe(onNext: {
             
@@ -142,7 +154,9 @@ extension PostUploadViewController {
         }).disposed(by: disposeBag)
         
         
+        
     }
+    
     
     
     //전체 사진 CollectionView에 바인딩
@@ -152,25 +166,59 @@ extension PostUploadViewController {
         photoCV.register(PhotoSelectorCell.self, forCellWithReuseIdentifier: "photoCell")
         photoCV.rx.setDelegate(self).disposed(by: disposeBag)
         
-        photoCV.rx.itemSelected.subscribe(onNext: { indexPath in
-            let cell = self.photoCV.cellForItem(at: indexPath) as! PhotoSelectorCell
+        photoCV.rx.itemSelected.subscribe(onNext: { _ in
             
-            if self.photoCV.allowsMultipleSelection {
-                if cell.isSelected {
-                    
+            if let indexPaths = self.photoCV.indexPathsForSelectedItems {
+                self.selectedImage = []
+                if indexPaths.count == 1 {
+                    let cell = self.photoCV.cellForItem(at: indexPaths[0]) as! PhotoSelectorCell
+                    cell.text.text = "V"
+                    self.selectedImage = [cell.photoImageView.image!]
                 } else {
-                    
+                    for i in 0..<indexPaths.count {
+                        let cell = self.photoCV.cellForItem(at: indexPaths[i]) as! PhotoSelectorCell
+                        cell.text.text = "\(i + 1)"
+                        self.selectedImage.append(cell.photoImageView.image!)
+                    }
+                }
+                self.setScrollView()
+            }
+            
+        }).disposed(by: disposeBag)
+        
+        photoCV.rx.itemDeselected.subscribe(onNext: { indexPath in
+            
+            
+            if let indexPaths = self.photoCV.indexPathsForSelectedItems {
+                if indexPaths.count == 0 {
+                    let cell = self.photoCV.cellForItem(at: indexPath) as! PhotoSelectorCell
+                    cell.isSelected = true
+                    cell.text.text = "V"
+                    self.selectedImage = [cell.photoImageView.image!]
+                } else {
+                    self.selectedImage = []
+                    for i in 0..<indexPaths.count {
+                        let cell = self.photoCV.cellForItem(at: indexPaths[i]) as! PhotoSelectorCell
+                        cell.text.text = "\(i + 1)"
+                        self.selectedImage.append(cell.photoImageView.image!)
+                    }
                 }
             } else {
+                let cell = self.photoCV.cellForItem(at: indexPath) as! PhotoSelectorCell
+                cell.isSelected = true
+                cell.text.text = "V"
                 self.selectedImage = [cell.photoImageView.image!]
             }
             
-            
+            self.setScrollView()
         }).disposed(by: disposeBag)
         
         vm.totalImage
             .bind(to: self.photoCV.rx.items(cellIdentifier: "photoCell", cellType: PhotoSelectorCell.self)) { indexPath, image, cell in
-               
+                if indexPath == 0 {
+                    cell.isSelected = true
+                    cell.text.text = "V"
+                }
                 cell.photoImageView.image = image
             }.disposed(by: disposeBag)
         
@@ -212,6 +260,7 @@ extension PostUploadViewController: UIScrollViewDelegate {
     }
     
     private func addContentScrollView() {
+        
         for i in 0..<selectedImage.count {
             let imageView = UIImageView()
             let xPos = (self.view.frame.width - 20) * CGFloat(i)
@@ -221,7 +270,6 @@ extension PostUploadViewController: UIScrollViewDelegate {
             selectedPhotoSV.contentSize.width = imageView.frame.width * CGFloat(i + 1)
             
         }
-        
         selectedPhotoSV.layoutIfNeeded()
     }
     
@@ -233,7 +281,6 @@ extension PostUploadViewController: UIScrollViewDelegate {
         let value = scrollView.contentOffset.x / scrollView.frame.size.width
         setPageControlSelectedPage(currentPage: Int(round(value)))
     }
-    
     
     
 }

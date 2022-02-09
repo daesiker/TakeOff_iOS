@@ -29,6 +29,17 @@ class PhotoSelectorCell: UICollectionViewCell {
         $0.textColor = .white
     }
     
+    override var isSelected: Bool {
+        didSet {
+            if isSelected {
+                text.isHidden = false
+            } else {
+                text.isHidden = true
+                text.text = ""
+            }
+        }
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setUI()

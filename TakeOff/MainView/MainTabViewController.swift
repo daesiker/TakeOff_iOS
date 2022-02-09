@@ -16,10 +16,10 @@ class MainTabViewController: UITabBarController, UITabBarControllerDelegate {
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
         let index = viewControllers?.firstIndex(of: viewController)
         if index == 2 {
+            
             let vc = PostUploadViewController()
-            vc.modalTransitionStyle = .crossDissolve
-            vc.modalPresentationStyle = .fullScreen
-            present(vc, animated: true, completion: nil)
+            let navController = UINavigationController(rootViewController: vc)
+            present(navController, animated: true, completion: nil)
             return false
         }
         return true
