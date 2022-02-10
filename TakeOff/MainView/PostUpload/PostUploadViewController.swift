@@ -38,7 +38,9 @@ class PostUploadViewController: UIViewController {
     
     let middleView = UIView()
     
-    let pageControl = UIPageControl()
+    let pageControl = UIPageControl().then {
+        $0.hidesForSinglePage = true
+    }
     
     let multiSelectedButton = UIButton(type: .custom).then {
         $0.setImage(UIImage(systemName: "aspectratio"), for: .normal)

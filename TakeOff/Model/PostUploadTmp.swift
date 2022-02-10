@@ -29,3 +29,17 @@ extension PostUploadSection: SectionModelType {
     
 }
 
+struct Post: Codable {
+    
+    var user:String = ""
+    var image:String = ""
+    var contents:String = ""
+    var date:TimeInterval = Date().timeIntervalSince1970
+    var hashTag:[String] = []
+    var heart:[String] = []
+    
+    init() {
+    }
+    
+    
+}
