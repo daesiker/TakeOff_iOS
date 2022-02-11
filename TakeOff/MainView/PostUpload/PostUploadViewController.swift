@@ -18,9 +18,6 @@ class PostUploadViewController: UIViewController {
     
     let vm = PostUploadViewModel()
     
-    //이미지 바인딩
-    
-    
     var selectedImage:[UIImage] = []
     
     let rightBarButton = UIBarButtonItem(title: "Next", style: .plain, target: self, action: nil)
@@ -158,8 +155,6 @@ extension PostUploadViewController {
         
         
     }
-    
-    
     
     //전체 사진 CollectionView에 바인딩
     private func setCV() {

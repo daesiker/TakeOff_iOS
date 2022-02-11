@@ -32,9 +32,7 @@ class SharePhotoController: UIViewController {
         $0.hidesForSinglePage = true
     }
     
-    let middleView = UIView().then {
-        $0.backgroundColor = .orange
-    }
+    let middleView = UIView()
     
     let hashTagCV: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
@@ -47,6 +45,7 @@ class SharePhotoController: UIViewController {
     }()
     
     let hashTagData = Observable<[String]>.of(["#재즈", "#버스킹", "#밴드", "#힙합", "#인디", "#공예", "#전시", "#디지털", "#패션", "#기타"])
+    
     let hashTagDomy:[String] = ["#재즈", "#버스킹", "#밴드", "#힙합", "#인디", "#공예", "#전시", "#디지털", "#패션", "#기타"]
     
     lazy var textView = UITextView().then {
@@ -70,10 +69,13 @@ class SharePhotoController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setScrollView()
-        setCV()
         setUI()
+        setCV()
         bind()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        setScrollView()
     }
     
 }
@@ -81,21 +83,49 @@ class SharePhotoController: UIViewController {
 extension SharePhotoController {
     
     func setCV() {
+        
         hashTagCV.delegate = nil
         hashTagCV.dataSource = nil
         hashTagCV.register(HashtagCell.self, forCellWithReuseIdentifier: "cell")
         hashTagCV.rx.setDelegate(self).disposed(by: disposeBag)
-        
         hashTagData
             .bind(to: hashTagCV.rx.items(cellIdentifier: "cell", cellType: HashtagCell.self)) { indexPath, title, cell in
                 cell.configure(name: title)
             }.disposed(by: disposeBag)
         
+        hashTagCV.rx.itemSelected.subscribe(onNext: { _ in
+            
+            var hashTags:[String] = []
+            
+            if let indexPaths = self.hashTagCV.indexPathsForSelectedItems {
+                for indexPath in indexPaths {
+                    let cell = self.hashTagCV.cellForItem(at: indexPath) as! HashtagCell
+                    hashTags.append(cell.titleLabel.text!)
+                }
+            }
+            
+            self.vm.input.hashtagObserver.accept(hashTags)
+            
+        }).disposed(by: disposeBag)
+        
+        hashTagCV.rx.itemDeselected.subscribe(onNext: { _ in
+            
+            var hashTags:[String] = []
+            if let indexPaths = self.hashTagCV.indexPathsForSelectedItems {
+                for indexPath in indexPaths {
+                    let cell = self.hashTagCV.cellForItem(at: indexPath) as! HashtagCell
+                    hashTags.append(cell.titleLabel.text!)
+                }
+            }
+            self.vm.input.hashtagObserver.accept(hashTags)
+            
+        }).disposed(by: disposeBag)
         
     }
     
     func setUI() {
         
+        view.backgroundColor = .white
         navigationItem.rightBarButtonItem = shareButton
         
         safeView.addSubview(selectedPhotoSV)
@@ -119,7 +149,6 @@ extension SharePhotoController {
             $0.edges.equalToSuperview()
         }
         
-        
         safeView.addSubview(textView)
         textView.snp.makeConstraints {
             $0.top.equalTo(middleView.snp.bottom)
@@ -135,6 +164,7 @@ extension SharePhotoController {
     }
     
     func bindInput() {
+        
         textView.rx.text.orEmpty
             .bind(to: vm.input.textObserver)
             .disposed(by: disposeBag)
@@ -143,9 +173,8 @@ extension SharePhotoController {
             .bind(to: vm.input.buttonObserver)
             .disposed(by: disposeBag)
         
-        Observable.just(images)
-            .bind(to: vm.input.imageObserver)
-            .disposed(by: disposeBag)
+        
+        
     }
     
     func bindOutput() {
@@ -193,7 +222,7 @@ extension SharePhotoController: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 20)
+        return UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 20)
     }
     
 }
@@ -207,8 +236,8 @@ extension SharePhotoController: UIScrollViewDelegate {
         pageControl.numberOfPages = images.count
         pageControl.pageIndicatorTintColor = UIColor.rgb(red: 171, green: 171, blue: 171)
         pageControl.currentPageIndicatorTintColor = UIColor.mainColor
-        addContentScrollView()
         
+        addContentScrollView()
     }
     
     private func addContentScrollView() {
@@ -217,12 +246,13 @@ extension SharePhotoController: UIScrollViewDelegate {
             
             let imageView = UIImageView()
             let xPos = (self.view.frame.width - 20) * CGFloat(i)
-            imageView.frame = CGRect(x: xPos, y: safeView.frame.origin.y, width: selectedPhotoSV.bounds.width, height: selectedPhotoSV.bounds.height)
+            imageView.frame = CGRect(x: xPos, y: 0, width: selectedPhotoSV.bounds.width, height: selectedPhotoSV.bounds.height)
             imageView.image = images[i]
             selectedPhotoSV.addSubview(imageView)
             selectedPhotoSV.contentSize.width = imageView.frame.width * CGFloat(i + 1)
             
         }
+        
         selectedPhotoSV.layoutIfNeeded()
     }
     
@@ -284,7 +314,6 @@ final class HashtagCell:UICollectionViewCell {
         super.init(coder: coder)
         setupView()
     }
-    
     
     private func setupView() {
         contentView.addSubview(borderView)

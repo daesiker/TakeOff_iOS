@@ -17,8 +17,11 @@ class SharePhotoViewModel {
     var output = Output()
     let disposeBag = DisposeBag()
     
+    var post:Post = Post()
+    
     struct Input {
         let textObserver = BehaviorRelay<String>(value: "")
+        let hashtagObserver = PublishRelay<[String]>()
         var imageObserver = BehaviorRelay<[UIImage]>(value : [])
         let buttonObserver = PublishRelay<Void>()
     }
@@ -30,6 +33,15 @@ class SharePhotoViewModel {
     }
     
     init() {
+        
+        input.hashtagObserver.subscribe(onNext: { value in
+            self.post.hashTag = value
+        }).disposed(by: disposeBag)
+        
+        input.textObserver.subscribe(onNext: { value in
+            self.post.contents = value
+        }).disposed(by: disposeBag)
+        
         
         let shareRelay = PublishRelay<Void>()
         input.buttonObserver.flatMap(handleShare).subscribe { event in
