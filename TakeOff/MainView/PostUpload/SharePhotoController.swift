@@ -12,6 +12,11 @@ import Then
 import RxSwift
 import RxCocoa
 
+//MARK: 게시물 올릴 때 유저 이름 추가
+//MARK: 에러발생시 알림 추가
+//MARK: 게시물을 올린뒤에 꺼져야함
+
+
 class SharePhotoController: UIViewController {
     
     let vm = SharePhotoViewModel()
@@ -169,7 +174,7 @@ extension SharePhotoController {
             .bind(to: vm.input.textObserver)
             .disposed(by: disposeBag)
         
-        shareButton.rx.tap
+        shareButton.rx.tap.map { self.images }
             .bind(to: vm.input.buttonObserver)
             .disposed(by: disposeBag)
         

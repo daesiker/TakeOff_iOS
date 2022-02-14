@@ -22,8 +22,7 @@ class SharePhotoViewModel {
     struct Input {
         let textObserver = BehaviorRelay<String>(value: "")
         let hashtagObserver = PublishRelay<[String]>()
-        var imageObserver = BehaviorRelay<[UIImage]>(value : [])
-        let buttonObserver = PublishRelay<Void>()
+        let buttonObserver = PublishRelay<[UIImage]>()
     }
     
     struct Output {
@@ -43,7 +42,6 @@ class SharePhotoViewModel {
         }).disposed(by: disposeBag)
         
         
-        let shareRelay = PublishRelay<Void>()
         input.buttonObserver.flatMap(handleShare).subscribe { event in
             switch event {
             case .completed:
@@ -56,19 +54,17 @@ class SharePhotoViewModel {
         }
         .disposed(by: disposeBag)
         
-        input.buttonObserver.bind(to: shareRelay).disposed(by: disposeBag)
-        self.output.shareDB = shareRelay.asSignal()
     }
     
     
-    func handleShare() -> Observable<[String]>{
+    func handleShare(images:[UIImage]) -> Observable<[String]>{
         
         Observable<[String]>.create { valid in
-            var imageURLs:[String] = []
-            for i in 0..<self.input.imageObserver.value.count {
+            
+            for i in 0..<images.count {
                 let fileName = NSUUID().uuidString
                 let storageRef = Storage.storage().reference().child("posts").child(fileName)
-                let uploadData = self.input.imageObserver.value[i].jpegData(compressionQuality: 0.5) ?? Data()
+                let uploadData = images[i].jpegData(compressionQuality: 0.5) ?? Data()
                 
                 storageRef.putData(uploadData, metadata: nil) { (metadata, err) in
                     if let err = err {
@@ -79,16 +75,15 @@ class SharePhotoViewModel {
                             valid.onError(err)
                         }
                         let imageUrl = downloadURL?.absoluteString ?? ""
-                        imageURLs.append(imageUrl)
-                        if i == self.input.imageObserver.value.count - 1 {
+                        self.post.images.append(imageUrl)
+                        if i == images.count - 1 {
                             guard let uid = Auth.auth().currentUser?.uid else { print("유저 없음"); return }
                             let userPostRef = Database.database().reference().child("posts").child(uid)
                             let ref = userPostRef.childByAutoId()
                             
-                            let values:[String:Any] = ["imageUrl": imageURLs,
-                                                       "contents": self.input.textObserver.value,
-                                                       "likes": 0,
-                                                       "creationDate": Date().timeIntervalSince1970]
+                            self.post.date = Date().timeIntervalSince1970
+                            
+                            let values = self.post.toDic()
                             
                             ref.updateChildValues(values) { (err, ref) in
                                 if let err = err {
