@@ -61,7 +61,21 @@ class ViewController: UIViewController {
                     if let _ = error {
                         self.goToLoginView()
                     }
-                    self.goToMainView()
+                    
+                    if let uid = Auth.auth().currentUser?.uid {
+                        let ref = Database.database().reference()
+                        
+                        ref.child("users").child(uid).observeSingleEvent(of: .value) { snapshot in
+                            let userData = snapshot.value as? [String: Any] ?? [:]
+                            
+                            let user = User.init(uid: uid, dbInfo: userData)
+                            
+                            User.loginedUser = user
+                            self.goToMainView()
+                            
+                        }
+                    }
+                    
                 }
             } else {
                 self.goToLoginView()

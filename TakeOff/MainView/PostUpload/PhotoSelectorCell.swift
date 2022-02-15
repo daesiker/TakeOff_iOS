@@ -45,11 +45,6 @@ class PhotoSelectorCell: UICollectionViewCell {
         setUI()
     }
     
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        if vm.isMultiSelected.value == false { text.isHidden = true }
-        else { text.isHidden = false }
-    }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

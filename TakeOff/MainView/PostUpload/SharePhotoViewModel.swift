@@ -26,8 +26,8 @@ class SharePhotoViewModel {
     }
     
     struct Output {
-        var shareDB:Signal<Void> = PublishSubject<Void>().asSignal(onErrorJustReturn: print("error"))
-        var error:Signal<Error> = PublishRelay<Error>().asSignal()
+        var shareDB = PublishRelay<Void>()
+        var error = PublishRelay<Error>()
         
     }
     
@@ -47,9 +47,9 @@ class SharePhotoViewModel {
             case .completed:
                 print("complete")
             case .next(_):
-                print("next")
+                self.output.shareDB.accept(())
             case .error(let error):
-                print(error)
+                self.output.error.accept(error)
             }
         }
         .disposed(by: disposeBag)
@@ -57,43 +57,53 @@ class SharePhotoViewModel {
     }
     
     
-    func handleShare(images:[UIImage]) -> Observable<[String]>{
+    func handleShare(images:[UIImage]) -> Observable<Void>{
         
-        Observable<[String]>.create { valid in
+        Observable<Void>.create { valid in
             
-            for i in 0..<images.count {
-                let fileName = NSUUID().uuidString
-                let storageRef = Storage.storage().reference().child("posts").child(fileName)
-                let uploadData = images[i].jpegData(compressionQuality: 0.5) ?? Data()
-                
-                storageRef.putData(uploadData, metadata: nil) { (metadata, err) in
-                    if let err = err {
-                        valid.onError(err)
-                    }
-                    storageRef.downloadURL(completion: { downloadURL, err in
+            if self.post.hashTag.count == 0 {
+                let error = NSError.init(domain: "한 개 이상의 해시테그를 추가해주세요.", code: 104)
+                valid.onError(error)
+            } else if self.post.contents == "" {
+                let error = NSError.init(domain: "내용을 작성해주세요.", code: 105)
+                valid.onError(error)
+            } else {
+                for i in 0..<images.count {
+                    let fileName = NSUUID().uuidString
+                    let storageRef = Storage.storage().reference().child("posts").child(fileName)
+                    let uploadData = images[i].jpegData(compressionQuality: 0.5) ?? Data()
+                    
+                    storageRef.putData(uploadData, metadata: nil) { (metadata, err) in
                         if let err = err {
                             valid.onError(err)
                         }
-                        let imageUrl = downloadURL?.absoluteString ?? ""
-                        self.post.images.append(imageUrl)
-                        if i == images.count - 1 {
-                            guard let uid = Auth.auth().currentUser?.uid else { print("유저 없음"); return }
-                            let userPostRef = Database.database().reference().child("posts").child(uid)
-                            let ref = userPostRef.childByAutoId()
-                            
-                            self.post.date = Date().timeIntervalSince1970
-                            
-                            let values = self.post.toDic()
-                            
-                            ref.updateChildValues(values) { (err, ref) in
-                                if let err = err {
-                                    print(err)
-                                    return
-                                }
-                                valid.onCompleted()
+                        storageRef.downloadURL(completion: { downloadURL, err in
+                            if let err = err {
+                                valid.onError(err)
                             }
-                        }
-                    })
+                            let imageUrl = downloadURL?.absoluteString ?? ""
+                            self.post.images.append(imageUrl)
+                            self.post.user = User.loginedUser.name
+                            if i == images.count - 1 {
+                                guard let uid = Auth.auth().currentUser?.uid else { print("유저 없음"); return }
+                                let userPostRef = Database.database().reference().child("posts").child(uid)
+                                let ref = userPostRef.childByAutoId()
+                                
+                                self.post.date = Date().timeIntervalSince1970
+                                
+                                let values = self.post.toDic()
+                                
+                                ref.updateChildValues(values) { (err, ref) in
+                                    if let err = err {
+                                        valid.onError(err)
+                                        return
+                                    }
+                                    valid.onNext(())
+                                    valid.onCompleted()
+                                }
+                            }
+                        })
+                    }
                 }
             }
             return Disposables.create()

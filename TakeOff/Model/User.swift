@@ -34,12 +34,31 @@ struct User:Codable {
 		return user
     }
     
-    var uid: String = ""
-    var email: String = ""
-    var name: String = ""
+    init() {
+        
+    }
+    
+    init(uid: String, dbInfo:[String:Any]) {
+        
+        self.uid = uid
+        self.email = dbInfo["email"] as? String ?? ""
+        self.name = dbInfo["name"] as? String ?? ""
+        self.pw = dbInfo["pw"] as? String ?? ""
+        self.type = dbInfo["type"] as? Bool ?? false
+        self.profileImage = dbInfo["profileImage"] as? String ?? ""
+        self.hashTag = dbInfo["hashTag"] as? [String] ?? []
+        self.follower = dbInfo["follower"] as? [String] ?? []
+        self.following = dbInfo["following"] as? [String] ?? []
+    }
+    
+    
+    
+    var uid: String = "" //o
+    var email: String = "" //o
+    var name: String = "" //o
     var pw: String = ""
     var type: Bool = false
-    var profileImage: String = ""
+    var profileImage:String = ""
     var hashTag:[String] = [String]()
     var follower:[String] = [String]()
     var following:[String] = [String]()
@@ -51,7 +70,8 @@ struct User:Codable {
                                  "follower": self.follower,
                                  "following": self.following,
                                  "hashTag": self.hashTag,
-                                 "profileImage": self.profileImage]
+                                 "profileImage": self.profileImage,
+                                 "pw": self.pw]
         
         return dic
     }

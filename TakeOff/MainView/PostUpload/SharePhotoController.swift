@@ -12,10 +12,7 @@ import Then
 import RxSwift
 import RxCocoa
 
-//MARK: 게시물 올릴 때 유저 이름 추가
 //MARK: 에러발생시 알림 추가
-//MARK: 게시물을 올린뒤에 꺼져야함
-
 
 class SharePhotoController: UIViewController {
     
@@ -178,14 +175,22 @@ extension SharePhotoController {
             .bind(to: vm.input.buttonObserver)
             .disposed(by: disposeBag)
         
-        
-        
     }
     
     func bindOutput() {
-        vm.output.shareDB
-            .emit(onNext: dismiss)
-            .disposed(by: disposeBag)
+        
+        vm.output.shareDB.asSignal()
+            .emit(onNext: {
+                self.dismiss()
+            }).disposed(by: disposeBag)
+        
+        vm.output.error.asSignal()
+            .emit(onNext: { error in
+                let alertController = UIAlertController(title: "에러", message: error.localizedDescription, preferredStyle: .alert)
+                alertController.addAction(UIAlertAction(title: "확인", style: .cancel, handler: nil))
+                self.present(alertController, animated: true)
+            }).disposed(by: disposeBag)
+        
     }
     
     func dismiss() {
