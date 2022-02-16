@@ -14,7 +14,7 @@
 		BF021F06278563050096E948 /* CustomComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF021F05278563050096E948 /* CustomComponent.swift */; };
 		BF1B97A126D5CAD5009D1B53 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1B97A026D5CAD5009D1B53 /* CalendarViewController.swift */; };
 		BF1B97A726D5D0DC009D1B53 /* MessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1B97A626D5D0DC009D1B53 /* MessageViewController.swift */; };
-		BF1B97AA26D5D35C009D1B53 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1B97A926D5D35C009D1B53 /* ProfileView.swift */; };
+		BF1B97AA26D5D35C009D1B53 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1B97A926D5D35C009D1B53 /* ProfileViewController.swift */; };
 		BF246AB627BBA4A700CF3D21 /* PhotoSelectorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF246AB527BBA4A700CF3D21 /* PhotoSelectorCell.swift */; };
 		BF270DEB26D3309400C0E6BE /* MainTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF270DEA26D3309400C0E6BE /* MainTabViewController.swift */; };
 		BF4591A126B7B1F00031E119 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4591A026B7B1F00031E119 /* LoginViewModel.swift */; };
@@ -75,7 +75,7 @@
 		BF021F05278563050096E948 /* CustomComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomComponent.swift; sourceTree = "<group>"; };
 		BF1B97A026D5CAD5009D1B53 /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
 		BF1B97A626D5D0DC009D1B53 /* MessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewController.swift; sourceTree = "<group>"; };
-		BF1B97A926D5D35C009D1B53 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		BF1B97A926D5D35C009D1B53 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		BF246AB527BBA4A700CF3D21 /* PhotoSelectorCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoSelectorCell.swift; sourceTree = "<group>"; };
 		BF270DEA26D3309400C0E6BE /* MainTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabViewController.swift; sourceTree = "<group>"; };
 		BF2DBAFD26EF4C2F00E7EC62 /* ExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleViewController.swift; sourceTree = "<group>"; };
@@ -198,7 +198,7 @@
 		BF1B97A826D5D34E009D1B53 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				BF1B97A926D5D35C009D1B53 /* ProfileView.swift */,
+				BF1B97A926D5D35C009D1B53 /* ProfileViewController.swift */,
 				046506D926E0A45A00F07726 /* ProfileViewModel.swift */,
 			);
 			path = Profile;
@@ -601,7 +601,7 @@
 				0497F61926C3A253002F1ACB /* User.swift in Sources */,
 				BF4591A626B7B2D60031E119 /* FoundationExtension.swift in Sources */,
 				046506DA26E0A45A00F07726 /* ProfileViewModel.swift in Sources */,
-				BF1B97AA26D5D35C009D1B53 /* ProfileView.swift in Sources */,
+				BF1B97AA26D5D35C009D1B53 /* ProfileViewController.swift in Sources */,
 				BFDD2A9226D0DFF20056409C /* Protocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
