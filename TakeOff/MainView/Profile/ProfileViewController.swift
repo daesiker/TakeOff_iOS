@@ -96,10 +96,9 @@ extension ProfileViewController {
             $0.height.equalToSuperview().multipliedBy(0.7)
         }
         
-        
-        
-        
     }
+    
+    
     
     
 }
