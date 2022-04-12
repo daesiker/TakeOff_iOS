@@ -41,19 +41,45 @@ class ProfileViewController: UIViewController {
         $0.font = UIFont.boldSystemFont(ofSize: 14)
     }
     
-    let postLabel = UILabel().then {
-        $0.text =  "0"
-        $0.numberOfLines = 0
+    let postTitleLabel = UILabel().then {
+        $0.text = "posts"
+        $0.font = UIFont.systemFont(ofSize: 14)
+        $0.textColor = UIColor.lightGray
         $0.textAlignment = .center
     }
     
-    let followLabel = UILabel().then {
+    let postLabel = UILabel().then {
+        $0.text =  "0"
+        $0.textColor = UIColor.black
+        $0.font = UIFont.boldSystemFont(ofSize: 14)
+        $0.textAlignment = .center
+    }
+    
+    let followersTitleLabel = UILabel().then {
+        $0.text = "followers"
+        $0.font = UIFont.systemFont(ofSize: 14)
+        $0.textColor = UIColor.lightGray
+        $0.textAlignment = .center
+    }
+    
+    let followersLabel = UILabel().then {
         $0.text = String(User.loginedUser.follower.count)
+        $0.textColor = UIColor.black
+        $0.font = UIFont.boldSystemFont(ofSize: 14)
+        $0.textAlignment = .center
+    }
+    
+    let followingTitleLabel = UILabel().then {
+        $0.text = "following"
+        $0.font = UIFont.systemFont(ofSize: 14)
+        $0.textColor = UIColor.lightGray
         $0.textAlignment = .center
     }
     
     let followingLabel = UILabel().then {
         $0.text = String(User.loginedUser.following.count)
+        $0.textColor = UIColor.black
+        $0.font = UIFont.boldSystemFont(ofSize: 14)
         $0.textAlignment = .center
     }
     
@@ -93,6 +119,8 @@ extension ProfileViewController {
             $0.leading.equalToSuperview().offset(12)
         }
         
+        setupUserStackView()
+        
         safeView.addSubview(postContainer)
         postContainer.snp.makeConstraints {
             $0.top.equalTo(userContainer.snp.bottom)
@@ -100,12 +128,37 @@ extension ProfileViewController {
             $0.height.equalToSuperview().multipliedBy(0.75)
         }
         
+        
+        
     }
     
     fileprivate func setupUserStackView() {
         
+        let postStackView = UIStackView(arrangedSubviews: [postLabel, postTitleLabel])
+        postStackView.axis = .vertical
+        postStackView.spacing = 10
         
         
+        let followersStackView = UIStackView(arrangedSubviews: [followersLabel, followersTitleLabel])
+        followersStackView.axis = .vertical
+        followersStackView.spacing = 10
+        
+        let followingStackView = UIStackView(arrangedSubviews: [followingLabel, followingTitleLabel])
+        followingStackView.axis = .vertical
+        followingStackView.spacing = 10
+        
+        
+        let stackView = UIStackView(arrangedSubviews: [postStackView, followersStackView, followingStackView])
+        stackView.distribution = .fillEqually
+        
+        
+        userContainer.addSubview(stackView)
+        stackView.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(12)
+            $0.leading.equalTo(profileImageView.snp.trailing).offset(12)
+            $0.trailing.equalToSuperview().offset(-12)
+            $0.height.equalTo(50)
+        }
     }
     
     
