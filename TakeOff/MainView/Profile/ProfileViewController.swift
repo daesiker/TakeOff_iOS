@@ -21,9 +21,8 @@ class ProfileViewController: UIViewController {
         $0.text = "ProfileViewController"
     }
     
-    let userContainer = UIView().then {
-        $0.backgroundColor = UIColor.red
-    }
+    let userContainer = UIView()
+    
     let postContainer = UIView().then {
         $0.backgroundColor = UIColor.yellow
     }
@@ -31,10 +30,10 @@ class ProfileViewController: UIViewController {
     let profileImageView = UIImageView().then {
         $0.image = UIImage(named: "logo")
         $0.layer.cornerRadius = 40
-        $0.backgroundColor = UIColor.white   
+        $0.backgroundColor = UIColor.white
+        $0.clipsToBounds = true
         $0.layer.masksToBounds = true
     }
-    
     
     let usernameLabel = UILabel().then {
         $0.text = User.loginedUser.name
@@ -83,6 +82,30 @@ class ProfileViewController: UIViewController {
         $0.textAlignment = .center
     }
     
+    lazy var gridButton = UIButton(type: .system).then {
+        $0.setImage(UIImage(systemName: "square.grid.2x2"), for: .normal)
+        $0.tintColor = UIColor.mainColor
+    }
+    
+    lazy var listButton = UIButton(type: .system).then {
+        $0.setImage(UIImage(systemName: "list.dash"), for: .normal)
+        $0.tintColor = UIColor(white: 0, alpha: 0.2)
+    }
+    
+    lazy var bookmarkButton = UIButton(type: .system).then {
+        $0.setImage(UIImage(systemName: "bookmark"), for: .normal)
+        $0.tintColor = UIColor(white: 0, alpha: 0.2)
+    }
+    
+    lazy var editProfileFollowButton = UIButton(type: .system).then {
+        $0.setTitle("Edit Profile", for: .normal)
+        $0.setTitleColor(.black, for: .normal)
+        $0.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+        $0.layer.borderColor = UIColor.lightGray.cgColor
+        $0.layer.borderWidth = 1
+        $0.layer.cornerRadius = 3
+    }
+    
     let disposBag = DisposeBag()
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -103,7 +126,7 @@ extension ProfileViewController {
         safeView.addSubview(userContainer)
         userContainer.snp.makeConstraints {
             $0.leading.trailing.top.equalToSuperview()
-            $0.height.equalToSuperview().multipliedBy(0.25)
+            $0.height.equalToSuperview().multipliedBy(0.3)
         }
         
         userContainer.addSubview(profileImageView)
@@ -121,14 +144,14 @@ extension ProfileViewController {
         
         setupUserStackView()
         
+        setupBottomToolBar()
+        
         safeView.addSubview(postContainer)
         postContainer.snp.makeConstraints {
             $0.top.equalTo(userContainer.snp.bottom)
             $0.leading.trailing.equalToSuperview()
             $0.height.equalToSuperview().multipliedBy(0.75)
         }
-        
-        
         
     }
     
@@ -157,8 +180,49 @@ extension ProfileViewController {
             $0.top.equalToSuperview().offset(12)
             $0.leading.equalTo(profileImageView.snp.trailing).offset(12)
             $0.trailing.equalToSuperview().offset(-12)
+            $0.height.equalTo(40)
+        }
+        
+        userContainer.addSubview(editProfileFollowButton)
+        editProfileFollowButton.snp.makeConstraints {
+            $0.top.equalTo(stackView.snp.bottom).offset(10)
+            $0.leading.trailing.equalTo(stackView)
+            $0.height.equalTo(34)
+        }
+        
+    }
+    
+    fileprivate func setupBottomToolBar() {
+        let topDividerView = UIView()
+        topDividerView.backgroundColor = UIColor.lightGray
+        
+        let bottomDividerView = UIView()
+        bottomDividerView.backgroundColor = UIColor.lightGray
+        
+        let stackView = UIStackView(arrangedSubviews: [gridButton, listButton, bookmarkButton])
+        stackView.axis = .horizontal
+        stackView.distribution = .fillEqually
+        
+        userContainer.addSubview(stackView)
+        stackView.snp.makeConstraints {
+            $0.leading.trailing.bottom.equalToSuperview()
             $0.height.equalTo(50)
         }
+        
+        userContainer.addSubview(topDividerView)
+        topDividerView.snp.makeConstraints {
+            $0.bottom.equalTo(stackView.snp.top)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(0.5)
+        }
+        
+        userContainer.addSubview(bottomDividerView)
+        bottomDividerView.snp.makeConstraints {
+            $0.top.equalTo(stackView.snp.bottom)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(0.5)
+        }
+        
     }
     
     
