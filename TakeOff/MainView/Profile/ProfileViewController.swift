@@ -23,9 +23,7 @@ class ProfileViewController: UIViewController {
     
     let userContainer = UIView()
     
-    let postContainer = UIView().then {
-        $0.backgroundColor = UIColor.yellow
-    }
+    let postContainer = UIView()
     
     let profileImageView = UIImageView().then {
         $0.image = UIImage(named: "logo")
@@ -106,10 +104,22 @@ class ProfileViewController: UIViewController {
         $0.layer.cornerRadius = 3
     }
     
-    let disposBag = DisposeBag()
+    lazy var postCV: UICollectionView = {
+        let flowLayout = UICollectionViewFlowLayout()
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
+        collectionView.backgroundColor = .red
+        collectionView.showsVerticalScrollIndicator = false
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.allowsMultipleSelection = false
+        return collectionView
+    }()
+    
+    let disposeBag = DisposeBag()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
+        setCV()
     }
     
 }
@@ -117,10 +127,16 @@ class ProfileViewController: UIViewController {
 extension ProfileViewController {
     
     
+    private func setCV() {
+        self.postCV.dataSource = nil
+        self.postCV.delegate = nil
+        //register
+        postCV.rx.setDelegate(self).disposed(by: disposeBag)
+    }
+    
     private func setUI() {
         
         view.backgroundColor = .white
-        
         navigationItem.rightBarButtonItem = logOutBt
         
         safeView.addSubview(userContainer)
@@ -129,11 +145,28 @@ extension ProfileViewController {
             $0.height.equalToSuperview().multipliedBy(0.3)
         }
         
+        setHeaderUI()
+
+        safeView.addSubview(postContainer)
+        postContainer.snp.makeConstraints {
+            $0.top.equalTo(userContainer.snp.bottom)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalToSuperview().multipliedBy(0.7)
+        }
+        
+        postContainer.addSubview(postCV)
+        postCV.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+        
+        
+    }
+    
+    fileprivate func setHeaderUI() {
         userContainer.addSubview(profileImageView)
         profileImageView.snp.makeConstraints {
             $0.leading.top.equalToSuperview().offset(12)
             $0.width.height.equalTo(80)
-            
         }
         
         userContainer.addSubview(usernameLabel)
@@ -145,14 +178,6 @@ extension ProfileViewController {
         setupUserStackView()
         
         setupBottomToolBar()
-        
-        safeView.addSubview(postContainer)
-        postContainer.snp.makeConstraints {
-            $0.top.equalTo(userContainer.snp.bottom)
-            $0.leading.trailing.equalToSuperview()
-            $0.height.equalToSuperview().multipliedBy(0.75)
-        }
-        
     }
     
     fileprivate func setupUserStackView() {
@@ -160,7 +185,6 @@ extension ProfileViewController {
         let postStackView = UIStackView(arrangedSubviews: [postLabel, postTitleLabel])
         postStackView.axis = .vertical
         postStackView.spacing = 10
-        
         
         let followersStackView = UIStackView(arrangedSubviews: [followersLabel, followersTitleLabel])
         followersStackView.axis = .vertical
@@ -170,10 +194,8 @@ extension ProfileViewController {
         followingStackView.axis = .vertical
         followingStackView.spacing = 10
         
-        
         let stackView = UIStackView(arrangedSubviews: [postStackView, followersStackView, followingStackView])
         stackView.distribution = .fillEqually
-        
         
         userContainer.addSubview(stackView)
         stackView.snp.makeConstraints {
@@ -190,9 +212,12 @@ extension ProfileViewController {
             $0.height.equalTo(34)
         }
         
+        
+        
     }
     
     fileprivate func setupBottomToolBar() {
+        
         let topDividerView = UIView()
         topDividerView.backgroundColor = UIColor.lightGray
         
@@ -225,7 +250,25 @@ extension ProfileViewController {
         
     }
     
+}
+
+extension ProfileViewController: UICollectionViewDelegateFlowLayout {
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 1
+    }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let width = (view.frame.width - 4) / 3
+        return CGSize(width: width, height: width)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 1, left: 1, bottom: 1, right: 1)
+    }
     
 }

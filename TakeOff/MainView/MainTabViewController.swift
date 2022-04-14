@@ -16,7 +16,6 @@ class MainTabViewController: UITabBarController, UITabBarControllerDelegate {
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
         let index = viewControllers?.firstIndex(of: viewController)
         if index == 2 {
-            
             let vc = PostUploadViewController()
             let navController = UINavigationController(rootViewController: vc)
             present(navController, animated: true, completion: nil)
@@ -51,6 +50,7 @@ class MainTabViewController: UITabBarController, UITabBarControllerDelegate {
     
     
     fileprivate func templateNavController(unselectedImage: UIImage, selectedImage: UIImage, rootViewController: UIViewController = UIViewController()) -> UINavigationController {
+        
         let viewController = rootViewController
         let navController = UINavigationController(rootViewController: viewController)
         navController.tabBarItem.image = unselectedImage
