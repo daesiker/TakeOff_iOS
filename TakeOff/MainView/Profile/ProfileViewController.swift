@@ -126,11 +126,10 @@ class ProfileViewController: UIViewController {
 
 extension ProfileViewController {
     
-    
     private func setCV() {
         self.postCV.dataSource = nil
         self.postCV.delegate = nil
-        //register
+        postCV.register(ProfileCollectionViewCell.self, forCellWithReuseIdentifier: "cell")
         postCV.rx.setDelegate(self).disposed(by: disposeBag)
     }
     
@@ -211,8 +210,6 @@ extension ProfileViewController {
             $0.leading.trailing.equalTo(stackView)
             $0.height.equalTo(34)
         }
-        
-        
         
     }
     
