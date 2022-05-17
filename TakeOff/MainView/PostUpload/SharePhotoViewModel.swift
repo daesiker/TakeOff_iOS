@@ -89,7 +89,7 @@ class SharePhotoViewModel {
                                 let userPostRef = Database.database().reference().child("posts").child(uid)
                                 let ref = userPostRef.childByAutoId()
                                 
-                                self.post.date = Date().timeIntervalSince1970
+                                self.post.date = Date()
                                 
                                 let values = self.post.toDic()
                                 

@@ -122,6 +122,17 @@ class ProfileViewController: UIViewController {
         setCV()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        vm.fetchPosts()
+            .asSignal(onErrorJustReturn: [])
+            .emit(onNext: { posts in
+                self.vm.posts = posts
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    
+    
 }
 
 extension ProfileViewController {

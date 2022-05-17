@@ -8,11 +8,15 @@
 import Foundation
 import RxSwift
 import RxCocoa
+import Firebase
 
-class ProfileViewModel: ViewModelType {
+class ProfileViewModel {
     var input = Input()
     var output = Output()
     var disposeBag = DisposeBag()
+    
+    var posts:[Post] = []
+    
     struct Input {
         let refresh = PublishRelay<Void>()
         //        let tab:BehaviorRelay<String>
@@ -31,6 +35,28 @@ class ProfileViewModel: ViewModelType {
     } 
     
     init() {
+        
+    }
+    
+    func fetchPosts() -> Observable<[Post]> {
+        
+        let user = Auth.auth().currentUser!
+        
+        return Observable.create { observe in
+            
+            Database.database().reference().child("posts").child(user.uid).observeSingleEvent(of: .value) { (snapshot) in
+                
+                if let userDictionary = snapshot.value as? [String:Any] {
+                    for (key, value) in userDictionary {
+                        print(key)
+                        print(value)
+                    }
+                }
+            }
+            
+            
+            return Disposables.create()
+        }
         
     }
     

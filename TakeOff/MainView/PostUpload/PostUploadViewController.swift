@@ -208,6 +208,7 @@ extension PostUploadViewController {
             }
             
             self.setScrollView()
+            
         }).disposed(by: disposeBag)
         
         vm.totalImage
@@ -246,6 +247,7 @@ extension PostUploadViewController: UICollectionViewDelegateFlowLayout {
 extension PostUploadViewController: UIScrollViewDelegate {
     
     private func setScrollView() {
+        
         selectedPhotoSV.delegate = self
         selectedPhotoSV.contentSize = CGSize(width: (UIScreen.main.bounds.width - 20) * CGFloat(selectedImage.count), height: UIScreen.main.bounds.height / 2)
         pageControl.currentPage = 0
@@ -267,6 +269,7 @@ extension PostUploadViewController: UIScrollViewDelegate {
             selectedPhotoSV.contentSize.width = imageView.frame.width * CGFloat(i + 1)
             
         }
+        
         selectedPhotoSV.layoutIfNeeded()
     }
     
