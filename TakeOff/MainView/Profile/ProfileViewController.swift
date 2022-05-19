@@ -120,15 +120,18 @@ class ProfileViewController: UIViewController {
         super.viewDidLoad()
         setUI()
         setCV()
+        print(self.vm.posts)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         vm.fetchPosts()
             .asSignal(onErrorJustReturn: [])
             .emit(onNext: { posts in
-                self.vm.posts = posts
+                self.vm.posts.accept(posts)
+                self.postCV.reloadData()
             })
             .disposed(by: disposeBag)
+        
     }
     
     
@@ -142,6 +145,11 @@ extension ProfileViewController {
         self.postCV.delegate = nil
         postCV.register(ProfileCollectionViewCell.self, forCellWithReuseIdentifier: "cell")
         postCV.rx.setDelegate(self).disposed(by: disposeBag)
+        
+        vm.posts
+            .bind(to: self.postCV.rx.items(cellIdentifier: "cell", cellType: ProfileCollectionViewCell.self)) { indexPath, post, cell in
+                cell.photoImageView.image = post.realImage[0]
+            }.disposed(by: disposeBag)
     }
     
     private func setUI() {

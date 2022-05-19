@@ -15,7 +15,7 @@ class ProfileViewModel {
     var output = Output()
     var disposeBag = DisposeBag()
     
-    var posts:[Post] = []
+    var posts = PublishRelay<[Post]>()
     
     struct Input {
         let refresh = PublishRelay<Void>()
@@ -45,12 +45,13 @@ class ProfileViewModel {
         return Observable.create { observe in
             
             Database.database().reference().child("posts").child(user.uid).observeSingleEvent(of: .value) { (snapshot) in
-                
+                var posts:[Post] = []
                 if let userDictionary = snapshot.value as? [String:Any] {
                     for (key, value) in userDictionary {
-                        print(key)
-                        print(value)
+                        let post = Post(key, dic: value as! [String : Any])
+                        posts.append(post)
                     }
+                    observe.onNext(posts)
                 }
             }
             

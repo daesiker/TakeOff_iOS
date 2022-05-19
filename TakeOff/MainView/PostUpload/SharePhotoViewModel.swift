@@ -74,13 +74,17 @@ class SharePhotoViewModel {
                     let uploadData = images[i].jpegData(compressionQuality: 0.5) ?? Data()
                     
                     storageRef.putData(uploadData, metadata: nil) { (metadata, err) in
+                        
                         if let err = err {
                             valid.onError(err)
                         }
+                        
                         storageRef.downloadURL(completion: { downloadURL, err in
+                            
                             if let err = err {
                                 valid.onError(err)
                             }
+                            
                             let imageUrl = downloadURL?.absoluteString ?? ""
                             self.post.images.append(imageUrl)
                             self.post.user = User.loginedUser.name

@@ -6,8 +6,9 @@
 //
 
 import Foundation
+import UIKit
 
-struct Post: Codable {
+struct Post {
     
     var uid:String = ""
     var user:String = ""
@@ -16,6 +17,7 @@ struct Post: Codable {
     var date:Date = Date()
     var hashTag:[String] = []
     var heart:[String] = []
+    var realImage:[UIImage] = []
     
     init() {
     }
@@ -24,12 +26,18 @@ struct Post: Codable {
         self.uid = uid
         self.contents = dic["contents"] as? String ?? ""
         self.hashTag = dic["hashTag"] as? [String] ?? []
+        self.heart = dic["heart"] as? [String] ?? []
+        self.user = dic["user"] as? String ?? ""
         
         let secondsFrom1970 = dic["date"] as? Double ?? 0
         self.date = Date(timeIntervalSince1970: secondsFrom1970)
         
-        
-        
+        let urls = dic["images"] as? [String] ?? []
+        for url in urls {
+            let image = URL(string: url)
+            let data = try? Data(contentsOf: image!)
+            self.realImage.append(UIImage(data: data!)!)
+        }
     }
     
     func toDic() -> [String:Any] {
