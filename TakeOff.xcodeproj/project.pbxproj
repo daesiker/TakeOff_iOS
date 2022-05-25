@@ -12,6 +12,8 @@
 		12976C7C5238AE8E49C94015 /* Pods_TakeOff.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B96FC7B284EF767A99B29A5 /* Pods_TakeOff.framework */; };
 		B98DA3D9814E88F33671E6B8 /* Pods_TakeOff_TakeOffUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 350243CD383F88E0778AB157 /* Pods_TakeOff_TakeOffUITests.framework */; };
 		BF021F06278563050096E948 /* CustomComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF021F05278563050096E948 /* CustomComponent.swift */; };
+		BF06A851283E07E200C39027 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF06A850283E07E200C39027 /* PostViewController.swift */; };
+		BF06A853283E083600C39027 /* PostViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF06A852283E083600C39027 /* PostViewCell.swift */; };
 		BF1B97A126D5CAD5009D1B53 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1B97A026D5CAD5009D1B53 /* CalendarViewController.swift */; };
 		BF1B97A726D5D0DC009D1B53 /* MessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1B97A626D5D0DC009D1B53 /* MessageViewController.swift */; };
 		BF1B97AA26D5D35C009D1B53 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1B97A926D5D35C009D1B53 /* ProfileViewController.swift */; };
@@ -74,6 +76,8 @@
 		904F2C6911FEEF43C782E968 /* Pods-TakeOff.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TakeOff.debug.xcconfig"; path = "Target Support Files/Pods-TakeOff/Pods-TakeOff.debug.xcconfig"; sourceTree = "<group>"; };
 		9D3799695D1A6873AD9AD76F /* Pods-TakeOff-TakeOffUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TakeOff-TakeOffUITests.release.xcconfig"; path = "Target Support Files/Pods-TakeOff-TakeOffUITests/Pods-TakeOff-TakeOffUITests.release.xcconfig"; sourceTree = "<group>"; };
 		BF021F05278563050096E948 /* CustomComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomComponent.swift; sourceTree = "<group>"; };
+		BF06A850283E07E200C39027 /* PostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
+		BF06A852283E083600C39027 /* PostViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewCell.swift; sourceTree = "<group>"; };
 		BF1B97A026D5CAD5009D1B53 /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
 		BF1B97A626D5D0DC009D1B53 /* MessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewController.swift; sourceTree = "<group>"; };
 		BF1B97A926D5D35C009D1B53 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
@@ -326,6 +330,8 @@
 			isa = PBXGroup;
 			children = (
 				BF71170E26D39966006ED7AF /* HomeViewController.swift */,
+				BF06A850283E07E200C39027 /* PostViewController.swift */,
+				BF06A852283E083600C39027 /* PostViewCell.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -594,8 +600,10 @@
 				BF606EE926A2876E004091A5 /* SceneDelegate.swift in Sources */,
 				BFC38EC32798039A004520EA /* Post.swift in Sources */,
 				BF4591A426B7B25B0031E119 /* UIKitExtension.swift in Sources */,
+				BF06A853283E083600C39027 /* PostViewCell.swift in Sources */,
 				BFDD2A8D26D0DFBE0056409C /* FirebaseDB.swift in Sources */,
 				BF021F06278563050096E948 /* CustomComponent.swift in Sources */,
+				BF06A851283E07E200C39027 /* PostViewController.swift in Sources */,
 				BFFDAE4926E5F1EA005707C9 /* PostUploadViewModel.swift in Sources */,
 				BF4591A126B7B1F00031E119 /* LoginViewModel.swift in Sources */,
 				BF1B97A726D5D0DC009D1B53 /* MessageViewController.swift in Sources */,

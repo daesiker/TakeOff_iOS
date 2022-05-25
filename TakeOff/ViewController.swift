@@ -71,7 +71,8 @@ class ViewController: UIViewController {
                             let user = User.init(uid: uid, dbInfo: userData)
                             
                             User.loginedUser = user
-                            self.goToMainView()
+                            //self.goToMainView()
+                            self.goToLoginView()
                             
                         }
                     }
