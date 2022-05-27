@@ -79,7 +79,22 @@ class LoginViewModel : ViewModelType {
                     UserDefaults.standard.set(self.user.email, forKey: "email")
                     UserDefaults.standard.set(self.user.pw, forKey: "pw")
                     
-                    observer.onNext(())
+                    Database.database().reference().child("users").observeSingleEvent(of: .value) { snapshot in
+                        if let userDictionary = snapshot.value as? [String:Any] {
+                            for (key, value) in userDictionary {
+                                if let value = value as? [String:Any] {
+                                    if value["email"] as! String == self.user.email {
+                                        User.loginedUser = User(uid: key, dbInfo: value)
+                                        observer.onNext(())
+                                        break
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    
+                    
+                    
                 } else if let error = error {
                     observer.onError(error)
                 } else {

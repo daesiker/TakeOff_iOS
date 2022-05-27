@@ -40,11 +40,10 @@ class ProfileViewModel {
     
     func fetchPosts() -> Observable<[Post]> {
         
-        let user = Auth.auth().currentUser!
         
         return Observable.create { observe in
             
-            Database.database().reference().child("posts").child(user.uid).observeSingleEvent(of: .value) { (snapshot) in
+            Database.database().reference().child("posts").observeSingleEvent(of: .value) { (snapshot) in
                 var posts:[Post] = []
                 if let userDictionary = snapshot.value as? [String:Any] {
                     for (key, value) in userDictionary {

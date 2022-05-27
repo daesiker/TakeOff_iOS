@@ -89,12 +89,11 @@ class SharePhotoViewModel {
                             self.post.images.append(imageUrl)
                             self.post.user = User.loginedUser.name
                             if i == images.count - 1 {
-                                guard let uid = Auth.auth().currentUser?.uid else { print("유저 없음"); return }
-                                let userPostRef = Database.database().reference().child("posts").child(uid)
+                                let userPostRef = Database.database().reference().child("posts")
                                 let ref = userPostRef.childByAutoId()
                                 
                                 self.post.date = Date()
-                                
+                                self.post.user = User.loginedUser.name
                                 let values = self.post.toDic()
                                 
                                 ref.updateChildValues(values) { (err, ref) in
