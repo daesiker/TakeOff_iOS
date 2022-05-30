@@ -45,7 +45,7 @@ struct Post {
         let values:[String:Any] = [ "user": self.user,
                                     "images": self.images,
                                     "contents": self.contents,
-                                    "date": self.date,
+                                    "date": self.date.timeIntervalSince1970,
                                     "hashTag": self.hashTag,
                                     "heart": self.heart]
         

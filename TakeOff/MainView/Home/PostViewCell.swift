@@ -13,6 +13,7 @@ class PostViewCell: UICollectionViewCell {
     
     var post: Post? {
         didSet {
+            addContentScrollView()
             
         }
     }
@@ -76,6 +77,7 @@ class PostViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setUI()
+        setSV()
     }
     
     required init?(coder: NSCoder) {
@@ -137,7 +139,7 @@ class PostViewCell: UICollectionViewCell {
         photoImageScrollView.delegate = self
         photoImageScrollView.contentSize = CGSize(width: UIScreen.main.bounds.width * CGFloat(count), height: UIScreen.main.bounds.width)
         pageControl.currentPage = 0
-        pageControl.numberOfPages = (post?.realImage.count)!
+        pageControl.numberOfPages = post?.realImage.count ?? 0
         pageControl.pageIndicatorTintColor = UIColor.rgb(red: 171, green: 171, blue: 171)
         pageControl.currentPageIndicatorTintColor = UIColor.mainColor
     }

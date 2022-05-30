@@ -40,7 +40,6 @@ class ProfileViewModel {
     
     func fetchPosts() -> Observable<[Post]> {
         
-        
         return Observable.create { observe in
             
             Database.database().reference().child("posts").observeSingleEvent(of: .value) { (snapshot) in
@@ -48,16 +47,19 @@ class ProfileViewModel {
                 if let userDictionary = snapshot.value as? [String:Any] {
                     for (key, value) in userDictionary {
                         let post = Post(key, dic: value as! [String : Any])
-                        posts.append(post)
+                        if post.user == User.loginedUser.name {
+                            posts.append(post)
+                        }
                     }
                     observe.onNext(posts)
                 }
             }
             
-            
             return Disposables.create()
         }
-        
     }
+    
+    
+    
     
 }

@@ -95,7 +95,8 @@ class SharePhotoViewModel {
                                 self.post.date = Date()
                                 self.post.user = User.loginedUser.name
                                 let values = self.post.toDic()
-                                
+                                print(self.post)
+                                print(values)
                                 ref.updateChildValues(values) { (err, ref) in
                                     if let err = err {
                                         valid.onError(err)
