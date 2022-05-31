@@ -84,6 +84,7 @@ class LoginViewModel : ViewModelType {
                             for (key, value) in userDictionary {
                                 if let value = value as? [String:Any] {
                                     if value["email"] as! String == self.user.email {
+                                        
                                         User.loginedUser = User(uid: key, dbInfo: value)
                                         observer.onNext(())
                                         break

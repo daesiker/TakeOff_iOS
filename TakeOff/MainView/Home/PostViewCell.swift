@@ -8,11 +8,14 @@
 import UIKit
 import Then
 import RxSwift
+import Kingfisher
 
 class PostViewCell: UICollectionViewCell {
     
     var post: Post? {
         didSet {
+            setContents()
+            setSV()
             addContentScrollView()
             
         }
@@ -20,6 +23,7 @@ class PostViewCell: UICollectionViewCell {
     
     let userProfileImageView:CustomImageView = {
         let iv = CustomImageView()
+        iv.image = UIImage(systemName: "person.circle.fill")
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
         iv.layer.cornerRadius = 40 / 2
@@ -33,7 +37,6 @@ class PostViewCell: UICollectionViewCell {
         $0.alwaysBounceVertical = false
         $0.isScrollEnabled = true
         $0.bounces = false
-        $0.backgroundColor = .red
     }
     
     let pageControl = UIPageControl()
@@ -60,7 +63,7 @@ class PostViewCell: UICollectionViewCell {
     
     let sendMessageButton = UIButton(type: .system).then {
         
-        $0.setImage(UIImage(named: "send2")?.withRenderingMode(.alwaysOriginal), for: .normal)
+        $0.setImage(UIImage(named: "send")?.withRenderingMode(.alwaysOriginal), for: .normal)
         
     }
     
@@ -77,7 +80,6 @@ class PostViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setUI()
-        setSV()
     }
     
     required init?(coder: NSCoder) {
@@ -90,11 +92,12 @@ class PostViewCell: UICollectionViewCell {
         userProfileImageView.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.leading.equalToSuperview().offset(8)
+            $0.width.height.equalTo(40)
         }
         
         addSubview(userNameLabel)
         userNameLabel.snp.makeConstraints {
-            $0.top.equalToSuperview()
+            $0.top.equalToSuperview().offset(8)
             $0.leading.equalTo(userProfileImageView.snp.trailing).offset(8)
         }
         
@@ -123,14 +126,37 @@ class PostViewCell: UICollectionViewCell {
             $0.height.equalTo(50)
         }
         
+        addSubview(bookmarkButton)
+        bookmarkButton.snp.makeConstraints {
+            $0.top.equalTo(photoImageScrollView.snp.bottom)
+            $0.trailing.equalToSuperview()
+            $0.width.equalTo(40)
+            $0.height.equalTo(50)
+        }
+        
         addSubview(captionLabel)
         captionLabel.snp.makeConstraints {
             $0.top.equalTo(likeButton.snp.bottom)
             $0.leading.equalToSuperview().offset(8)
             $0.trailing.equalToSuperview().offset(-8)
-            $0.bottom.equalToSuperview()
         }
         
+        
+    }
+    
+    private func setContents() {
+        
+        if let post = post {
+            self.userNameLabel.text = post.user
+            
+            let attributeText = NSMutableAttributedString(string: post.user, attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 14)])
+            attributeText.append(NSAttributedString(string: " \(post.contents)", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14)]))
+            attributeText.append(NSAttributedString(string: "\n\n", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 4)]))
+            
+            let timeAgoDisplay = post.date.timeAgoDisplay()
+            attributeText.append(NSAttributedString(string: timeAgoDisplay, attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14), NSAttributedString.Key.foregroundColor: UIColor.gray]))
+            captionLabel.attributedText = attributeText
+        }
         
     }
     
@@ -145,14 +171,22 @@ class PostViewCell: UICollectionViewCell {
     }
     
     private func addContentScrollView() {
-        for i in 0..<(post?.realImage.count)! {
-            let imageView = UIImageView()
-            let xPos = frame.width * CGFloat(i)
-            imageView.frame = CGRect(x: xPos, y: 0, width: photoImageScrollView.bounds.width, height: photoImageScrollView.bounds.height)
-            imageView.image = post?.realImage[i]
-            photoImageScrollView.addSubview(imageView)
-            photoImageScrollView.contentSize.width = imageView.frame.width * CGFloat(i + 1)
+        
+        if let post = post {
+            for i in 0..<post.images.count {
+                let imageView = UIImageView()
+                let xPos = frame.width * CGFloat(i)
+                imageView.frame = CGRect(x: xPos, y: photoImageScrollView.frame.minY, width: photoImageScrollView.bounds.width, height: photoImageScrollView.bounds.height)
+                
+                if let url = URL(string: post.images[i]) {
+                    imageView.kf.setImage(with: url)
+                    self.photoImageScrollView.addSubview(imageView)
+                    self.photoImageScrollView.contentSize.width = imageView.frame.width * CGFloat(i + 1)
+                }
+            }
         }
+        
+        
     }
     
 }

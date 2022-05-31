@@ -32,12 +32,9 @@ struct Post {
         let secondsFrom1970 = dic["date"] as? Double ?? 0
         self.date = Date(timeIntervalSince1970: secondsFrom1970)
         
-        let urls = dic["images"] as? [String] ?? []
-        for url in urls {
-            let image = URL(string: url)
-            let data = try? Data(contentsOf: image!)
-            self.realImage.append(UIImage(data: data!)!)
-        }
+        self.images = dic["images"] as? [String] ?? []
+        
+        
     }
     
     func toDic() -> [String:Any] {

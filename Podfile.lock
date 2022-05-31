@@ -97,6 +97,7 @@ PODS:
   - GoogleUtilities/UserDefaults (7.5.0):
     - GoogleUtilities/Logger
   - GTMSessionFetcher/Core (1.6.1)
+  - Kingfisher (7.2.2)
   - leveldb-library (1.22.1)
   - nanopb (2.30908.0):
     - nanopb/decode (= 2.30908.0)
@@ -124,6 +125,7 @@ DEPENDENCIES:
   - Firebase/Database (~> 8.4.0)
   - Firebase/Storage (~> 8.4.0)
   - FSPagerView
+  - Kingfisher (~> 7.0)
   - RxCocoa
   - RxDataSources (~> 4.0)
   - RxSwift (~> 5.0.0)
@@ -147,6 +149,7 @@ SPEC REPOS:
     - GoogleDataTransport
     - GoogleUtilities
     - GTMSessionFetcher
+    - Kingfisher
     - leveldb-library
     - nanopb
     - PromisesObjC
@@ -173,6 +176,7 @@ SPEC CHECKSUMS:
   GoogleDataTransport: 85fd18ff3019bb85d3f2c551d04c481dedf71fc9
   GoogleUtilities: eea970f4a389963963bffe8d8fabe43540678b9c
   GTMSessionFetcher: 36689134877faeb055b27dfa4ccc9ceaa42e029e
+  Kingfisher: 184d4d1a8c36666e663caf8e08abe87898595c53
   leveldb-library: 50c7b45cbd7bf543c81a468fe557a16ae3db8729
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   PromisesObjC: 68159ce6952d93e17b2dfe273b8c40907db5ba58
@@ -184,6 +188,6 @@ SPEC CHECKSUMS:
   TextFieldEffects: 529b8aff706fb40f82c41c780c0777941a893796
   Then: acfe0be7e98221c6204e12f8161459606d5d822d
 
-PODFILE CHECKSUM: e24742e60b901bd546c028faad61af00c39c8e24
+PODFILE CHECKSUM: 729789d9b34ac457a33c0a057df4078c92d94478
 
 COCOAPODS: 1.11.2

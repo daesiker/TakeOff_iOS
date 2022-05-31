@@ -16,6 +16,7 @@ pod 'RxDataSources', '~> 4.0'
 pod 'Then'
 pod 'TextFieldEffects'
 pod 'FSPagerView'
+pod 'Kingfisher', '~> 7.0'
   target 'TakeOffTests' do
     inherit! :search_paths
     # Pods for testing
