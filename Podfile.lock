@@ -43,22 +43,23 @@ PODS:
     - FirebaseCoreDiagnostics (~> 8.0)
     - GoogleUtilities/Environment (~> 7.4)
     - GoogleUtilities/Logger (~> 7.4)
-  - FirebaseCoreDiagnostics (8.4.0):
-    - GoogleDataTransport (~> 9.0)
-    - GoogleUtilities/Environment (~> 7.4)
-    - GoogleUtilities/Logger (~> 7.4)
+  - FirebaseCoreDiagnostics (8.10.0):
+    - GoogleDataTransport (~> 9.1)
+    - GoogleUtilities/Environment (~> 7.6)
+    - GoogleUtilities/Logger (~> 7.6)
     - nanopb (~> 2.30908.0)
   - FirebaseDatabase (8.4.0):
     - FirebaseCore (~> 8.0)
     - leveldb-library (~> 1.22)
-  - FirebaseInstallations (8.4.0):
+  - FirebaseInstallations (8.10.0):
     - FirebaseCore (~> 8.0)
-    - GoogleUtilities/Environment (~> 7.4)
-    - GoogleUtilities/UserDefaults (~> 7.4)
+    - GoogleUtilities/Environment (~> 7.6)
+    - GoogleUtilities/UserDefaults (~> 7.6)
     - PromisesObjC (< 3.0, >= 1.2)
   - FirebaseStorage (8.4.0):
     - FirebaseCore (~> 8.0)
     - GTMSessionFetcher/Core (~> 1.5)
+  - FSCalendar (2.8.2)
   - FSPagerView (0.8.3)
   - GoogleAppMeasurement (8.4.0):
     - GoogleAppMeasurement/AdIdSupport (= 8.4.0)
@@ -73,30 +74,30 @@ PODS:
     - GoogleUtilities/Network (~> 7.4)
     - "GoogleUtilities/NSData+zlib (~> 7.4)"
     - nanopb (~> 2.30908.0)
-  - GoogleDataTransport (9.1.0):
+  - GoogleDataTransport (9.1.2):
     - GoogleUtilities/Environment (~> 7.2)
     - nanopb (~> 2.30908.0)
     - PromisesObjC (< 3.0, >= 1.2)
-  - GoogleUtilities/AppDelegateSwizzler (7.5.0):
+  - GoogleUtilities/AppDelegateSwizzler (7.6.0):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
     - GoogleUtilities/Network
-  - GoogleUtilities/Environment (7.5.0):
+  - GoogleUtilities/Environment (7.6.0):
     - PromisesObjC (< 3.0, >= 1.2)
-  - GoogleUtilities/Logger (7.5.0):
+  - GoogleUtilities/Logger (7.6.0):
     - GoogleUtilities/Environment
-  - GoogleUtilities/MethodSwizzler (7.5.0):
+  - GoogleUtilities/MethodSwizzler (7.6.0):
     - GoogleUtilities/Logger
-  - GoogleUtilities/Network (7.5.0):
+  - GoogleUtilities/Network (7.6.0):
     - GoogleUtilities/Logger
     - "GoogleUtilities/NSData+zlib"
     - GoogleUtilities/Reachability
-  - "GoogleUtilities/NSData+zlib (7.5.0)"
-  - GoogleUtilities/Reachability (7.5.0):
+  - "GoogleUtilities/NSData+zlib (7.6.0)"
+  - GoogleUtilities/Reachability (7.6.0):
     - GoogleUtilities/Logger
-  - GoogleUtilities/UserDefaults (7.5.0):
+  - GoogleUtilities/UserDefaults (7.6.0):
     - GoogleUtilities/Logger
-  - GTMSessionFetcher/Core (1.6.1)
+  - GTMSessionFetcher/Core (1.7.0)
   - Kingfisher (7.2.2)
   - leveldb-library (1.22.1)
   - nanopb (2.30908.0):
@@ -105,18 +106,17 @@ PODS:
   - nanopb/decode (2.30908.0)
   - nanopb/encode (2.30908.0)
   - PromisesObjC (2.0.0)
-  - RxCocoa (5.1.1):
+  - RxCocoa (5.1.3):
     - RxRelay (~> 5)
     - RxSwift (~> 5)
   - RxDataSources (4.0.1):
     - Differentiator (~> 4.0)
     - RxCocoa (~> 5.0)
     - RxSwift (~> 5.0)
-  - RxRelay (5.1.1):
+  - RxRelay (5.1.3):
     - RxSwift (~> 5)
   - RxSwift (5.0.1)
   - SnapKit (5.0.1)
-  - TextFieldEffects (1.6.0)
   - Then (2.7.0)
 
 DEPENDENCIES:
@@ -124,13 +124,13 @@ DEPENDENCIES:
   - Firebase/Auth (~> 8.4.0)
   - Firebase/Database (~> 8.4.0)
   - Firebase/Storage (~> 8.4.0)
+  - FSCalendar
   - FSPagerView
   - Kingfisher (~> 7.0)
   - RxCocoa
   - RxDataSources (~> 4.0)
   - RxSwift (~> 5.0.0)
   - SnapKit (~> 5.0.0)
-  - TextFieldEffects
   - Then
 
 SPEC REPOS:
@@ -144,6 +144,7 @@ SPEC REPOS:
     - FirebaseDatabase
     - FirebaseInstallations
     - FirebaseStorage
+    - FSCalendar
     - FSPagerView
     - GoogleAppMeasurement
     - GoogleDataTransport
@@ -158,7 +159,6 @@ SPEC REPOS:
     - RxRelay
     - RxSwift
     - SnapKit
-    - TextFieldEffects
     - Then
 
 SPEC CHECKSUMS:
@@ -167,27 +167,27 @@ SPEC CHECKSUMS:
   FirebaseAnalytics: 4751d6a49598a2b58da678cc07df696bcd809ab9
   FirebaseAuth: 8ef169751d795f20921d425f7b0131cc1c70935c
   FirebaseCore: 31f389c37ac1ea52454a53d3081f2d7019485a4a
-  FirebaseCoreDiagnostics: cad03be1904b975f845e632f2720c3337da27faf
+  FirebaseCoreDiagnostics: 56fb7216d87e0e6ec2feddefa9d8a392fe8b2c18
   FirebaseDatabase: 38f21731dea277e454060d0d39c1bf2aaa12bbb9
-  FirebaseInstallations: 1585729afc787877763208c2088ed84221161f77
+  FirebaseInstallations: 830327b45345ffc859eaa9c17bcd5ae893fd5425
   FirebaseStorage: e6065bcbf70e2a06a8c3ddc66cbe03a395bbddc4
+  FSCalendar: e6a2eb9c571bf0719ed797ef807e08426753c241
   FSPagerView: 670405b2f18e2a87fa37f20b00de783e562c25a8
   GoogleAppMeasurement: 6b6a08fd9c71f4dbc89e0e812acca81d797aa342
-  GoogleDataTransport: 85fd18ff3019bb85d3f2c551d04c481dedf71fc9
-  GoogleUtilities: eea970f4a389963963bffe8d8fabe43540678b9c
-  GTMSessionFetcher: 36689134877faeb055b27dfa4ccc9ceaa42e029e
+  GoogleDataTransport: 629c20a4d363167143f30ea78320d5a7eb8bd940
+  GoogleUtilities: 684ee790a24f73ebb2d1d966e9711c203f2a4237
+  GTMSessionFetcher: 43748f93435c2aa068b1cbe39655aaf600652e91
   Kingfisher: 184d4d1a8c36666e663caf8e08abe87898595c53
   leveldb-library: 50c7b45cbd7bf543c81a468fe557a16ae3db8729
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   PromisesObjC: 68159ce6952d93e17b2dfe273b8c40907db5ba58
-  RxCocoa: 32065309a38d29b5b0db858819b5bf9ef038b601
+  RxCocoa: e2ed092d5432e4296aa818021d27de4090ac0354
   RxDataSources: efee07fa4de48477eca0a4611e6d11e2da9c1114
-  RxRelay: d77f7d771495f43c556cbc43eebd1bb54d01e8e9
+  RxRelay: 5a18c2eb2d68326ebaf0112f80d837ae41b92b97
   RxSwift: e2dc62b366a3adf6a0be44ba9f405efd4c94e0c4
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
-  TextFieldEffects: 529b8aff706fb40f82c41c780c0777941a893796
   Then: acfe0be7e98221c6204e12f8161459606d5d822d
 
-PODFILE CHECKSUM: 729789d9b34ac457a33c0a057df4078c92d94478
+PODFILE CHECKSUM: 91d565f77da9dc3ec1ce2499e4a41e18a3b33aa8
 
 COCOAPODS: 1.11.2
