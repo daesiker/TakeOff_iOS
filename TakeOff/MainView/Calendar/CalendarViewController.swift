@@ -57,6 +57,7 @@ class CalendarViewController: UIViewController {
         $0.setImage(UIImage(named: "calendar_right_bt"), for: .normal)
     }
     
+    let tableView = UITableView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -111,6 +112,10 @@ extension CalendarViewController {
             $0.bottom.equalTo(self.view.snp.bottom)
         }
         
+        tableLayoutView.addSubview(tableView)
+        tableView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
         
         
     }
