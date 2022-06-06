@@ -10,6 +10,7 @@ import UIKit
 import SnapKit
 import Then
 import FSCalendar
+import RxSwift
 
 class CalendarViewController: UIViewController {
     
@@ -57,11 +58,18 @@ class CalendarViewController: UIViewController {
         $0.setImage(UIImage(named: "calendar_right_bt"), for: .normal)
     }
     
+    let addPostBt = UIButton(type: .system).then {
+        $0.setImage(UIImage(systemName: "plus.circle.fill")?.withTintColor(UIColor.mainColor, renderingMode: .alwaysOriginal), for: .normal)
+    }
+    
     let tableView = UITableView()
+    
+    let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
+        bind()
         
         
         
@@ -105,7 +113,7 @@ extension CalendarViewController {
             $0.height.equalTo(safeView.snp.height).multipliedBy(0.5)
         }
         
-        view.addSubview(tableLayoutView)
+        safeView.addSubview(tableLayoutView)
         tableLayoutView.snp.makeConstraints {
             $0.top.equalTo(calendarLayoutView.snp.bottom)
             $0.leading.trailing.equalToSuperview()
@@ -117,7 +125,21 @@ extension CalendarViewController {
             $0.edges.equalToSuperview()
         }
         
-        
+        safeView.addSubview(addPostBt)
+        addPostBt.snp.makeConstraints {
+            $0.bottom.equalToSuperview().offset(-20)
+            $0.trailing.equalToSuperview().offset(-20)
+            $0.width.height.equalTo(40)
+        }
+    }
+    
+    private func bind() {
+        addPostBt.rx.tap.subscribe(onNext: {
+            let vc = AddCalendarViewController()
+            let nav = UINavigationController(rootViewController: vc)
+            nav.modalTransitionStyle = .flipHorizontal
+            self.present(nav, animated: true)
+        }).disposed(by: disposeBag)
     }
     
 }
@@ -129,5 +151,9 @@ extension CalendarViewController: FSCalendarDelegate, FSCalendarDataSource {
         let cell = calendar.dequeueReusableCell(withIdentifier: "calCell", for: date, at: position)
         return cell
     }
+    
+}
+
+extension CalendarViewController: UITableViewDelegate {
     
 }
