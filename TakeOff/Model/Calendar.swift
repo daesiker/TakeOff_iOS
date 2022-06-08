@@ -9,11 +9,25 @@ import Foundation
 
 struct Calendar {
     
-    let uid:String
-    let userName:String
-    let location:String
-    let title:String
-    let date:Date
+    let uid:String = UUID().uuidString
+    var userName:String = ""
+    var location:String = ""
+    var title:String = ""
+    var date:Double = Date().timeIntervalSince1970
+    
+    func toDic() -> [String:Any] {
+        
+        let dic:[String:Any] = [
+            "uid": self.uid,
+            "userName":self.userName,
+            "location": self.location,
+            "title": self.title,
+            "date" : self.date
+        ]
+        
+        return dic
+    }
+    
     
     
 }

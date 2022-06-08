@@ -7,9 +7,12 @@
 
 import UIKit
 import Then
-
+import RxSwift
+import RxCocoa
 
 class AddCalendarViewController: UIViewController {
+    
+    var vm = AddCalendarViewModel()
     
     let rightBarButton = UIBarButtonItem(title: "Next", style: .plain, target: self, action: nil)
     let leftBarButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: nil)
@@ -44,10 +47,17 @@ class AddCalendarViewController: UIViewController {
         $0.clearButtonMode = .whileEditing
     }
     
+    let disposeBag = DisposeBag()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationButtons()
         setUI()
+        bind()
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
     }
    
 }
@@ -103,6 +113,41 @@ extension AddCalendarViewController {
     }
     
     fileprivate func bind() {
+        
+        leftBarButton.rx.tap.subscribe(onNext: {
+            self.dismiss(animated: true, completion: nil)
+        }).disposed(by: disposeBag)
+        
+        locationTf.rx.text
+            .orEmpty
+            .skip(1)
+            .bind(to: vm.input.locationObserver)
+            .disposed(by: disposeBag)
+        
+        titleTf.rx.text
+            .orEmpty
+            .skip(1)
+            .bind(to: vm.input.titleObserver)
+            .disposed(by: disposeBag)
+        
+        datePicker.rx.controlEvent([.valueChanged])
+            .map { self.datePicker.date.timeIntervalSince1970 }
+            .bind(to: vm.input.dateObserver)
+            .disposed(by: disposeBag)
+        
+        rightBarButton.rx.tap.bind(to: vm.input.postObserver)
+            .disposed(by: disposeBag)
+        
+        vm.output.addPost.asSignal().emit(onNext: { _ in
+            self.dismiss(animated: true, completion: nil)
+        }).disposed(by: disposeBag)
+        
+        vm.output.errorValid.asSignal()
+            .emit(onNext: { error in
+                let alertController = UIAlertController(title: "에러", message: error.localizedDescription, preferredStyle: .alert)
+                alertController.addAction(UIAlertAction(title: "확인", style: .cancel, handler: nil))
+                self.present(alertController, animated: true)
+            }).disposed(by: disposeBag)
         
     }
 }
