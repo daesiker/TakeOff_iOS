@@ -138,12 +138,11 @@ extension AddCalendarViewController {
         rightBarButton.rx.tap.bind(to: vm.input.postObserver)
             .disposed(by: disposeBag)
         
-        vm.output.addPost.asSignal().emit(onNext: { _ in
+        vm.output.addPost.subscribe(onNext: { _ in
             self.dismiss(animated: true, completion: nil)
         }).disposed(by: disposeBag)
         
-        vm.output.errorValid.asSignal()
-            .emit(onNext: { error in
+        vm.output.errorValid.subscribe(onNext: { error in
                 let alertController = UIAlertController(title: "에러", message: error.localizedDescription, preferredStyle: .alert)
                 alertController.addAction(UIAlertAction(title: "확인", style: .cancel, handler: nil))
                 self.present(alertController, animated: true)

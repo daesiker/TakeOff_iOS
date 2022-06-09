@@ -15,7 +15,7 @@ class AddCalendarViewModel {
     let disposeBag = DisposeBag()
     let input = Input()
     var output = Output()
-    var calendar = Calendar()
+    var calendar = CalendarPost()
     
     struct Input {
         let locationObserver = PublishRelay<String>()
@@ -72,7 +72,7 @@ class AddCalendarViewModel {
             } else {
                 self.calendar.userName = User.loginedUser.name
             
-                let ref = Database.database().reference().child("calendars")
+                let ref = Database.database().reference().child("calendars").childByAutoId()
                 let values = self.calendar.toDic()
                 ref.updateChildValues(values) { (err, ref) in
                     if let err = err {

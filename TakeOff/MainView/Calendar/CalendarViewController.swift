@@ -11,6 +11,7 @@ import SnapKit
 import Then
 import FSCalendar
 import RxSwift
+import Firebase
 
 class CalendarViewController: UIViewController {
     
@@ -66,13 +67,17 @@ class CalendarViewController: UIViewController {
     
     let disposeBag = DisposeBag()
     
+    var tableData:[CalendarPost] = []
+    var calendarData:[String: [CalendarPost]] = [:]
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
         bind()
-        
-        
-        
+        setTitle()
+        fetchData()
     }
 }
 
@@ -134,13 +139,77 @@ extension CalendarViewController {
     }
     
     private func bind() {
+        
         addPostBt.rx.tap.subscribe(onNext: {
             let vc = AddCalendarViewController()
             let nav = UINavigationController(rootViewController: vc)
             nav.modalTransitionStyle = .flipHorizontal
             self.present(nav, animated: true)
         }).disposed(by: disposeBag)
+        
+        leftBt.rx.tap.subscribe(onNext: {
+            let _calendar = Calendar.current
+            var dateComponents = DateComponents()
+            dateComponents.month = -1 // For prev button
+            self.calendarView.currentPage = _calendar.date(byAdding: dateComponents, to: self.calendarView.currentPage)!
+            self.calendarView.setCurrentPage(self.calendarView.currentPage, animated: true)
+            self.setTitle()
+            self.calendarView.reloadData()
+        }).disposed(by: disposeBag)
+        
+        rightBt.rx.tap.subscribe(onNext: {
+            
+            let _calendar = Calendar.current
+            var dateComponents = DateComponents()
+            dateComponents.month = 1
+            self.calendarView.currentPage = _calendar.date(byAdding: dateComponents, to: self.calendarView.currentPage)!
+            self.calendarView.setCurrentPage(self.calendarView.currentPage, animated: true)
+            self.setTitle()
+            self.calendarView.reloadData()
+        }).disposed(by: disposeBag)
     }
+    
+    func setTitle() {
+        let date = calendarView.currentPage
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy.MM"
+        let title = dateFormatter.string(from: date)
+        titleLb.text = title
+    }
+    
+    
+    func fetchData() {
+        Database.database().reference().child("calendars").observeSingleEvent(of: .value) { (snapshot) in
+            
+            if let userDictionary = snapshot.value as? [String:Any] {
+                for (_, value) in userDictionary {
+                    let data = CalendarPost(value as! [String : Any])
+                    if data.userName == User.loginedUser.name || User.loginedUser.follower.contains(data.userName) {
+                        let date = Date(timeIntervalSince1970: data.date)
+                        let dateFormatter = DateFormatter()
+                        dateFormatter.dateFormat = "yyyy.MM.dd"
+                        let title = dateFormatter.string(from: date)
+                        
+                        if let _ = self.calendarData[title] {
+                            self.calendarData[title]!.append(data)
+                        } else {
+                            self.calendarData[title] = [data]
+                        }
+                        
+                    }
+                }
+                
+                
+                
+                DispatchQueue.main.async {
+                    self.calendarView.reloadData()
+                    self.tableView.reloadData()
+                }
+                
+            }
+        }
+    }
+    
     
 }
 
@@ -150,6 +219,36 @@ extension CalendarViewController: FSCalendarDelegate, FSCalendarDataSource {
     func calendar(_ calendar: FSCalendar, cellFor date: Date, at position: FSCalendarMonthPosition) -> FSCalendarCell {
         let cell = calendar.dequeueReusableCell(withIdentifier: "calCell", for: date, at: position)
         return cell
+    }
+    
+    func calendar(_ calendar: FSCalendar, numberOfEventsFor date: Date) -> Int {
+        var count = 0
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy.MM.dd"
+        let title = dateFormatter.string(from: date)
+        
+        
+        for (k, v) in calendarData {
+            if k == title {
+                count = v.count > 3 ? 3 : v.count
+            }
+        }
+        return count
+    }
+    
+    func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy.MM.dd"
+        let title = dateFormatter.string(from: date)
+        
+        if let posts = calendarData[title] {
+            tableData = posts
+        } else {
+            tableData = []
+        }
+        tableView.reloadData()
     }
     
 }
