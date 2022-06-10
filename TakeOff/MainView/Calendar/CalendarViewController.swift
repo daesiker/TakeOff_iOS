@@ -16,7 +16,7 @@ import Firebase
 class CalendarViewController: UIViewController {
     
     let calendarLayoutView = UIView().then {
-        $0.backgroundColor = .clear
+        $0.backgroundColor = UIColor.rgb(red: 251, green: 229, blue: 187)
     }
     
     let tableLayoutView = UIView().then {
@@ -63,7 +63,15 @@ class CalendarViewController: UIViewController {
         $0.setImage(UIImage(systemName: "plus.circle.fill")?.withTintColor(UIColor.mainColor, renderingMode: .alwaysOriginal), for: .normal)
     }
     
-    let tableView = UITableView()
+    lazy var collectionView:UICollectionView = {
+        let flowLayout = UICollectionViewFlowLayout()
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.register(CalendarCell.self, forCellWithReuseIdentifier: "colCell")
+        collectionView.backgroundColor = .white
+        return collectionView
+    }()
     
     let disposeBag = DisposeBag()
     
@@ -84,29 +92,30 @@ class CalendarViewController: UIViewController {
 extension CalendarViewController {
     
     private func setUI() {
-        view.backgroundColor = UIColor.rgb(red: 251, green: 229, blue: 187)
+        view.backgroundColor = .white
         
         safeView.addSubview(calendarLayoutView)
         calendarLayoutView.snp.makeConstraints {
-            $0.top.leading.trailing.equalToSuperview()
+            $0.top.equalTo(self.view.snp.top)
+            $0.leading.trailing.equalToSuperview()
             $0.height.equalToSuperview().multipliedBy(0.6)
         }
         
         calendarLayoutView.addSubview(leftBt)
         leftBt.snp.makeConstraints {
-            $0.top.equalToSuperview()
+            $0.top.equalTo(safeView.snp.top)
             $0.leading.equalToSuperview().offset(26)
         }
         
         calendarLayoutView.addSubview(titleLb)
         titleLb.snp.makeConstraints {
-            $0.top.equalToSuperview()
+            $0.top.equalTo(safeView.snp.top)
             $0.leading.equalTo(leftBt.snp.trailing).offset(1)
         }
         
         calendarLayoutView.addSubview(rightBt)
         rightBt.snp.makeConstraints {
-            $0.top.equalToSuperview()
+            $0.top.equalTo(safeView.snp.top)
             $0.leading.equalTo(titleLb.snp.trailing).offset(1)
         }
         
@@ -122,11 +131,11 @@ extension CalendarViewController {
         tableLayoutView.snp.makeConstraints {
             $0.top.equalTo(calendarLayoutView.snp.bottom)
             $0.leading.trailing.equalToSuperview()
-            $0.bottom.equalTo(self.view.snp.bottom)
+            $0.bottom.equalToSuperview()
         }
         
-        tableLayoutView.addSubview(tableView)
-        tableView.snp.makeConstraints {
+        tableLayoutView.addSubview(collectionView)
+        collectionView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
         
@@ -203,7 +212,7 @@ extension CalendarViewController {
                 
                 DispatchQueue.main.async {
                     self.calendarView.reloadData()
-                    self.tableView.reloadData()
+                    self.collectionView.reloadData()
                 }
                 
             }
@@ -248,11 +257,39 @@ extension CalendarViewController: FSCalendarDelegate, FSCalendarDataSource {
         } else {
             tableData = []
         }
-        tableView.reloadData()
+        collectionView.reloadData()
     }
     
 }
 
-extension CalendarViewController: UITableViewDelegate {
+extension CalendarViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 3
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "colCell", for: indexPath) as! CalendarCell
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 17
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 17
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let width = view.frame.width - 40
+        return CGSize(width: width, height: 144)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
+    }
+    
+    
     
 }

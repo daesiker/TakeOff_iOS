@@ -12,7 +12,7 @@
 		12976C7C5238AE8E49C94015 /* Pods_TakeOff.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B96FC7B284EF767A99B29A5 /* Pods_TakeOff.framework */; };
 		B98DA3D9814E88F33671E6B8 /* Pods_TakeOff_TakeOffUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 350243CD383F88E0778AB157 /* Pods_TakeOff_TakeOffUITests.framework */; };
 		BF021F06278563050096E948 /* CustomComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF021F05278563050096E948 /* CustomComponent.swift */; };
-		BF02A3D72849A6730046516E /* CalendarTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF02A3D62849A6730046516E /* CalendarTableViewCell.swift */; };
+		BF02A3D72849A6730046516E /* CalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF02A3D62849A6730046516E /* CalendarCell.swift */; };
 		BF02A3D92849AC190046516E /* CalendarPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF02A3D82849AC190046516E /* CalendarPost.swift */; };
 		BF06A851283E07E200C39027 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF06A850283E07E200C39027 /* PostViewController.swift */; };
 		BF06A853283E083600C39027 /* PostViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF06A852283E083600C39027 /* PostViewCell.swift */; };
@@ -80,7 +80,7 @@
 		904F2C6911FEEF43C782E968 /* Pods-TakeOff.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TakeOff.debug.xcconfig"; path = "Target Support Files/Pods-TakeOff/Pods-TakeOff.debug.xcconfig"; sourceTree = "<group>"; };
 		9D3799695D1A6873AD9AD76F /* Pods-TakeOff-TakeOffUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TakeOff-TakeOffUITests.release.xcconfig"; path = "Target Support Files/Pods-TakeOff-TakeOffUITests/Pods-TakeOff-TakeOffUITests.release.xcconfig"; sourceTree = "<group>"; };
 		BF021F05278563050096E948 /* CustomComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomComponent.swift; sourceTree = "<group>"; };
-		BF02A3D62849A6730046516E /* CalendarTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarTableViewCell.swift; sourceTree = "<group>"; };
+		BF02A3D62849A6730046516E /* CalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCell.swift; sourceTree = "<group>"; };
 		BF02A3D82849AC190046516E /* CalendarPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarPost.swift; sourceTree = "<group>"; };
 		BF06A850283E07E200C39027 /* PostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
 		BF06A852283E083600C39027 /* PostViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewCell.swift; sourceTree = "<group>"; };
@@ -185,7 +185,7 @@
 			isa = PBXGroup;
 			children = (
 				BF1B97A026D5CAD5009D1B53 /* CalendarViewController.swift */,
-				BF02A3D62849A6730046516E /* CalendarTableViewCell.swift */,
+				BF02A3D62849A6730046516E /* CalendarCell.swift */,
 				BF18BD5C284DF04E007BC205 /* AddCalendarViewController.swift */,
 				BF8EC88F2850328100B761FC /* AddCalendarViewModel.swift */,
 			);
@@ -623,7 +623,7 @@
 				BFD6402A2809339100AF67F8 /* ProfileCollectionViewCell.swift in Sources */,
 				BF8EC8902850328100B761FC /* AddCalendarViewModel.swift in Sources */,
 				BFB9EC1B26DF0468002AA1B6 /* SharePhotoViewModel.swift in Sources */,
-				BF02A3D72849A6730046516E /* CalendarTableViewCell.swift in Sources */,
+				BF02A3D72849A6730046516E /* CalendarCell.swift in Sources */,
 				BF606F2F26A28F0F004091A5 /* LoginViewController.swift in Sources */,
 				0497F61926C3A253002F1ACB /* User.swift in Sources */,
 				BF4591A626B7B2D60031E119 /* FoundationExtension.swift in Sources */,
