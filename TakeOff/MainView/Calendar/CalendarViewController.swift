@@ -74,6 +74,7 @@ class CalendarViewController: UIViewController {
     }()
     
     let disposeBag = DisposeBag()
+    let refreshControl = UIRefreshControl()
     
     var tableData:[CalendarPost] = []
     var calendarData:[String: [CalendarPost]] = [:]
@@ -134,6 +135,7 @@ extension CalendarViewController {
             $0.bottom.equalToSuperview()
         }
         
+        collectionView.refreshControl = refreshControl
         tableLayoutView.addSubview(collectionView)
         collectionView.snp.makeConstraints {
             $0.edges.equalToSuperview()
@@ -176,6 +178,10 @@ extension CalendarViewController {
             self.setTitle()
             self.calendarView.reloadData()
         }).disposed(by: disposeBag)
+        
+        refreshControl.rx.controlEvent([.valueChanged]).subscribe(onNext: {
+            self.fetchData()
+        }).disposed(by: disposeBag)
     }
     
     func setTitle() {
@@ -198,6 +204,21 @@ extension CalendarViewController {
                         let dateFormatter = DateFormatter()
                         dateFormatter.dateFormat = "yyyy.MM.dd"
                         let title = dateFormatter.string(from: date)
+                        
+                        var currentDate = ""
+                        
+                        if let selectedDate = self.calendarView.selectedDate {
+                            currentDate = dateFormatter.string(from: selectedDate)
+                        } else {
+                            currentDate = dateFormatter.string(from: Date())
+                        }
+                        
+                        
+                        print("\(currentDate), \(title)")
+                        
+                        if title == currentDate {
+                            self.tableData.append(data)
+                        }
                         
                         if let _ = self.calendarData[title] {
                             self.calendarData[title]!.append(data)
@@ -265,11 +286,24 @@ extension CalendarViewController: FSCalendarDelegate, FSCalendarDataSource {
 extension CalendarViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+        return tableData.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "colCell", for: indexPath) as! CalendarCell
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy.MM.dd"
+        
+        var currentDate = ""
+        if let selectedDate = self.calendarView.selectedDate {
+            currentDate = dateFormatter.string(from: selectedDate)
+        } else {
+            currentDate = dateFormatter.string(from: Date())
+        }
+        
+        if let posts = calendarData[currentDate] {
+            cell.calendarPost = posts[indexPath.row]
+        }
         return cell
     }
     
