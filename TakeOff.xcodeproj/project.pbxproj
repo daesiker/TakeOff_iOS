@@ -26,6 +26,8 @@
 		BF4591A426B7B25B0031E119 /* UIKitExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4591A326B7B25B0031E119 /* UIKitExtension.swift */; };
 		BF4591A626B7B2D60031E119 /* FoundationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4591A526B7B2D60031E119 /* FoundationExtension.swift */; };
 		BF4591B326B7E92B0031E119 /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4591B226B7E92B0031E119 /* SignUpViewModel.swift */; };
+		BF46D61928581E3E007EF15E /* UserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF46D61828581E3E007EF15E /* UserTableViewCell.swift */; };
+		BF46D61B28581EC9007EF15E /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF46D61A28581EC9007EF15E /* Message.swift */; };
 		BF606EE726A2876E004091A5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF606EE626A2876E004091A5 /* AppDelegate.swift */; };
 		BF606EE926A2876E004091A5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF606EE826A2876E004091A5 /* SceneDelegate.swift */; };
 		BF606EEB26A2876E004091A5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF606EEA26A2876E004091A5 /* ViewController.swift */; };
@@ -95,6 +97,8 @@
 		BF4591A326B7B25B0031E119 /* UIKitExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitExtension.swift; sourceTree = "<group>"; };
 		BF4591A526B7B2D60031E119 /* FoundationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoundationExtension.swift; sourceTree = "<group>"; };
 		BF4591B226B7E92B0031E119 /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
+		BF46D61828581E3E007EF15E /* UserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTableViewCell.swift; sourceTree = "<group>"; };
+		BF46D61A28581EC9007EF15E /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		BF606EE326A2876E004091A5 /* TakeOff.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TakeOff.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF606EE626A2876E004091A5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BF606EE826A2876E004091A5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -208,6 +212,7 @@
 			isa = PBXGroup;
 			children = (
 				BF1B97A626D5D0DC009D1B53 /* MessageViewController.swift */,
+				BF46D61828581E3E007EF15E /* UserTableViewCell.swift */,
 			);
 			path = Message;
 			sourceTree = "<group>";
@@ -270,6 +275,7 @@
 				0497F61826C3A253002F1ACB /* User.swift */,
 				BFC38EC22798039A004520EA /* Post.swift */,
 				BF02A3D82849AC190046516E /* CalendarPost.swift */,
+				BF46D61A28581EC9007EF15E /* Message.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -625,11 +631,13 @@
 				BFB9EC1B26DF0468002AA1B6 /* SharePhotoViewModel.swift in Sources */,
 				BF02A3D72849A6730046516E /* CalendarCell.swift in Sources */,
 				BF606F2F26A28F0F004091A5 /* LoginViewController.swift in Sources */,
+				BF46D61B28581EC9007EF15E /* Message.swift in Sources */,
 				0497F61926C3A253002F1ACB /* User.swift in Sources */,
 				BF4591A626B7B2D60031E119 /* FoundationExtension.swift in Sources */,
 				BF18BD5D284DF04E007BC205 /* AddCalendarViewController.swift in Sources */,
 				046506DA26E0A45A00F07726 /* ProfileViewModel.swift in Sources */,
 				BF1B97AA26D5D35C009D1B53 /* ProfileViewController.swift in Sources */,
+				BF46D61928581E3E007EF15E /* UserTableViewCell.swift in Sources */,
 				BFDD2A9226D0DFF20056409C /* Protocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
