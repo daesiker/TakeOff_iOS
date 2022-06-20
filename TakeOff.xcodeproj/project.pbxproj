@@ -22,6 +22,7 @@
 		BF1B97AA26D5D35C009D1B53 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1B97A926D5D35C009D1B53 /* ProfileViewController.swift */; };
 		BF246AB627BBA4A700CF3D21 /* PhotoSelectorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF246AB527BBA4A700CF3D21 /* PhotoSelectorCell.swift */; };
 		BF270DEB26D3309400C0E6BE /* MainTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF270DEA26D3309400C0E6BE /* MainTabViewController.swift */; };
+		BF366AE7286001070012111A /* NewMessageTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF366AE6286001070012111A /* NewMessageTableViewController.swift */; };
 		BF4591A126B7B1F00031E119 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4591A026B7B1F00031E119 /* LoginViewModel.swift */; };
 		BF4591A426B7B25B0031E119 /* UIKitExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4591A326B7B25B0031E119 /* UIKitExtension.swift */; };
 		BF4591A626B7B2D60031E119 /* FoundationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4591A526B7B2D60031E119 /* FoundationExtension.swift */; };
@@ -93,6 +94,7 @@
 		BF246AB527BBA4A700CF3D21 /* PhotoSelectorCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoSelectorCell.swift; sourceTree = "<group>"; };
 		BF270DEA26D3309400C0E6BE /* MainTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabViewController.swift; sourceTree = "<group>"; };
 		BF2DBAFD26EF4C2F00E7EC62 /* ExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleViewController.swift; sourceTree = "<group>"; };
+		BF366AE6286001070012111A /* NewMessageTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageTableViewController.swift; sourceTree = "<group>"; };
 		BF4591A026B7B1F00031E119 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		BF4591A326B7B25B0031E119 /* UIKitExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitExtension.swift; sourceTree = "<group>"; };
 		BF4591A526B7B2D60031E119 /* FoundationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoundationExtension.swift; sourceTree = "<group>"; };
@@ -213,6 +215,7 @@
 			children = (
 				BF1B97A626D5D0DC009D1B53 /* MessageViewController.swift */,
 				BF46D61828581E3E007EF15E /* UserTableViewCell.swift */,
+				BF366AE6286001070012111A /* NewMessageTableViewController.swift */,
 			);
 			path = Message;
 			sourceTree = "<group>";
@@ -632,6 +635,7 @@
 				BF02A3D72849A6730046516E /* CalendarCell.swift in Sources */,
 				BF606F2F26A28F0F004091A5 /* LoginViewController.swift in Sources */,
 				BF46D61B28581EC9007EF15E /* Message.swift in Sources */,
+				BF366AE7286001070012111A /* NewMessageTableViewController.swift in Sources */,
 				0497F61926C3A253002F1ACB /* User.swift in Sources */,
 				BF4591A626B7B2D60031E119 /* FoundationExtension.swift in Sources */,
 				BF18BD5D284DF04E007BC205 /* AddCalendarViewController.swift in Sources */,
