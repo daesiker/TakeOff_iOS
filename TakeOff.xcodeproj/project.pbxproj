@@ -43,6 +43,7 @@
 		BF83C47A2786B8CA008FE7BF /* EnumNError.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF83C4792786B8CA008FE7BF /* EnumNError.swift */; };
 		BF83C47C2786DB38008FE7BF /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF83C47B2786DB38008FE7BF /* SignUpViewController.swift */; };
 		BF8EC8902850328100B761FC /* AddCalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8EC88F2850328100B761FC /* AddCalendarViewModel.swift */; };
+		BF9AA3272862B8780029AF30 /* ChatLogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF9AA3262862B8780029AF30 /* ChatLogViewController.swift */; };
 		BFAFB971278C0C0600BDEF01 /* GodoB.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BFAFB96F278C0C0600BDEF01 /* GodoB.ttf */; };
 		BFAFB972278C0C0600BDEF01 /* GodoM.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BFAFB970278C0C0600BDEF01 /* GodoM.ttf */; };
 		BFB9EC1B26DF0468002AA1B6 /* SharePhotoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB9EC1A26DF0467002AA1B6 /* SharePhotoViewModel.swift */; };
@@ -121,6 +122,7 @@
 		BF83C4792786B8CA008FE7BF /* EnumNError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnumNError.swift; sourceTree = "<group>"; };
 		BF83C47B2786DB38008FE7BF /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		BF8EC88F2850328100B761FC /* AddCalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCalendarViewModel.swift; sourceTree = "<group>"; };
+		BF9AA3262862B8780029AF30 /* ChatLogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatLogViewController.swift; sourceTree = "<group>"; };
 		BFAFB96F278C0C0600BDEF01 /* GodoB.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GodoB.ttf; sourceTree = "<group>"; };
 		BFAFB970278C0C0600BDEF01 /* GodoM.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GodoM.ttf; sourceTree = "<group>"; };
 		BFB9EC1A26DF0467002AA1B6 /* SharePhotoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharePhotoViewModel.swift; sourceTree = "<group>"; };
@@ -216,6 +218,7 @@
 				BF1B97A626D5D0DC009D1B53 /* MessageViewController.swift */,
 				BF46D61828581E3E007EF15E /* UserTableViewCell.swift */,
 				BF366AE6286001070012111A /* NewMessageTableViewController.swift */,
+				BF9AA3262862B8780029AF30 /* ChatLogViewController.swift */,
 			);
 			path = Message;
 			sourceTree = "<group>";
@@ -643,6 +646,7 @@
 				BF1B97AA26D5D35C009D1B53 /* ProfileViewController.swift in Sources */,
 				BF46D61928581E3E007EF15E /* UserTableViewCell.swift in Sources */,
 				BFDD2A9226D0DFF20056409C /* Protocol.swift in Sources */,
+				BF9AA3272862B8780029AF30 /* ChatLogViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
