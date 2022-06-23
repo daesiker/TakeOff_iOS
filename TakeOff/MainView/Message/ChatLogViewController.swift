@@ -23,6 +23,8 @@ class ChatLogViewController: UICollectionViewController {
     var messages:[Message] = []
     let cellId = "cellId"
 
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

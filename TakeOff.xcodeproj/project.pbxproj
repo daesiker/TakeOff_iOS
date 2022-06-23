@@ -53,6 +53,7 @@
 		BFD6402A2809339100AF67F8 /* ProfileCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD640292809339100AF67F8 /* ProfileCollectionViewCell.swift */; };
 		BFDD2A8D26D0DFBE0056409C /* FirebaseDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDD2A8C26D0DFBE0056409C /* FirebaseDB.swift */; };
 		BFDD2A9226D0DFF20056409C /* Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDD2A9126D0DFF20056409C /* Protocol.swift */; };
+		BFE53B2E2864070800A511A1 /* ChatInputContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE53B2D2864070800A511A1 /* ChatInputContainerView.swift */; };
 		BFFDAE4926E5F1EA005707C9 /* PostUploadViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFDAE4826E5F1EA005707C9 /* PostUploadViewModel.swift */; };
 		FEE2F63F1E8D7C2FCF508D6A /* Pods_TakeOffTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3262C1A1886FC01C8B0B0EE0 /* Pods_TakeOffTests.framework */; };
 /* End PBXBuildFile section */
@@ -132,6 +133,7 @@
 		BFD640292809339100AF67F8 /* ProfileCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCollectionViewCell.swift; sourceTree = "<group>"; };
 		BFDD2A8C26D0DFBE0056409C /* FirebaseDB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseDB.swift; sourceTree = "<group>"; };
 		BFDD2A9126D0DFF20056409C /* Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocol.swift; sourceTree = "<group>"; };
+		BFE53B2D2864070800A511A1 /* ChatInputContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatInputContainerView.swift; sourceTree = "<group>"; };
 		BFFDAE4826E5F1EA005707C9 /* PostUploadViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostUploadViewModel.swift; sourceTree = "<group>"; };
 		C41870B3E414FF79D7F3BDEE /* Pods-TakeOffTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TakeOffTests.release.xcconfig"; path = "Target Support Files/Pods-TakeOffTests/Pods-TakeOffTests.release.xcconfig"; sourceTree = "<group>"; };
 		C4FE371827A1C9A242C5DA3D /* Pods-TakeOff.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TakeOff.release.xcconfig"; path = "Target Support Files/Pods-TakeOff/Pods-TakeOff.release.xcconfig"; sourceTree = "<group>"; };
@@ -219,6 +221,7 @@
 				BF46D61828581E3E007EF15E /* UserTableViewCell.swift */,
 				BF366AE6286001070012111A /* NewMessageTableViewController.swift */,
 				BF9AA3262862B8780029AF30 /* ChatLogViewController.swift */,
+				BFE53B2D2864070800A511A1 /* ChatInputContainerView.swift */,
 			);
 			path = Message;
 			sourceTree = "<group>";
@@ -629,6 +632,7 @@
 				BFDD2A8D26D0DFBE0056409C /* FirebaseDB.swift in Sources */,
 				BF021F06278563050096E948 /* CustomComponent.swift in Sources */,
 				BF06A851283E07E200C39027 /* PostViewController.swift in Sources */,
+				BFE53B2E2864070800A511A1 /* ChatInputContainerView.swift in Sources */,
 				BFFDAE4926E5F1EA005707C9 /* PostUploadViewModel.swift in Sources */,
 				BF4591A126B7B1F00031E119 /* LoginViewModel.swift in Sources */,
 				BF1B97A726D5D0DC009D1B53 /* MessageViewController.swift in Sources */,
