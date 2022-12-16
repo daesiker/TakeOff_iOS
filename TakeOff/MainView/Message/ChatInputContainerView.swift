@@ -54,7 +54,6 @@ class ChatInputContainerView: UIView, UITextFieldDelegate {
         sendButton.snp.makeConstraints {
             $0.trailing.equalToSuperview()
             $0.centerY.equalToSuperview()
-        
         }
         
     }

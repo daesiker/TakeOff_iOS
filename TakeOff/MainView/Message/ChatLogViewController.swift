@@ -16,12 +16,17 @@ class ChatLogViewController: UICollectionViewController {
     var user: User? {
         didSet {
             navigationItem.title = user?.name
-            //observeMessages()
+            observeMessages()
         }
     }
     
     var messages:[Message] = []
     let cellId = "cellId"
+    
+    lazy var inputContainerView = ChatInputContainerView().then {
+        $0.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: 50)
+        $0.chatLogViewController = self
+    }
 
     
     
@@ -29,6 +34,13 @@ class ChatLogViewController: UICollectionViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+    }
+    
+    func setUI() {
+        collectionView.contentInset = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
+        collectionView.alwaysBounceVertical = true
+        collectionView.backgroundColor = .white
+        
     }
     
     func observeMessages() {
@@ -54,7 +66,33 @@ class ChatLogViewController: UICollectionViewController {
             }
         }
     }
-
+    
     
 
+}
+
+extension ChatLogViewController {
+    
+}
+
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromUIImagePickerControllerInfoKeyDictionary(_ input: [UIImagePickerController.InfoKey: Any]) -> [String: Any] {
+    return Dictionary(uniqueKeysWithValues: input.map {key, value in (key.rawValue, value)})
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromUIImagePickerControllerInfoKey(_ input: UIImagePickerController.InfoKey) -> String {
+    return input.rawValue
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToOptionalNSAttributedStringKeyDictionary(_ input: [String: Any]?) -> [NSAttributedString.Key: Any]? {
+    guard let input = input else { return nil }
+    return Dictionary(uniqueKeysWithValues: input.map { key, value in (NSAttributedString.Key(rawValue: key), value)})
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromNSAttributedStringKey(_ input: NSAttributedString.Key) -> String {
+    return input.rawValue
 }
